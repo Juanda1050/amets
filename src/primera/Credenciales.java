@@ -1,5 +1,6 @@
 package primera;
 
+import DB.Conexion;
 import segunda.MenuPrincipal;
 import tercera.VistaMA;
 
@@ -16,11 +17,13 @@ public class Credenciales {
     private JTextField VcContraTF;
 
     /**
-     * Launch the application.
+     * Launch the application.|
      */
     public static void main(String[] args) {
         Credenciales cFrame = new Credenciales();
         cFrame.runFrame();
+        Conexion conecxion = new Conexion();
+        conecxion.conectar();
     }
 
     public void runFrame(){

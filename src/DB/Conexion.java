@@ -1,3 +1,5 @@
+package DB;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -5,9 +7,9 @@ import java.sql.SQLException;
 public class Conexion
 {
     private static final String CONTROLADOR = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/ametsTravels";
+    private static final String URL = "jdbc:mysql://localhost:3306/poo";
     private static final String USUARIO = "root";
-    private static final String CLAVE = "";
+    private static final String CLAVE = "admin";
 
     public Connection conectar()
     {
@@ -32,9 +34,4 @@ public class Conexion
         return conexion;
     }
 
-    public static void main(String[] args)
-    {
-        Conexion conecxion = new Conexion();
-        conecxion.conectar();
-    }
 }
