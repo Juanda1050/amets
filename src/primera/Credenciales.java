@@ -1,5 +1,6 @@
 package primera;
 
+import Controlador.Conexion;
 import segunda.MenuPrincipal;
 import tercera.VistaMA;
 
@@ -8,12 +9,16 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Credenciales {
 
     private JFrame VcFrame;
     private JTextField VcUsuarioTF;
-    private JTextField VcContraTF;
+    private JPasswordField VcContraTF;
+    private JComboBox VcComboBox;
 
     /**
      * Launch the application.
@@ -89,13 +94,13 @@ public class Credenciales {
         panel_1.add(VcContraL);
         VcContraL.setBounds(0, 137, 76, 24);
 
-        VcContraTF = new JTextField();
+        VcContraTF = new JPasswordField();
         panel_1.add(VcContraTF);
         VcContraTF.setColumns(10);
         VcContraTF.setBounds(80, 137, 119, 24);
 
         Object[] items = new Object[] {"Tipo de usuario 1", "Tipo de usuario 2"};
-        JComboBox VcComboBox = new JComboBox(items);
+        VcComboBox = new JComboBox(items);
         VcComboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
         panel_1.add(VcComboBox);
         VcComboBox.setBounds(80, 57, 119, 24);
@@ -104,20 +109,53 @@ public class Credenciales {
         panel_1.add(VcButton);
         VcButton.setBounds(99, 174, 81, 24);
         VcButton.addActionListener(e -> {
-            switch(VcComboBox.getSelectedIndex())
-            {
-                case 0:
-                    MenuPrincipal mpFrame = new MenuPrincipal();
-                    mpFrame.runFrame();
-                    VcFrame.setVisible(false);
-                    break;
-
-                case 1:
-                    VistaMA maFrame = new VistaMA();
-                    maFrame.runFrame();
-                    VcFrame.setVisible(false);
-                    break;
-            }
+            Login();
         });
+    }
+
+    public void Login(){
+
+        PreparedStatement st;
+        ResultSet rs;
+
+        String user = VcUsuarioTF.getText();
+        String password = String.valueOf(VcContraTF.getPassword());
+        int userType = VcComboBox.getSelectedIndex()+1;
+
+        String userSearch = "SELECT * FROM `empleado` WHERE `agentName` = ? AND `password` = ? AND `jobTitle` = ?";
+        Conexion con = new Conexion();
+        try {
+            st = con.conectar().prepareStatement(userSearch);
+            st.setString(1, user);
+            st.setString(2, password);
+            st.setString(3, String.valueOf(userType));
+            rs = st.executeQuery();
+
+            if(rs.next()){
+                int type = rs.getInt("jobTitle");
+                System.out.println(type);
+                switch(type)
+                {
+                    case 1:
+                        MenuPrincipal mpFrame = new MenuPrincipal();
+                        mpFrame.runFrame();
+                        VcFrame.setVisible(false);
+                        break;
+
+                    case 2:
+                        VistaMA maFrame = new VistaMA();
+                        maFrame.runFrame();
+                        VcFrame.setVisible(false);
+                        break;
+
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Revisa tus credenciales y vuelve a intentarlo", "Credenciales Inválidas", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 }
