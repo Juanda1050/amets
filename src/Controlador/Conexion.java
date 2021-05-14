@@ -11,14 +11,14 @@ public class Conexion
     private static final String USUARIO = "root";
     private static final String CLAVE = "";
 
-    public Connection conectar()
+    public static Connection conectar()
     {
         Connection conexion = null;
         try
         {
             Class.forName(CONTROLADOR);
             conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-            System.out.println("Controlador.Conexion OK");
+            //System.out.println("Controlador.Conexion OK");
         }
         catch(ClassNotFoundException e)
         {

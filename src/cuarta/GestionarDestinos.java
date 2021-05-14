@@ -1,37 +1,33 @@
 package cuarta;
 
-import java.awt.EventQueue;
+import Controlador.DestinoController;
+import Modelo.DestinoDAO;
+
+import java.awt.*;
 
 import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Frame;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class GestionarDestinos {
 
+    public JButton gDestino_addB, gDestino_editB, gDestino_listB;
     private JFrame gDestinoFrame;
-    private JTextField gDestino_ciudadTF;
-    private JTextField gDestino_estadoTF;
-    private JTextField gDestino_paisTF;
+    public JTextField gDestino_ciudadTF;
+    public JTextField gDestino_estadoTF;
+    public JTextField gDestino_paisTF;
     private JScrollPane gDestinoSP;
-    private JTable gDestinoTable;
-
-    /**
-     * Launch the application.
-     */
+    public JTable gDestinoTable;
+    
     public void runFrame(){
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     GestionarDestinos window = new GestionarDestinos();
+                    DestinoDAO destinoDAO = new DestinoDAO();
+                    DestinoController controller = new DestinoController(window, destinoDAO);
                     window.gDestinoFrame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -40,17 +36,10 @@ public class GestionarDestinos {
         });
     }
 
-
-    /**
-     * Create the application.
-     */
     public GestionarDestinos() {
         initialize();
     }
 
-    /**
-     * Initialize the contents of the frame.
-     */
     private void initialize() {
         gDestinoFrame = new JFrame("Amets Travels");
         gDestinoFrame.setBounds(100, 100, 1280, 720);
@@ -115,7 +104,7 @@ public class GestionarDestinos {
         gDestinoLeft.add(gDestino_paisTF);
         gDestino_paisTF.setColumns(20);
 
-        JButton gDestino_addB = new JButton("Añadir");
+        gDestino_addB = new JButton("Añadir");
         gDestino_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gDestinoLeft.add(gDestino_addB);
 
@@ -133,13 +122,6 @@ public class GestionarDestinos {
         gDestinoMid.add(gDestinoSP, BorderLayout.CENTER);
 
         gDestinoTable = new JTable();
-        gDestinoTable.setModel(new DefaultTableModel(
-                new Object[][]{
-                },
-                new String[]{
-                        "ID Destino", "Ciudad", "Estado", "Pais"
-                }
-        ));
 
         //Generando estilo de JTable
         JTableHeader tHeader = gDestinoTable.getTableHeader();
@@ -147,7 +129,7 @@ public class GestionarDestinos {
         tHeader.setBackground(Color.decode("#094293"));
         tHeader.setForeground(Color.white);
         tHeader.setFont(new Font("Tahome", Font.BOLD, 16));
-        gDestinoTable.setFont(new Font("Tahome", Font.PLAIN, 14));
+        gDestinoTable.setFont(new Font("Tahome", Font.PLAIN, 16));
         gDestinoSP.setViewportView(gDestinoTable);
 
         JPanel gDestinoMid_B = new JPanel();
@@ -155,12 +137,17 @@ public class GestionarDestinos {
         gDestinoMid.add(gDestinoMid_B, BorderLayout.SOUTH);
         gDestinoMid_B.setLayout(new GridLayout(0, 6, 20, 0));
 
-        JButton gDestino_editB = new JButton("Editar");
+        gDestino_listB = new JButton("Listar");
+        gDestino_listB.setVerticalAlignment(SwingConstants.TOP);
+        gDestino_listB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gDestinoMid_B.add(gDestino_listB);
+
+        gDestino_editB = new JButton("Editar");
         gDestino_editB.setVerticalAlignment(SwingConstants.TOP);
         gDestino_editB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gDestinoMid_B.add(gDestino_editB);
 
-        JButton gDestino_deleteB = new JButton("Eliminar\\r\\n");
+        JButton gDestino_deleteB = new JButton("Eliminar");
         gDestino_deleteB.setVerticalAlignment(SwingConstants.TOP);
         gDestino_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gDestinoMid_B.add(gDestino_deleteB);
