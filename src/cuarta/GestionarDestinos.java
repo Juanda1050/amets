@@ -7,20 +7,19 @@ import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class GestionarDestinos {
 
-    public JButton gDestino_addB, gDestino_editB, gDestino_listB;
+    public JButton gDestino_addB, gDestino_editB, gDestino_updateB, gDestino_deleteB, gDestino_listB;
     private JFrame gDestinoFrame;
-    public JTextField gDestino_ciudadTF;
-    public JTextField gDestino_estadoTF;
-    public JTextField gDestino_paisTF;
+    public JTextField gDestino_idTF, gDestino_ciudadTF, gDestino_estadoTF, gDestino_paisTF;
     private JScrollPane gDestinoSP;
     public JTable gDestinoTable;
-    
+
     public void runFrame(){
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -74,7 +73,17 @@ public class GestionarDestinos {
         JPanel gDestinoLeft = new JPanel();
         gDestinoLeft.setBorder(new EmptyBorder(20, 50, 50, 50));
         gDestinoFrame.getContentPane().add(gDestinoLeft, BorderLayout.WEST);
-        gDestinoLeft.setLayout(new GridLayout(0, 2, 15, 120));
+        gDestinoLeft.setLayout(new GridLayout(0, 2, 15, 100));
+
+        JLabel gDestino_idL = new JLabel("ID Destino");
+        gDestino_idL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gDestinoLeft.add(gDestino_idL);
+
+        gDestino_idTF = new JTextField();
+        gDestino_idTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gDestino_idTF.setEditable(false);
+        gDestinoLeft.add(gDestino_idTF);
+        gDestino_idTF.setColumns(20);
 
         JLabel gDestino_ciudadL = new JLabel("Ciudad");
         gDestino_ciudadL.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -122,6 +131,12 @@ public class GestionarDestinos {
         gDestinoMid.add(gDestinoSP, BorderLayout.CENTER);
 
         gDestinoTable = new JTable();
+        DefaultTableModel tModel = new DefaultTableModel();
+        gDestinoTable.setModel(tModel);
+        tModel.addColumn("ID Destino");
+        tModel.addColumn("Ciudad");
+        tModel.addColumn("Estado");
+        tModel.addColumn("Pais");
 
         //Generando estilo de JTable
         JTableHeader tHeader = gDestinoTable.getTableHeader();
@@ -147,7 +162,12 @@ public class GestionarDestinos {
         gDestino_editB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gDestinoMid_B.add(gDestino_editB);
 
-        JButton gDestino_deleteB = new JButton("Eliminar");
+        gDestino_updateB = new JButton("Actualizar");
+        gDestino_updateB.setVerticalAlignment(SwingConstants.TOP);
+        gDestino_updateB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gDestinoMid_B.add(gDestino_updateB);
+
+        gDestino_deleteB = new JButton("Eliminar");
         gDestino_deleteB.setVerticalAlignment(SwingConstants.TOP);
         gDestino_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gDestinoMid_B.add(gDestino_deleteB);
