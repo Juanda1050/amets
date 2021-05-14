@@ -53,8 +53,9 @@ public class Credenciales {
      */
     private void initialize() {
         VcFrame = new JFrame();
-        VcFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+
         VcFrame.setBounds(100, 100, 500, 300);
+        VcFrame.setResizable(false);
         VcFrame.setTitle("Amets Travels");
         VcFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
@@ -99,12 +100,6 @@ public class Credenciales {
         VcContraTF.setColumns(10);
         VcContraTF.setBounds(80, 137, 119, 24);
 
-        Object[] items = new Object[] {"Tipo de usuario 1", "Tipo de usuario 2"};
-        VcComboBox = new JComboBox(items);
-        VcComboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        panel_1.add(VcComboBox);
-        VcComboBox.setBounds(80, 57, 119, 24);
-
         JButton VcButton = new JButton("Ingresar");
         panel_1.add(VcButton);
         VcButton.setBounds(99, 174, 81, 24);
@@ -120,15 +115,13 @@ public class Credenciales {
 
         String user = VcUsuarioTF.getText();
         String password = String.valueOf(VcContraTF.getPassword());
-        int userType = VcComboBox.getSelectedIndex()+1;
 
-        String userSearch = "SELECT * FROM `empleado` WHERE `agentName` = ? AND `password` = ? AND `jobTitle` = ?";
+        String userSearch = "SELECT * FROM `empleado` WHERE `agentName` = ? AND `password` = ?";
         Conexion con = new Conexion();
         try {
             st = con.conectar().prepareStatement(userSearch);
             st.setString(1, user);
             st.setString(2, password);
-            st.setString(3, String.valueOf(userType));
             rs = st.executeQuery();
 
             if(rs.next()){
