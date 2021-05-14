@@ -1,3 +1,5 @@
+package Controlador;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,7 +18,7 @@ public class Conexion
         {
             Class.forName(CONTROLADOR);
             conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-            System.out.println("Conexion OK");
+            System.out.println("Controlador.Conexion OK");
         }
         catch(ClassNotFoundException e)
         {
