@@ -7,6 +7,7 @@ import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.event.WindowAdapter;
@@ -14,7 +15,7 @@ import java.awt.event.WindowEvent;
 
 public class GestionarDestinos {
 
-    public JButton gDestino_addB, gDestino_editB, gDestino_updateB, gDestino_deleteB, gDestino_listB;
+    public JButton gDestino_addB, gDestino_editB, gDestino_updateB, gDestino_deleteB, gDestino_saveB;
     private JFrame gDestinoFrame;
     public JTextField gDestino_idTF, gDestino_ciudadTF, gDestino_estadoTF, gDestino_paisTF;
     private JScrollPane gDestinoSP;
@@ -113,13 +114,13 @@ public class GestionarDestinos {
         gDestinoLeft.add(gDestino_paisTF);
         gDestino_paisTF.setColumns(20);
 
-        gDestino_addB = new JButton("Añadir");
+        gDestino_addB = new JButton("Nuevo");
         gDestino_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gDestinoLeft.add(gDestino_addB);
 
-        JButton gDestino_cleanB = new JButton("Limpiar");
-        gDestino_cleanB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gDestinoLeft.add(gDestino_cleanB);
+        gDestino_saveB = new JButton("Guardar");
+        gDestino_saveB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gDestinoLeft.add(gDestino_saveB);
 
         JPanel gDestinoMid = new JPanel();
         gDestinoMid.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -131,31 +132,37 @@ public class GestionarDestinos {
         gDestinoMid.add(gDestinoSP, BorderLayout.CENTER);
 
         gDestinoTable = new JTable();
+        gDestinoTable = new JTable(){
+          public boolean isCellEditable(int rowIndex, int colIndex){
+              return false;
+          }
+        };
         DefaultTableModel tModel = new DefaultTableModel();
         gDestinoTable.setModel(tModel);
         tModel.addColumn("ID Destino");
         tModel.addColumn("Ciudad");
         tModel.addColumn("Estado");
         tModel.addColumn("Pais");
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        gDestinoTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+        gDestinoTable.setRowHeight(50);
 
         //Generando estilo de JTable
         JTableHeader tHeader = gDestinoTable.getTableHeader();
         tHeader.setPreferredSize(new Dimension(0, 25));
         tHeader.setBackground(Color.decode("#094293"));
         tHeader.setForeground(Color.white);
+        tHeader.setReorderingAllowed(false);
         tHeader.setFont(new Font("Tahome", Font.BOLD, 16));
         gDestinoTable.setFont(new Font("Tahome", Font.PLAIN, 16));
         gDestinoSP.setViewportView(gDestinoTable);
 
+        //PANEL PARA BOTONES DEBAJO DE JTABLE
         JPanel gDestinoMid_B = new JPanel();
         gDestinoMid_B.setBorder(new EmptyBorder(0, 0, 20, 20));
         gDestinoMid.add(gDestinoMid_B, BorderLayout.SOUTH);
         gDestinoMid_B.setLayout(new GridLayout(0, 6, 20, 0));
-
-        gDestino_listB = new JButton("Listar");
-        gDestino_listB.setVerticalAlignment(SwingConstants.TOP);
-        gDestino_listB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gDestinoMid_B.add(gDestino_listB);
 
         gDestino_editB = new JButton("Editar");
         gDestino_editB.setVerticalAlignment(SwingConstants.TOP);
@@ -177,8 +184,8 @@ public class GestionarDestinos {
         gDestinoFrame.getContentPane().add(gDestinoBottom, BorderLayout.SOUTH);
         gDestinoBottom.setLayout(new BorderLayout(0, 0));
 
-        JButton btnNewButton = new JButton("VOLVER");
-        btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gDestinoBottom.add(btnNewButton, BorderLayout.EAST);
+        JButton gDestinos_backB = new JButton("VOLVER");
+        gDestinos_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gDestinoBottom.add(gDestinos_backB, BorderLayout.EAST);
     }
 }

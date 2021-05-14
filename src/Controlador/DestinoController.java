@@ -19,20 +19,27 @@ public class DestinoController implements ActionListener {
         this.dao = dao;
         this.vistaD = vistaD;
         this.vistaD.gDestino_addB.addActionListener(this);
+        this.vistaD.gDestino_saveB.addActionListener(this);
         this.vistaD.gDestino_editB.addActionListener(this);
         this.vistaD.gDestino_updateB.addActionListener(this);
         this.vistaD.gDestino_deleteB.addActionListener(this);
-        this.vistaD.gDestino_listB.addActionListener(this);
         listar(vistaD.gDestinoTable);
+        areTextFieldEditable(false);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         //Boton Agregar
         if(e.getSource() == vistaD.gDestino_addB){
+            areTextFieldEditable(true);
+        }
+        //Boton Guardar
+        if(e.getSource() == vistaD.gDestino_saveB){
             agregar();
             limpiar();
             listar(vistaD.gDestinoTable);
+            areTextFieldEditable(false);
+            cleanForm();
         }
         //Boton Editar
         if(e.getSource() == vistaD.gDestino_editB){
@@ -41,6 +48,7 @@ public class DestinoController implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Seleccione una fila");
             }
             else{
+                areTextFieldEditable(true);
                 int id = Integer.parseInt(vistaD.gDestinoTable.getValueAt(row, 0).toString());
                 String ciudad = (String) vistaD.gDestinoTable.getValueAt(row, 1);
                 String estado = (String) vistaD.gDestinoTable.getValueAt(row, 2);
@@ -56,16 +64,13 @@ public class DestinoController implements ActionListener {
             actualizar();
             limpiar();
             listar(vistaD.gDestinoTable);
+            areTextFieldEditable(false);
+            cleanForm();
 
         }
         //Boton Eliminar
         if(e.getSource() == vistaD.gDestino_deleteB){
             eliminar();
-            limpiar();
-            listar(vistaD.gDestinoTable);
-        }
-        //Boton Listar
-        if(e.getSource() == vistaD.gDestino_listB){
             limpiar();
             listar(vistaD.gDestinoTable);
         }
@@ -129,10 +134,22 @@ public class DestinoController implements ActionListener {
         }
     }
 
-    void limpiar(){
+    private void limpiar(){
         for (int i = 0; i < vistaD.gDestinoTable.getRowCount(); i++){
             modelo.removeRow(i);
             i = i - 1;
         }
+    }
+
+    private void areTextFieldEditable(boolean flag){
+        vistaD.gDestino_ciudadTF.setEditable(flag);
+        vistaD.gDestino_estadoTF.setEditable(flag);
+        vistaD.gDestino_paisTF.setEditable(flag);
+    }
+
+    private void cleanForm(){
+        vistaD.gDestino_ciudadTF.setText("");
+        vistaD.gDestino_estadoTF.setText("");
+        vistaD.gDestino_paisTF.setText("");
     }
 }

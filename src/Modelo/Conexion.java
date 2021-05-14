@@ -1,4 +1,4 @@
-package Controlador;
+package Modelo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,7 +18,7 @@ public class Conexion
         {
             Class.forName(CONTROLADOR);
             conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-            //System.out.println("Controlador.Conexion OK");
+            //System.out.println("Modelo.Conexion OK");
         }
         catch(ClassNotFoundException e)
         {

@@ -1,11 +1,11 @@
 package Modelo;
 
-import Controlador.Conexion;
-
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DestinoDAO extends Conexion{
+import static Modelo.Conexion.conectar;
+
+public class DestinoDAO{
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
