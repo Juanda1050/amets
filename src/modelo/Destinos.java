@@ -1,4 +1,4 @@
-package Modelo;
+package modelo;
 
 public class Destinos {
     private int destinationID;
@@ -8,14 +8,6 @@ public class Destinos {
 
     public Destinos(){
 
-    }
-
-    public Destinos(int destinationID, String city, String state, String country)
-    {
-        this.destinationID = destinationID;
-        this.city = city;
-        this.state = state;
-        this.country = country;
     }
 
     public int getDestinationID() {

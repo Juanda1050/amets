@@ -1,7 +1,8 @@
 package cuarta;
 
-import Controlador.DestinoController;
-import Modelo.DestinoDAO;
+import controlador.DestinoController;
+import modelo.DestinoDAO;
+import tercera.VistaMA;
 
 import java.awt.*;
 
@@ -187,5 +188,10 @@ public class GestionarDestinos {
         JButton gDestinos_backB = new JButton("VOLVER");
         gDestinos_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gDestinoBottom.add(gDestinos_backB, BorderLayout.EAST);
+        gDestinos_backB.addActionListener(e -> {
+            VistaMA maFrame = new VistaMA();
+            maFrame.runFrame();
+            gDestinoFrame.setVisible(false);
+        });
     }
 }

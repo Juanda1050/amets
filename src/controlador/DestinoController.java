@@ -1,7 +1,7 @@
-package Controlador;
+package controlador;
 
-import Modelo.DestinoDAO;
-import Modelo.Destinos;
+import modelo.DestinoDAO;
+import modelo.Destinos;
 import cuarta.GestionarDestinos;
 
 import javax.swing.*;
@@ -148,6 +148,7 @@ public class DestinoController implements ActionListener {
     }
 
     private void cleanForm(){
+        vistaD.gDestino_idTF.setText("");
         vistaD.gDestino_ciudadTF.setText("");
         vistaD.gDestino_estadoTF.setText("");
         vistaD.gDestino_paisTF.setText("");

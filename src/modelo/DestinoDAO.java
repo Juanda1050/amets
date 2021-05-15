@@ -1,9 +1,9 @@
-package Modelo;
+package modelo;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import static Modelo.Conexion.conectar;
+import static modelo.Conexion.conectar;
 
 public class DestinoDAO{
     Connection con;
@@ -19,7 +19,9 @@ public class DestinoDAO{
             ps.setString(2, d.getState());
             ps.setString(3, d.getCountry());
             ps.executeUpdate();
-        }catch (Exception e){
+        }catch (SQLException e){
+            System.out.println("Error en agregar un registro");
+            e.printStackTrace();
         }
         return 1;
     }
