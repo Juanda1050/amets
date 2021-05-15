@@ -1,5 +1,6 @@
 package tercera;
 
+import primera.Retorno;
 import segunda.MenuPrincipal;
 
 import java.awt.*;
@@ -174,8 +175,8 @@ public class VistaPP {
         ppMenuButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
         Bottom.add(ppMenuButton);
         ppMenuButton.addActionListener(e -> {
-            MenuPrincipal mpFrame = new MenuPrincipal();
-            mpFrame.runFrame();
+            Retorno rtn = new Retorno();
+            rtn.runReturn();
             frmAmetsTravel.setVisible(false);
         });
 
@@ -183,7 +184,9 @@ public class VistaPP {
         ppSiguienteButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
         Bottom.add(ppSiguienteButton);
         ppSiguienteButton.addActionListener(e -> {
-            /* Se procesa el pago */
+            /* Se genera el ticket */
+            Ticket tickt = new Ticket();
+            tickt.runFrame();
             frmAmetsTravel.setVisible(false);
         });
     }

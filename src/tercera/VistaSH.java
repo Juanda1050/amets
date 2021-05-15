@@ -8,6 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import com.toedter.calendar.JDateChooser;
+import primera.Retorno;
 import segunda.MenuPrincipal;
 import segunda.SeleccionarVuelos;
 
@@ -191,8 +192,8 @@ public class VistaSH extends JFrame{
         btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
         BottomSouth.add(btnNewButton_1);
         btnNewButton_1.addActionListener(e -> {
-            MenuPrincipal mpFrame = new MenuPrincipal();
-            mpFrame.runFrame();
+            Retorno rtn = new Retorno();
+            rtn.runReturn();
             frmAmetsTravels.setVisible(false);
         });
 

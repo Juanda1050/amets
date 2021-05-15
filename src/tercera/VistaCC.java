@@ -1,5 +1,6 @@
 package tercera;
 
+import primera.Retorno;
 import segunda.MenuPrincipal;
 
 import java.awt.*;
@@ -144,8 +145,8 @@ public class VistaCC {
         ccVolverButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
         ButtomSouth.add(ccVolverButton);
         ccVolverButton.addActionListener(e -> {
-            MenuPrincipal mpFrame = new MenuPrincipal();
-            mpFrame.runFrame();
+            Retorno rtn = new Retorno();
+            rtn.runReturn();
             frmAmetsTravels.setVisible(false);
         });
 

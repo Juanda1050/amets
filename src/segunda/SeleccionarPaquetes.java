@@ -1,5 +1,7 @@
 package segunda;
 
+import primera.Retorno;
+
 import java.awt.*;
 
 import javax.swing.*;
@@ -158,8 +160,8 @@ public class SeleccionarPaquetes {
         spVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         spBottom.add(spVolverBtn);
         spVolverBtn.addActionListener(e -> {
-            RegistroUsuarios ruFrame = new RegistroUsuarios();
-            ruFrame.runFrame();
+            Retorno rtn = new Retorno();
+            rtn.runReturn();
             spFrame.setVisible(false);
         });
 

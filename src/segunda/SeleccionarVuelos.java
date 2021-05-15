@@ -8,6 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import com.toedter.calendar.JDateChooser;
+import primera.Retorno;
 import tercera.VistaSH;
 
 public class SeleccionarVuelos {
@@ -182,8 +183,8 @@ public class SeleccionarVuelos {
         svMenuBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         svBottom.add(svMenuBtn);
         svMenuBtn.addActionListener(e -> {
-            MenuPrincipal mpFrame = new MenuPrincipal();
-            mpFrame.runFrame();
+            Retorno rtn = new Retorno();
+            rtn.runReturn();
             svFrame.setVisible(false);
         });
 
