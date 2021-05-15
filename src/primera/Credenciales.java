@@ -18,7 +18,6 @@ public class Credenciales {
     private JFrame VcFrame;
     private JTextField VcUsuarioTF;
     private JPasswordField VcContraTF;
-    private JComboBox VcComboBox;
 
     /**
      * Launch the application.
@@ -126,7 +125,6 @@ public class Credenciales {
 
             if(rs.next()){
                 int type = rs.getInt("jobTitle");
-                System.out.println(type);
                 switch(type)
                 {
                     case 1:
