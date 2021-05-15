@@ -94,6 +94,13 @@ public class GestionarHoteles {
         textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
         textField.setColumns(10);
 
+        JLabel lblNewLabel_7 = new JLabel("Destino");
+        lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
+
+        JComboBox comboBox2 = new JComboBox();
+        comboBox2.setModel(new DefaultComboBoxModel(new String[] {"Seleccione"}));
+        comboBox2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+
         JLabel lblNewLabel_3 = new JLabel("Ubicacion");
         lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
@@ -138,6 +145,8 @@ public class GestionarHoteles {
         gHotelesTop_left.setLayout(new GridLayout(0, 2, 15, 50));
         gHotelesTop_left.add(lblNewLabel_2);
         gHotelesTop_left.add(textField);
+        gHotelesTop_left.add(lblNewLabel_7);
+        gHotelesTop_left.add(comboBox2);
         gHotelesTop_left.add(lblNewLabel_3);
         gHotelesTop_left.add(textField_1);
         gHotelesTop_left.add(lblNewLabel_2_1);
