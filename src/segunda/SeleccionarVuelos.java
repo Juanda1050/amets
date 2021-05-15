@@ -184,8 +184,7 @@ public class SeleccionarVuelos {
         svBottom.add(svMenuBtn);
         svMenuBtn.addActionListener(e -> {
             Retorno rtn = new Retorno();
-            rtn.runReturn();
-            svFrame.setVisible(false);
+            svFrame.setVisible(rtn.runReturn());
         });
 
         JButton svSiguienteBtn = new JButton("Siguiente");

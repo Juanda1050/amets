@@ -116,8 +116,7 @@ public class Ticket {
         bottom.add(btnNewButton_1);
         btnNewButton_1.addActionListener(e -> {
             Retorno rtn = new Retorno();
-            rtn.runReturn();
-            frame.setVisible(false);
+            frame.setVisible(rtn.runReturn());
         });
 
         JButton btnNewButton = new JButton("Imprimir Ticket");

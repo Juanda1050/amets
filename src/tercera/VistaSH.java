@@ -193,8 +193,7 @@ public class VistaSH extends JFrame{
         BottomSouth.add(btnNewButton_1);
         btnNewButton_1.addActionListener(e -> {
             Retorno rtn = new Retorno();
-            rtn.runReturn();
-            frmAmetsTravels.setVisible(false);
+            frmAmetsTravels.setVisible(rtn.runReturn());
         });
 
         JButton btnNewButton_2 = new JButton("Siguiente");

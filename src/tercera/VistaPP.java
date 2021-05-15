@@ -176,8 +176,7 @@ public class VistaPP {
         Bottom.add(ppMenuButton);
         ppMenuButton.addActionListener(e -> {
             Retorno rtn = new Retorno();
-            rtn.runReturn();
-            frmAmetsTravel.setVisible(false);
+            frmAmetsTravel.setVisible(rtn.runReturn());
         });
 
         JButton ppSiguienteButton = new JButton("Siguiente");

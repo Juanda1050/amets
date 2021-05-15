@@ -161,8 +161,7 @@ public class SeleccionarPaquetes {
         spBottom.add(spVolverBtn);
         spVolverBtn.addActionListener(e -> {
             Retorno rtn = new Retorno();
-            rtn.runReturn();
-            spFrame.setVisible(false);
+            spFrame.setVisible(rtn.runReturn());
         });
 
         JButton spMenuBtn = new JButton("Men\u00FA");

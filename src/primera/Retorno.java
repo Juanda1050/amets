@@ -17,13 +17,18 @@ public class Retorno
         JOptionPane.showMessageDialog(null, "INTENTOS CONSUMIDOS. COMUNIQUESE CON EL SUPERVISOR","Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    public void runReturn(){
+    public boolean runReturn(){
 
         int result = JOptionPane.showConfirmDialog(null, "¿Seguro que desea regresar al menú principal?", "Regresar", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION)
         {
             MenuPrincipal mpFrame = new MenuPrincipal();
             mpFrame.runFrame();
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 }
