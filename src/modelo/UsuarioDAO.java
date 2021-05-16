@@ -8,7 +8,6 @@ import static modelo.Conexion.conectar;
 
 public class UsuarioDAO
 {
-    Conexion conectar = new Conexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
