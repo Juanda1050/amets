@@ -1,6 +1,9 @@
-package segunda;
+package vista;
 
-import primera.Credenciales;
+
+import controlador.ControladorRU;
+import modelo.UsuarioDAO;
+import segunda.MenuPrincipal;
 
 import java.awt.*;
 
@@ -9,15 +12,18 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+
 public class RegistroUsuarios {
 
     private JFrame ruFrame;
-    private JTextField ruDireccionTF;
-    private JTextField ruTelefonoTF;
-    private JTextField ruEmailTF;
-    private JTextField ruNombreTF;
-    private JTextField ruApellidoTF;
-    private JTextField ruNacimientoTF;
+    public JTextField ruDireccionTF;
+    public JTextField ruTelefonoTF;
+    public JTextField ruEmailTF;
+    public JTextField ruNombreTF;
+    public JTextField ruApellidoTF;
+    public JTextField ruNacimientoTF;
+    public JButton ruSiguienteBtn;
+    public JButton ruVolverBtn;
 
     /**
      * Launch the application.
@@ -27,6 +33,8 @@ public class RegistroUsuarios {
             public void run() {
                 try {
                     RegistroUsuarios window = new RegistroUsuarios();
+                    UsuarioDAO dao = new UsuarioDAO();
+                    ControladorRU c = new ControladorRU(window, dao);
                     window.ruFrame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -42,10 +50,12 @@ public class RegistroUsuarios {
         initialize();
     }
 
+
     /**
      * Initialize the contents of the frame.
      */
     private void initialize() {
+
         ruFrame = new JFrame();
         ruFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
         ruFrame.setTitle("Amets Travel");
@@ -154,16 +164,11 @@ public class RegistroUsuarios {
         ruFrame.getContentPane().add(ruBottom, BorderLayout.SOUTH);
         ruBottom.setLayout(new BorderLayout(0, 0));
 
-        JButton ruSiguienteBtn = new JButton("Siguiente");
+        ruSiguienteBtn = new JButton("Siguiente");
         ruSiguienteBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         ruBottom.add(ruSiguienteBtn, BorderLayout.EAST);
-        ruSiguienteBtn.addActionListener(e -> {
-            SeleccionarPaquetes spFrame = new SeleccionarPaquetes();
-            spFrame.runFrame();
-            ruFrame.setVisible(false);
-        });
 
-        JButton ruVolverBtn = new JButton("Volver");
+        ruVolverBtn = new JButton("Volver");
         ruVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         ruBottom.add(ruVolverBtn, BorderLayout.WEST);
         ruVolverBtn.addActionListener(e -> {

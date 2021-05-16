@@ -1,20 +1,17 @@
-package quinta;
-
-import java.awt.*;
-
-import javax.swing.*;
-
-import javax.swing.border.EmptyBorder;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+package vista;
 
 import com.toedter.calendar.JDateChooser;
 import tercera.VistaMA;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class GestionarVuelos {
+public class GestionarAerolinea {
 
     private JFrame gVuelosFrame;
     private JTextField textField;
@@ -27,11 +24,12 @@ public class GestionarVuelos {
     /**
      * Launch the application.
      */
+
     public void runFrame(){
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    GestionarVuelos window = new GestionarVuelos();
+                    GestionarAerolinea window = new GestionarAerolinea();
                     window.gVuelosFrame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -43,7 +41,7 @@ public class GestionarVuelos {
     /**
      * Create the application.
      */
-    public GestionarVuelos() {
+    public GestionarAerolinea() {
         initialize();
     }
 
@@ -52,7 +50,7 @@ public class GestionarVuelos {
      */
     private void initialize() {
         gVuelosFrame = new JFrame();
-        gVuelosFrame.setTitle("Gestionar Vuelos");
+        gVuelosFrame.setTitle("Gestionar Aerolineas");
         gVuelosFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
         gVuelosFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\DELL\\OneDrive\\Documentos\\Tercer Semestre\\POO\\agenciaAmets\\resources\\amets.jpg"));
         gVuelosFrame.setBounds(100, 100, 1280, 720);
@@ -75,12 +73,12 @@ public class GestionarVuelos {
         gVuelosFrame.getContentPane().add(gVuelosTop, BorderLayout.NORTH);
         gVuelosTop.setLayout(new BorderLayout(0, 0));
 
-        JLabel lblAadirVuelo = new JLabel("A\u00F1adir Vuelo");
+        JLabel lblAadirVuelo = new JLabel("Agregar Aerolinea");
         lblAadirVuelo.setFont(new Font("Tahoma", Font.BOLD, 18));
         lblAadirVuelo.setHorizontalAlignment(SwingConstants.LEFT);
         gVuelosTop.add(lblAadirVuelo, BorderLayout.WEST);
 
-        JLabel lblNewLabel_1 = new JLabel("Vuelos");
+        JLabel lblNewLabel_1 = new JLabel("Aerolineas");
         lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 18));
         gVuelosTop.add(lblNewLabel_1, BorderLayout.CENTER);
@@ -90,7 +88,7 @@ public class GestionarVuelos {
         gVuelosFrame.getContentPane().add(gVuelosTop_left, BorderLayout.WEST);
         gVuelosTop_left.setLayout(new GridLayout(0, 2, 15, 30));
 
-        JLabel lblNewLabel_2 = new JLabel("Origen");
+        JLabel lblNewLabel_2 = new JLabel("Nombre");
         lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosTop_left.add(lblNewLabel_2);
 
@@ -99,7 +97,7 @@ public class GestionarVuelos {
         textField.setColumns(10);
         gVuelosTop_left.add(textField);
 
-        JLabel lblNewLabel_4 = new JLabel("Destino");
+        JLabel lblNewLabel_4 = new JLabel("Clase");
         lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosTop_left.add(lblNewLabel_4);
 
@@ -107,7 +105,7 @@ public class GestionarVuelos {
         comboBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosTop_left.add(comboBox);
 
-        JLabel lblNewLabel_5 = new JLabel("Aerolinea");
+        JLabel lblNewLabel_5 = new JLabel("Precio");
         lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosTop_left.add(lblNewLabel_5);
 
@@ -115,47 +113,6 @@ public class GestionarVuelos {
         textField_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
         gVuelosTop_left.add(textField_1);
         textField_1.setColumns(10);
-
-        JLabel lblNewLabel_6 = new JLabel("Pasajeros");
-        lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosTop_left.add(lblNewLabel_6);
-
-        textField_4 = new JTextField();
-        textField_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        textField_4.setColumns(10);
-        gVuelosTop_left.add(textField_4);
-
-        JLabel lblNewLabel_7 = new JLabel("Clase");
-        lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosTop_left.add(lblNewLabel_7);
-
-        textField_2 = new JTextField();
-        textField_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        gVuelosTop_left.add(textField_2);
-        textField_2.setColumns(10);
-
-        JLabel lblNewLabel = new JLabel("Fecha de salida");
-        lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosTop_left.add(lblNewLabel);
-
-        JDateChooser dateChooser = new JDateChooser();
-        gVuelosTop_left.add(dateChooser);
-
-        JLabel lblNewLabel_3 = new JLabel("Fecha de llegada");
-        lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosTop_left.add(lblNewLabel_3);
-
-        JDateChooser dateChooser_1 = new JDateChooser();
-        gVuelosTop_left.add(dateChooser_1);
-
-        JLabel lblNewLabel_8 = new JLabel("Precio");
-        lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosTop_left.add(lblNewLabel_8);
-
-        textField_3 = new JTextField();
-        textField_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        gVuelosTop_left.add(textField_3);
-        textField_3.setColumns(10);
 
         JButton gHoteles_añadirButton = new JButton("A\u00F1adir");
         gHoteles_añadirButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -202,7 +159,7 @@ public class GestionarVuelos {
         gVuelos_editarButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gHotelesMid_bottom.add(gVuelos_editarButton);
 
-        JButton gVuelos_eliminarButton = new JButton("Eliminar\r\n");
+        JButton gVuelos_eliminarButton = new JButton("Eliminar");
         gVuelos_eliminarButton.setVerticalAlignment(SwingConstants.TOP);
         gVuelos_eliminarButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gHotelesMid_bottom.add(gVuelos_eliminarButton);
@@ -217,8 +174,8 @@ public class GestionarVuelos {
         btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gHotelesBottom.add(btnNewButton, BorderLayout.EAST);
         btnNewButton.addActionListener(e -> {
-            VistaMA maFrame = new VistaMA();
-            maFrame.runFrame();
+            GestionarVuelos gvFrame = new GestionarVuelos();
+            gvFrame.runFrame();
             gVuelosFrame.setVisible(false);
         });
     }

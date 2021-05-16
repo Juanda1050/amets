@@ -2,6 +2,7 @@ package segunda;
 
 import primera.Credenciales;
 import tercera.VistaCC;
+import vista.RegistroUsuarios;
 
 import java.awt.*;
 

@@ -16,7 +16,7 @@ public class Credenciales {
     private JTextField VcContraTF;
 
     /**
-     * Launch the application.
+     * Launch the application.|
      */
     public static void main(String[] args) {
         Credenciales cFrame = new Credenciales();
@@ -48,9 +48,10 @@ public class Credenciales {
      */
     private void initialize() {
         VcFrame = new JFrame();
-        VcFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
         VcFrame.setBounds(100, 100, 500, 300);
         VcFrame.setTitle("Amets Travels");
+        VcFrame.setLocationRelativeTo(null);
+        VcFrame.setResizable(false);
         VcFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 int result = JOptionPane.showConfirmDialog(VcFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
