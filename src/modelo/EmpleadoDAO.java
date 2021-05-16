@@ -57,7 +57,7 @@ public class EmpleadoDAO {
     }
 
     public int actualizar(Empleado empleado){
-        String sql = "UPDATE empleado SET agentName = ? agentLastName = ? password = ? workShift = ? jobTitle = ?";
+        String sql = "UPDATE empleado SET agentName = ?, agentLastName = ?, password = ?, workShift = ?, jobTitle = ? WHERE ID = ?";
         try{
             con = conectar.conectar();
             ps = con.prepareStatement(sql);
