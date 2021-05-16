@@ -11,7 +11,7 @@ public class EmpleadoDAO {
     PreparedStatement ps;
     ResultSet rs;
     //listar los registros de la DB en la tabla
-    public List listar(){
+    public List<Empleado> listar(){
         List<Empleado> datos = new ArrayList<>();
         String sql = "SELECT * FROM empleado";
         try{
@@ -57,7 +57,7 @@ public class EmpleadoDAO {
     }
 
     public int actualizar(Empleado empleado){
-        String sql = "UPDATE empleado SET agentName = ? agentLastName = ? password = ? workShift = ? jobTitle = ?";
+        String sql = "UPDATE empleado SET agentName = ?, agentLastName = ?, password = ?, workShift = ?, jobTitle = ? WHERE agentID = ?";
         try{
             con = conectar.conectar();
             ps = con.prepareStatement(sql);

@@ -20,7 +20,7 @@ public class GestionarVuelos {
     private JFrame gVuelosFrame;
     public JTextField gVuelos_idTF, gVuelos_origenTF, gVuelos_aerolineaTF, gVuelos_claseTF, gVuelos_precioTF;
     public JButton gVuelos_addB, gVuelos_saveB, gVuelos_editB, gVuelos_updateB, gVuelos_deleteB;
-    private JTable gVuelosTable;
+    public JTable gVuelosTable;
 
     public void runFrame(){
         EventQueue.invokeLater(new Runnable() {

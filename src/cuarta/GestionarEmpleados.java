@@ -59,10 +59,7 @@ public class GestionarEmpleados {
             public void run() {
                 try {
                     GestionarEmpleados window = new GestionarEmpleados();
-
-
                     ControladorEmpleado controladorEmpleado = new ControladorEmpleado(window);
-
                     window.gEmpleadoFrame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -76,11 +73,7 @@ public class GestionarEmpleados {
     }
 
     private void initialize() {
-
-        gEmpleadoFrame = new JFrame("Amets Travels");
-
         gEmpleadoFrame = new JFrame("Gestionar Empleados");
-
         gEmpleadoFrame.setBounds(100, 100, 1280, 720);
         gEmpleadoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gEmpleadoFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
