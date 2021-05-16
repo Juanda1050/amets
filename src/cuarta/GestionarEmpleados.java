@@ -214,14 +214,14 @@ public class GestionarEmpleados {
         gEmpleado_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gEmpleadoMid_bottom.add(gEmpleado_deleteB);
 
-        JPanel panel = new JPanel();
-        panel.setBorder(new EmptyBorder(20, 20, 20, 20));
-        gEmpleadoFrame.getContentPane().add(panel, BorderLayout.SOUTH);
-        panel.setLayout(new BorderLayout(0, 0));
+        JPanel gPromoBottom = new JPanel();
+        gPromoBottom.setBorder(new EmptyBorder(20, 20, 20, 20));
+        gEmpleadoFrame.getContentPane().add(gPromoBottom, BorderLayout.SOUTH);
+        gPromoBottom.setLayout(new BorderLayout(0, 0));
 
         JButton gEmpleado_backB = new JButton("VOLVER");
         gEmpleado_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        panel.add(gEmpleado_backB, BorderLayout.EAST);
+        gPromoBottom.add(gEmpleado_backB, BorderLayout.EAST);
         gEmpleado_backB.addActionListener(e -> {
             VistaMA maFrame = new VistaMA();
             maFrame.runFrame();
