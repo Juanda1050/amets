@@ -11,35 +11,19 @@ public class Conexion
     private static final String USUARIO = "root";
     private static final String CLAVE = "admin";
 
-<<<<<<< HEAD:src/modelo/Conexion.java
-    public static Connection conectar()
-=======
-    static
->>>>>>> Tercera:src/Conexion.java
-    {
-        try
-        {
-            Class.forName(CONTROLADOR);
-<<<<<<< HEAD:src/modelo/Conexion.java
-            conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-            System.out.println("Modelo.Conexion OK");
-=======
->>>>>>> Tercera:src/Conexion.java
-        }
-        catch(ClassNotFoundException e)
-        {
-            System.out.println("Error al cargar el controlador");
-            e.printStackTrace();
-        }
-    }
-
     public static Connection conectar()
     {
         Connection conexion = null;
         try
         {
+            Class.forName(CONTROLADOR);
             conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-            System.out.println("Conexion OK");
+            System.out.println("Modelo.Conexion OK");
+        }
+        catch(ClassNotFoundException e)
+        {
+            System.out.println("Error al cargar el controlador");
+            e.printStackTrace();
         }
         catch(SQLException e)
         {
@@ -50,4 +34,9 @@ public class Conexion
         return conexion;
     }
 
+    public static void main(String[] args)
+    {
+        Conexion conecxion = new Conexion();
+        conecxion.conectar();
+    }
 }
