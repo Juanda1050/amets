@@ -19,7 +19,6 @@ public class PaquetesDAO
     public ArrayList<Paquetes> listar()
     {
         ArrayList<Paquetes> listaPaquetes = new ArrayList();
-        Destinos destinos;
         String sql = "SELECT * FROM paquetes";
         try{
             con = conectar();
@@ -31,7 +30,7 @@ public class PaquetesDAO
                 p.setName(rs.getString(2));
                 p.setDescription(rs.getString(3));
                 p.setPassengers(rs.getInt(4));
-                p.setPrice(rs.getInt(5));
+                p.setPrice(rs.getFloat(5));
                 listaPaquetes.add(p);
             }
         }catch (Exception e){
@@ -49,7 +48,7 @@ public class PaquetesDAO
             ps.setString(1, p.getName());
             ps.setString(2, p.getDescription());
             ps.setInt(3, p.getPassengers());
-            ps.setInt(4, p.getPrice());
+            ps.setFloat(4, p.getPrice());
             ps.executeUpdate();
         }catch (SQLException e){
             System.out.println("Error");

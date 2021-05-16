@@ -20,12 +20,28 @@ public class PaquetesController implements ActionListener
     {
         this.vista = v;
         this.dao = dao;
+        areTextFieldEditable(false);
         vista.gPaquete_addB.addActionListener(this);
+        vista.gPaquete_saveB.addActionListener(this);
         listar(vista.gPaqueteTable);
     }
 
-    public void actionPerformed(ActionEvent e) {
-
+    public void actionPerformed(ActionEvent e)
+    {
+        if(e.getSource()==vista.gPaquete_addB)
+        {
+            areTextFieldEditable(true);
+            vista.gPaquete_addB.setEnabled(false);
+            vista.gPaquete_editB.setEnabled(false);
+            vista.gPaquete_deleteB.setEnabled(false);
+        }
+        if(e.getSource()==vista.gPaquete_saveB)
+        {
+            agregar();
+            cleanForm();
+            limpiar();
+            listar(vista.gPaqueteTable);
+        }
     }
 
 
@@ -48,5 +64,43 @@ public class PaquetesController implements ActionListener
 
     public void agregar()
     {
+        String name = vista.gPaquete_nombreTF.getText();
+        String description = vista.gPaquete_descripcionTF.getText();
+        int passengers = Integer.parseInt(vista.gPaquete_genteTF.getText());
+        float price = Float.parseFloat(vista.gPaquete_precioTF.getText());
+
+        p.setName(name);
+        p.setDescription(description);
+        p.setPassengers(passengers);
+        p.setPrice(price);
+        int r = dao.agregar(p);
+        if(r == 1){
+            JOptionPane.showMessageDialog(null, "Paquete agregado exitosamente");
+        }else{
+            JOptionPane.showMessageDialog(null, "Paquete fallido");
+        }
+    }
+
+    private void limpiar(){
+        for (int i = 0; i < vista.gPaqueteTable.getRowCount(); i++){
+            modelo.removeRow(i);
+            i = i - 1;
+        }
+    }
+
+    private void areTextFieldEditable(boolean flag)
+    {
+        vista.gPaquete_nombreTF.setEditable(flag);
+        vista.gPaquete_descripcionTF.setEditable(flag);
+        vista.gPaquete_genteTF.setEditable(flag);
+        vista.gPaquete_precioTF.setEditable(flag);
+    }
+
+    private void cleanForm(){
+        vista.gPaquete_nombreTF.setText("");
+        vista.gPaquete_descripcionTF.setText("");
+        vista.gPaquete_genteTF.setText("");
+        vista.gPaquete_precioTF.setText("");
     }
 }
+

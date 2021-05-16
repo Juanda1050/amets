@@ -6,13 +6,13 @@ public class Paquetes
     String name;
     String description;
     int passengers;
-    int price;
+    float price;
 
     public Paquetes()
     {
     }
 
-    public Paquetes(int ID, String name, String description, int passengers, int price) {
+    public Paquetes(int ID, String name, String description, int passengers, float price) {
         this.ID = ID;
         this.name = name;
         this.description = description;
@@ -52,11 +52,11 @@ public class Paquetes
         this.passengers = passengers;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 }
