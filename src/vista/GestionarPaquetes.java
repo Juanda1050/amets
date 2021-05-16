@@ -1,4 +1,4 @@
-package cuarta;
+package vista;
 
 import tercera.VistaMA;
 

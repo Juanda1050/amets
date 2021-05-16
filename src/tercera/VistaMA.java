@@ -6,7 +6,7 @@ import quinta.GestionarVentas;
 import vista.GestionarVuelos;
 import cuarta.GestionarDestinos;
 import cuarta.GestionarEmpleados;
-import cuarta.GestionarPaquetes;
+import vista.GestionarPaquetes;
 import cuarta.GestionarPromociones;
 import primera.Credenciales;
 
