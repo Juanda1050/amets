@@ -57,4 +57,48 @@ public class PaquetesDAO
 
         return 1;
     }
+
+    public int Actualizar(Paquetes p)
+    {
+        String sql = "UPDATE paquetes SET packName=?, packDescription=?, passengers=?, price=? WHERE packID=?";
+        int r=0;
+        try
+        {
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, p.getName());
+            ps.setString(2, p.getDescription());
+            ps.setInt(3, p.getPassengers());
+            ps.setFloat(4, p.getPrice());
+            ps.setInt(5, p.getID());
+            r = ps.executeUpdate();
+            if(r==1)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        catch (Exception e)
+        {
+        }
+        return r;
+    }
+
+    public void eliminar(int id)
+    {
+        String sql = "DELETE FROM paquetes WHERE packID="+id;
+        try
+        {
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
 }
