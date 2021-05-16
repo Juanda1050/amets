@@ -1,5 +1,8 @@
 package vista;
 
+import controlador.AerolineaController;
+import modelo.AerolineaDAO;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -26,6 +29,8 @@ public class GestionarAerolinea {
             public void run() {
                 try {
                     GestionarAerolinea window = new GestionarAerolinea();
+                    AerolineaDAO dao = new AerolineaDAO();
+                    AerolineaController controller = new AerolineaController(window, dao);
                     window.gAerolineaFrame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -138,6 +143,7 @@ public class GestionarAerolinea {
         tModel.addColumn("ID Aerolinea");
         tModel.addColumn("Nombre");
         tModel.addColumn("Clase");
+        tModel.addColumn("Precio");
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         gAerolineaTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
