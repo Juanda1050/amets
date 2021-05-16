@@ -1,4 +1,4 @@
-package segunda;
+package modelo;
 
 public class Usuario
 {

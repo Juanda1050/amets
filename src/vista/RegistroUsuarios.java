@@ -1,5 +1,9 @@
-package segunda;
+package vista;
 
+
+import controlador.ControladorRU;
+import modelo.UsuarioDAO;
+import segunda.MenuPrincipal;
 
 import java.awt.*;
 
@@ -174,8 +178,4 @@ public class RegistroUsuarios {
         });
     }
 
-    public void Terminar()
-    {
-        ruFrame.setVisible(false);
-    }
 }

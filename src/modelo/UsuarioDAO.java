@@ -1,12 +1,10 @@
-package segunda;
-
-import DB.Conexion;
+package modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import static DB.Conexion.conectar;
+import static modelo.Conexion.conectar;
 
 public class UsuarioDAO
 {

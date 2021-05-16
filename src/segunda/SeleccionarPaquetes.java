@@ -1,5 +1,7 @@
 package segunda;
 
+import vista.RegistroUsuarios;
+
 import java.awt.*;
 
 import javax.swing.*;

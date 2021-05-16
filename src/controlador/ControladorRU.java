@@ -1,6 +1,10 @@
-package segunda;
+package controlador;
 
-import javax.swing.*;
+import modelo.Usuario;
+import modelo.UsuarioDAO;
+import vista.RegistroUsuarios;
+import segunda.SeleccionarPaquetes;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

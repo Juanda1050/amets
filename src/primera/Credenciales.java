@@ -1,6 +1,5 @@
 package primera;
 
-import DB.Conexion;
 import segunda.MenuPrincipal;
 import tercera.VistaMA;
 
