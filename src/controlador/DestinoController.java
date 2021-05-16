@@ -113,7 +113,7 @@ public class DestinoController implements ActionListener {
         if(row == 1){
             JOptionPane.showMessageDialog(null, "Seleccione un Destino");
         }else{
-            int id = Integer.parseInt((String) vistaD.gDestinoTable.getValueAt(row, 0).toString());
+            int id = Integer.parseInt(vistaD.gDestinoTable.getValueAt(row, 0).toString());
             dao.delete(id);
             JOptionPane.showMessageDialog(null, "Destino eliminado exitosamente");
         }

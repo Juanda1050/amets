@@ -15,8 +15,7 @@ import java.awt.event.WindowEvent;
 public class GestionarAerolinea {
 
     private JFrame gAerolineaFrame;
-    public JTextField gAerolinea_nombreTF, gAerolinea_precioTF;
-    public JComboBox gAerolinea_claseCB;
+    public JTextField gAerolinea_idTF, gAerolinea_nombreTF, gAerolinea_precioTF, gAerolinea_claseTF;
     public JButton gAerolinea_addB, gAerolinea_saveB, gAerolinea_editB, gAerolinea_deleteB;
     public JTable gAerolineaTable;
 
@@ -74,20 +73,30 @@ public class GestionarAerolinea {
         gAerolineaFrame.getContentPane().add(gAerolineaTop, BorderLayout.NORTH);
         gAerolineaTop.setLayout(new BorderLayout(0, 0));
 
-        JLabel lblAadirVuelo = new JLabel("Agregar Aerolinea");
-        lblAadirVuelo.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblAadirVuelo.setHorizontalAlignment(SwingConstants.LEFT);
-        gAerolineaTop.add(lblAadirVuelo, BorderLayout.WEST);
+        JLabel gAerolinea_addL = new JLabel("Nueva Aerolinea");
+        gAerolinea_addL.setFont(new Font("Tahoma", Font.BOLD, 18));
+        gAerolinea_addL.setHorizontalAlignment(SwingConstants.LEFT);
+        gAerolineaTop.add(gAerolinea_addL, BorderLayout.WEST);
 
-        JLabel lblNewLabel_1 = new JLabel("Aerolineas");
-        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 18));
-        gAerolineaTop.add(lblNewLabel_1, BorderLayout.CENTER);
+        JLabel gAerolineaL = new JLabel("Aerolineas");
+        gAerolineaL.setHorizontalAlignment(SwingConstants.CENTER);
+        gAerolineaL.setFont(new Font("Tahoma", Font.BOLD, 18));
+        gAerolineaTop.add(gAerolineaL, BorderLayout.CENTER);
 
         JPanel gAerolineaLeft = new JPanel();
         gAerolineaLeft.setBorder(new EmptyBorder(20, 20, 20, 20));
         gAerolineaFrame.getContentPane().add(gAerolineaLeft, BorderLayout.WEST);
         gAerolineaLeft.setLayout(new GridLayout(0, 2, 15, 30));
+
+        JLabel gAerolinea_idL = new JLabel("Nombre");
+        gAerolinea_idL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolineaLeft.add(gAerolinea_idL);
+
+        gAerolinea_idTF = new JTextField();
+        gAerolinea_idTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        gAerolinea_idTF.setColumns(10);
+        gAerolinea_idTF.setEditable(false);
+        gAerolineaLeft.add(gAerolinea_idTF);
 
         JLabel gAerolinea_nombreL = new JLabel("Nombre");
         gAerolinea_nombreL.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -102,9 +111,9 @@ public class GestionarAerolinea {
         gAerolinea_claseL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gAerolineaLeft.add(gAerolinea_claseL);
 
-        gAerolinea_claseCB = new JComboBox();
-        gAerolinea_claseCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gAerolineaLeft.add(gAerolinea_claseCB);
+        gAerolinea_claseTF = new JTextField();
+        gAerolinea_claseTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolineaLeft.add(gAerolinea_claseTF);
 
         JLabel gAerolinea_precioL = new JLabel("Precio");
         gAerolinea_precioL.setFont(new Font("Tahoma", Font.PLAIN, 16));
