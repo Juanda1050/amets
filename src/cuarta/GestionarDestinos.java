@@ -7,6 +7,8 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -157,11 +159,10 @@ public class GestionarDestinos{
         gestDest_table = new JTable();
         gestDest_table.setModel(new DefaultTableModel(
                 new Object[][] {
-                        {null, null, null},
-                        {null, null, null},
+
                 },
                 new String[] {
-                        "Ciudad", "Estado", "Pa\u00EDs"
+                        "ID de Destino", "Ciudad", "Estado", "Pa\u00EDs"
                 }
         ));
         gestDest_ScrollPane.setViewportView(gestDest_table);
@@ -183,6 +184,7 @@ public class GestionarDestinos{
         gbc_gestDest_limpiarButton.gridx = 2;
         gbc_gestDest_limpiarButton.gridy = 6;
         gestDest_centerPanel.add(gestDest_limpiarButton, gbc_gestDest_limpiarButton);
+
 
         JButton gestDest_editarButton = new JButton("Editar");
         gestDest_editarButton.setFont(new Font("Tahoma", Font.PLAIN, 16));

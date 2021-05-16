@@ -203,11 +203,10 @@ public class GestionarPromociones{
         gestPromo_table = new JTable();
         gestPromo_table.setModel(new DefaultTableModel(
                 new Object[][] {
-                        {null, null, null, null, null, null},
-                        {null, null, null, null, null, null},
+
                 },
                 new String[] {
-                        "Nombre", "Hotel", "Vuelo", "Paquete", "Descuento", "Descripci\u00F3n"
+                        "ID promocion","Nombre", "Hotel", "Vuelo", "Paquete", "Descuento", "Descripci\u00F3n"
                 }
         ));
         gestPromo_ScrollPane.setViewportView(gestPromo_table);

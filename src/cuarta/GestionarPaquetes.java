@@ -175,11 +175,10 @@ public class GestionarPaquetes{
         gestPaq_table = new JTable();
         gestPaq_table.setModel(new DefaultTableModel(
                 new Object[][] {
-                        {null, null, null},
-                        {null, null, null},
+
                 },
                 new String[] {
-                        "Nombre", "Personas", "Precio"
+                        "ID de Paquete", "Nombre","Descripcion", "Personas", "Precio"
                 }
         ));
         gestPaq_ScrollPane.setViewportView(gestPaq_table);
