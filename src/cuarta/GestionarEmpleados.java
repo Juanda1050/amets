@@ -1,5 +1,6 @@
 package cuarta;
 
+import controlador.ControladorEmpleado;
 import tercera.VistaMA;
 
 import java.awt.EventQueue;
@@ -7,7 +8,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+
 import java.awt.GridBagLayout;
+
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -16,6 +19,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import java.awt.Font;
 import java.awt.Frame;
 
@@ -23,13 +27,18 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+
 import javax.swing.ScrollPaneConstants;
+
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.JButton;
+
 import java.awt.Panel;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -41,7 +50,7 @@ public class GestionarEmpleados {
 
     private JFrame gEmpleadoFrame;
     public JTextField gEmpleado_idTF, gEmpleado_nombreTF, gEmpleado_apellidoTF, gEmpleado_contraTF;
-    public JComboBox gEmpleado_turnoCB, gEmpleado_puestoTF;
+    public JComboBox gEmpleado_turnoCB, gEmpleado_puestoCB;
     public JButton gEmpleado_addB , gEmpleado_saveB, gEmpleado_editB, gEmpleado_deleteB;
     public JTable gEmpleadoTable;
 
@@ -50,6 +59,10 @@ public class GestionarEmpleados {
             public void run() {
                 try {
                     GestionarEmpleados window = new GestionarEmpleados();
+
+
+                    ControladorEmpleado controladorEmpleado = new ControladorEmpleado(window);
+
                     window.gEmpleadoFrame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -63,7 +76,11 @@ public class GestionarEmpleados {
     }
 
     private void initialize() {
+
         gEmpleadoFrame = new JFrame("Amets Travels");
+
+        gEmpleadoFrame = new JFrame("Gestionar Empleados");
+
         gEmpleadoFrame.setBounds(100, 100, 1280, 720);
         gEmpleadoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gEmpleadoFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -149,10 +166,10 @@ public class GestionarEmpleados {
         gEmpleado_puestoL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gEmpleadoLeft.add(gEmpleado_puestoL);
 
-        gEmpleado_puestoTF = new JComboBox();
-        gEmpleado_puestoTF.setModel(new DefaultComboBoxModel(new String[] {"Seleccione puesto de trabajo", "1", "2"}));
-        gEmpleado_puestoTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gEmpleadoLeft.add(gEmpleado_puestoTF);
+        gEmpleado_puestoCB = new JComboBox();
+        gEmpleado_puestoCB.setModel(new DefaultComboBoxModel(new String[] {"Seleccione puesto de trabajo", "1", "2"}));
+        gEmpleado_puestoCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gEmpleadoLeft.add(gEmpleado_puestoCB);
 
         gEmpleado_addB = new JButton("Agregar");
         gEmpleado_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -228,4 +245,7 @@ public class GestionarEmpleados {
             gEmpleadoFrame.setVisible(false);
         });
     }
+
 }
+
+
