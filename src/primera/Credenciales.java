@@ -22,8 +22,6 @@ public class Credenciales {
     public static void main(String[] args) {
         Credenciales cFrame = new Credenciales();
         cFrame.runFrame();
-        Conexion conecxion = new Conexion();
-        conecxion.conectar();
     }
 
     public void runFrame(){

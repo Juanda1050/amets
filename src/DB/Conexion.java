@@ -11,19 +11,26 @@ public class Conexion
     private static final String USUARIO = "root";
     private static final String CLAVE = "admin";
 
-    public Connection conectar()
+    static
     {
-        Connection conexion = null;
         try
         {
             Class.forName(CONTROLADOR);
-            conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-            System.out.println("Conexion OK");
         }
         catch(ClassNotFoundException e)
         {
             System.out.println("Error al cargar el controlador");
             e.printStackTrace();
+        }
+    }
+
+    public static Connection conectar()
+    {
+        Connection conexion = null;
+        try
+        {
+            conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
+            System.out.println("Conexion OK");
         }
         catch(SQLException e)
         {
