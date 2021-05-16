@@ -1,13 +1,20 @@
 package segunda;
 
+import Controlador.SelecPaqController;
+import modelo.Paquetes;
+import modelo.SelecPaqDAO;
 import primera.Retorno;
+import tercera.Ticket;
 
 import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 public class SeleccionarPaquetes {
 
@@ -16,6 +23,7 @@ public class SeleccionarPaquetes {
     private JTextField spDestinoTF;
     private JTextField spPlazasTF;
     private JTextField spPrecioTF;
+    private JTextArea spDescripcionTA;
 
     /**
      * Launch the application.
@@ -44,6 +52,9 @@ public class SeleccionarPaquetes {
      * Initialize the contents of the frame.
      */
     private void initialize() {
+
+        SelecPaqDAO spDAO = new SelecPaqDAO();
+
         spFrame = new JFrame();
         spFrame.setTitle("Amets Travels");
         spFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -82,16 +93,32 @@ public class SeleccionarPaquetes {
         spMid.add(spMidTop, BorderLayout.NORTH);
         spMidTop.setLayout(new GridLayout(0, 4, 25, 0));
 
-        JComboBox spDestinoCB = new JComboBox();
+        JComboBox spPaqueteCB = new JComboBox();
+        spPaqueteCB.setEnabled(false);
+
+        JComboBox<String> spDestinoCB = new JComboBox<String>(spDAO.listarDestinos().toArray(new String[0]));
         spDestinoCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        spDestinoCB.setModel(new DefaultComboBoxModel(new String[] {"Destino"}));
         spDestinoCB.setToolTipText("");
         spMidTop.add(spDestinoCB);
+        spDestinoCB.addActionListener (e -> {
+            spPaqueteCB.removeAllItems();
+            spDAO.listarPaquetes(spDestinoCB.getSelectedIndex()+1);
+            for(int i=0;i<spDAO.getListaPaquete().size();i++){
+                spPaqueteCB.addItem(spDAO.getListaPaquete().get(i));
+            }
+            spPaqueteCB.setEnabled(true);
+        });
 
-        JComboBox spPaqueteCB = new JComboBox();
         spPaqueteCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        spPaqueteCB.setModel(new DefaultComboBoxModel(new String[] {"Paquete"}));
         spMidTop.add(spPaqueteCB);
+        spPaqueteCB.addActionListener (e -> {
+            int paqueteCBindex = spPaqueteCB.getSelectedIndex() + 1;
+            spNombreTF.setText(spDAO.getData(paqueteCBindex).get(0));
+            spDescripcionTA.setText(spDAO.getData(paqueteCBindex).get(1));
+            spPlazasTF.setText(spDAO.getData(paqueteCBindex).get(2));
+            spPrecioTF.setText(spDAO.getData(paqueteCBindex).get(3));
+            spDestinoTF.setText(spDAO.getData(paqueteCBindex).get(4));
+        });
 
         JPanel spMidCenter = new JPanel();
         spMidCenter.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -104,6 +131,7 @@ public class SeleccionarPaquetes {
         spMidCenter.add(spNombreLbl);
 
         spNombreTF = new JTextField();
+        spNombreTF.setEditable(false);
         spNombreTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
         spNombreTF.setHorizontalAlignment(SwingConstants.LEFT);
         spMidCenter.add(spNombreTF);
@@ -115,6 +143,7 @@ public class SeleccionarPaquetes {
         spMidCenter.add(spDestinoLbl);
 
         spDestinoTF = new JTextField();
+        spDestinoTF.setEditable(false);
         spDestinoTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
         spDestinoTF.setHorizontalAlignment(SwingConstants.LEFT);
         spMidCenter.add(spDestinoTF);
@@ -125,7 +154,8 @@ public class SeleccionarPaquetes {
         spDescripcionLbl.setHorizontalAlignment(SwingConstants.CENTER);
         spMidCenter.add(spDescripcionLbl);
 
-        JTextArea spDescripcionTA = new JTextArea();
+        spDescripcionTA = new JTextArea();
+        spDescripcionTA.setEditable(false);
         spDescripcionTA.setFont(new Font("Tahoma", Font.PLAIN, 16));
         spMidCenter.add(spDescripcionTA);
 
@@ -135,6 +165,7 @@ public class SeleccionarPaquetes {
         spMidCenter.add(spPlazasLbl);
 
         spPlazasTF = new JTextField();
+        spPlazasTF.setEditable(false);
         spPlazasTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
         spPlazasTF.setHorizontalAlignment(SwingConstants.LEFT);
         spMidCenter.add(spPlazasTF);
@@ -146,6 +177,7 @@ public class SeleccionarPaquetes {
         spMidCenter.add(spPrecioLbl);
 
         spPrecioTF = new JTextField();
+        spPrecioTF.setEditable(false);
         spPrecioTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         spPrecioTF.setHorizontalAlignment(SwingConstants.LEFT);
         spMidCenter.add(spPrecioTF);

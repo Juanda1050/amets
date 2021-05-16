@@ -2,6 +2,7 @@ package tercera;
 
 import primera.Retorno;
 import segunda.RegistroUsuarios;
+import segunda.SeleccionarPaquetes;
 
 import java.awt.*;
 
@@ -46,6 +47,10 @@ public class Ticket {
      * Initialize the contents of the frame.
      */
     private void initialize() {
+
+        VistaPP pp = new VistaPP();
+        SeleccionarPaquetes sp = new SeleccionarPaquetes();
+
         frame = new JFrame();
         frame.setResizable(false);
         frame.setBounds(100, 100, 400, 500);
@@ -92,15 +97,15 @@ public class Ticket {
         mid.setLayout(new GridLayout(3, 1, 0, 0));
 
         JTextArea txtrCompraRealizada = new JTextArea();
-        txtrCompraRealizada.setText("Compra realizada\r\nTipo de Pago:");
+        txtrCompraRealizada.setText("Compra Realizada\nTipo de pago: ");
         mid.add(txtrCompraRealizada);
 
         JTextArea txtrNumDeTarjeta = new JTextArea();
-        txtrNumDeTarjeta.setText("Num. de Tarjeta: \r\n");
+        txtrNumDeTarjeta.setText("Num. de Tarjeta: ");
         mid.add(txtrNumDeTarjeta);
 
         JTextArea txtrAsfdas = new JTextArea();
-        txtrAsfdas.setText("Descripci\u00F3n:\r\n");
+        txtrAsfdas.setText("Descripcion: ");
         mid.add(txtrAsfdas);
 
         JPanel bottompnt = new JPanel();

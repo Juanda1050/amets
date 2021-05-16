@@ -1,7 +1,7 @@
 package tercera;
 
 import primera.Retorno;
-import segunda.MenuPrincipal;
+import segunda.SeleccionarPaquetes;
 
 import java.awt.*;
 
@@ -44,7 +44,7 @@ public class VistaPP {
     /**
      * Initialize the contents of the frame.
      */
-    private void initialize() {
+    public void initialize() {
         frmAmetsTravel = new JFrame();
         frmAmetsTravel.setTitle("Amets Travels");
         frmAmetsTravel.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -96,7 +96,7 @@ public class VistaPP {
 
         JComboBox comboBox = new JComboBox();
         comboBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        comboBox.setModel(new DefaultComboBoxModel(new String[] {"Tipo de Pago"}));
+        comboBox.setModel(new DefaultComboBoxModel(new String[] {"Tipo de Pago", "Tarjeta", "Efectivo"}));
         MidTop.add(comboBox);
 
         JLabel lblNewLabel_1 = new JLabel("");

@@ -1,6 +1,6 @@
 package primera;
 
-import Controlador.Conexion;
+import modelo.Conexion;
 import segunda.MenuPrincipal;
 import tercera.VistaMA;
 
