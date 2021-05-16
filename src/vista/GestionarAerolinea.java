@@ -159,7 +159,7 @@ public class GestionarAerolinea {
         gVuelos_editarButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gHotelesMid_bottom.add(gVuelos_editarButton);
 
-        JButton gVuelos_eliminarButton = new JButton("Eliminar\r\n");
+        JButton gVuelos_eliminarButton = new JButton("Eliminar");
         gVuelos_eliminarButton.setVerticalAlignment(SwingConstants.TOP);
         gVuelos_eliminarButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gHotelesMid_bottom.add(gVuelos_eliminarButton);
