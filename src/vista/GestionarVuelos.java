@@ -9,6 +9,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
 
+import controlador.VuelosController;
+import modelo.Vuelos;
+import modelo.VuelosDAO;
 import tercera.VistaMA;
 
 import javax.swing.table.DefaultTableCellRenderer;
@@ -23,14 +26,14 @@ public class GestionarVuelos {
     public JTable gVuelosTable;
 
     public void runFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    GestionarVuelos window = new GestionarVuelos();
-                    window.gVuelosFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                GestionarVuelos window = new GestionarVuelos();
+                VuelosDAO dao = new VuelosDAO();
+                VuelosController controller = new VuelosController(window, dao);
+                window.gVuelosFrame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -40,6 +43,7 @@ public class GestionarVuelos {
     }
 
     private void initialize() {
+        VuelosDAO gvDAO = new VuelosDAO();
         gVuelosFrame = new JFrame();
         gVuelosFrame.setTitle("Gestionar Vuelos");
         gVuelosFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -102,18 +106,19 @@ public class GestionarVuelos {
         gVuelos_destinoL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosLeft.add(gVuelos_destinoL);
 
-        JComboBox gVuelos_destinoCB = new JComboBox();
+        JComboBox<String> gVuelos_destinoCB = new JComboBox<>(gvDAO.listarDestinos().toArray(new String[0]));
         gVuelos_destinoCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gVuelos_destinoCB.setToolTipText("");
         gVuelosLeft.add(gVuelos_destinoCB);
 
         JLabel gVuelos_aerolineaL = new JLabel("Aerolinea");
         gVuelos_aerolineaL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosLeft.add(gVuelos_aerolineaL);
 
-        gVuelos_aerolineaTF = new JTextField();
-        gVuelos_aerolineaTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosLeft.add(gVuelos_aerolineaTF);
-        gVuelos_aerolineaTF.setColumns(10);
+        JComboBox<String> gVuelos_aerolineaCB = new JComboBox<>(gvDAO.listarAerolinea().toArray(new String[0]));
+        gVuelos_aerolineaCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gVuelos_aerolineaCB.setToolTipText("");
+        gVuelosLeft.add(gVuelos_aerolineaCB);
 
         JLabel gVuelos_claseL = new JLabel("Clase");
         gVuelos_claseL.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -183,10 +188,9 @@ public class GestionarVuelos {
         tModel.addColumn("Origen");
         tModel.addColumn("Destino");
         tModel.addColumn("Aerolinea");
-        tModel.addColumn("Clase");
+        tModel.addColumn("Pasajeros");
         tModel.addColumn("Salida");
         tModel.addColumn("Llegada");
-        tModel.addColumn("Precio");
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         gVuelosTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );

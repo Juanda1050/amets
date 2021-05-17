@@ -3,8 +3,8 @@ package modelo;
 public class Vuelos {
     private int flightID;
     private String origin;
-    private int destinationID;
-    private int airlineID;
+    private String destinationName;
+    private String airlineName;
     private int passengers;
     private String departure;
     private String landing;
@@ -28,20 +28,20 @@ public class Vuelos {
         this.origin = origin;
     }
 
-    public int getDestinationID() {
-        return destinationID;
+    public String getDestinationName() {
+        return destinationName;
     }
 
-    public void setDestinationID(int destinationID) {
-        this.destinationID = destinationID;
+    public void setDestinationName(String destinationID) {
+        this.destinationName = destinationID;
     }
 
-    public int getAirlineID() {
-        return airlineID;
+    public String getAirlineName() {
+        return airlineName;
     }
 
-    public void setAirlineID(int airlineID) {
-        this.airlineID = airlineID;
+    public void setAirlineName(String airlineName) {
+        this.airlineName = airlineName;
     }
 
     public int getPassengers() {
