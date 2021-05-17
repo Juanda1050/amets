@@ -157,7 +157,6 @@ public class ControladorEmpleado implements ActionListener {
                 cleanForm();
                 boolean[] arr = {true, false, true, true};
                 estadosBotones(arr);
-
         }
     }
 
@@ -195,7 +194,6 @@ public class ControladorEmpleado implements ActionListener {
                 limpiar();
                 cleanForm();
                 listar(vista.gEmpleadoTable);
-
         }
     }
 
@@ -264,7 +262,6 @@ public class ControladorEmpleado implements ActionListener {
         vista.gEmpleado_nombreTF.setEditable(flag);
         vista.gEmpleado_apellidoTF.setEditable(flag);
         vista.gEmpleado_contraTF.setEditable(flag);
-
     }
 
     //Limpiar los TextField
@@ -286,34 +283,4 @@ public class ControladorEmpleado implements ActionListener {
         vista.gEmpleado_deleteB.setEnabled(a[3]);
     }
 
-    //Validar si pasajeros es un numero
-    private boolean validacionI(String cadena)
-    {
-        int num;
-        try
-        {
-            num = Integer.parseInt(cadena);
-
-            return true;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
-
-    //Validar si el precio es un numero
-    private boolean validacionF(String cadena)
-    {
-        float num;
-        try
-        {
-            num = Float.parseFloat(cadena);
-            return true;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
 }
