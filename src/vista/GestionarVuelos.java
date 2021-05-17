@@ -21,8 +21,8 @@ import javax.swing.table.JTableHeader;
 public class GestionarVuelos {
 
     private JFrame gVuelosFrame;
-    public JTextField gVuelos_idTF, gVuelos_origenTF, gVuelos_aerolineaTF, gVuelos_claseTF, gVuelos_precioTF;
-    public JButton gVuelos_addB, gVuelos_saveB, gVuelos_editB, gVuelos_updateB, gVuelos_deleteB;
+    public JTextField gVuelos_idTF, gVuelos_origenTF, gVuelos_claseTF, gVuelos_precioTF;
+    public JButton gVuelos_addB, gVuelos_saveB, gVuelos_editB, gVuelos_deleteB;
     public JTable gVuelosTable;
 
     public void runFrame(){
@@ -214,11 +214,6 @@ public class GestionarVuelos {
         gVuelos_editB.setVerticalAlignment(SwingConstants.TOP);
         gVuelos_editB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosMid_B.add(gVuelos_editB);
-
-        gVuelos_updateB = new JButton("Actualizar");
-        gVuelos_updateB.setVerticalAlignment(SwingConstants.TOP);
-        gVuelos_updateB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosMid_B.add(gVuelos_updateB);
 
         gVuelos_deleteB = new JButton("Eliminar");
         gVuelos_deleteB.setVerticalAlignment(SwingConstants.TOP);

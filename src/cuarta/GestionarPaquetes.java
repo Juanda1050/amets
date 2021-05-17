@@ -182,6 +182,15 @@ public class GestionarPaquetes{
         gPaquete_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPaqueteMid_B.add(gPaquete_deleteB);
 
+        JButton gPaquete_packB = new JButton("Detalles");
+        gPaquete_packB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPaqueteMid_B.add(gPaquete_packB);
+        gPaquete_packB.addActionListener(e -> {
+            DetallePaquete dpFrame = new DetallePaquete();
+            dpFrame.runFrame();
+            gPaqueteFrame.setVisible(false);
+        });
+
         JPanel gPaqueteBottom = new JPanel();
         gPaqueteBottom.setBorder(new EmptyBorder(20, 20, 20, 20));
         gPaqueteFrame.getContentPane().add(gPaqueteBottom, BorderLayout.SOUTH);
