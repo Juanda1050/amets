@@ -137,23 +137,35 @@ public class PaquetesController implements ActionListener
         }
         else
         {
-            String name = vista.gPaquete_nombreTF.getText();
-            String description = vista.gPaquete_descripcionTF.getText();
-            int passengers = Integer.parseInt(vista.gPaquete_genteTF.getText());
-            float price = Float.parseFloat(vista.gPaquete_precioTF.getText());
 
-            p.setName(name);
-            p.setDescription(description);
-            p.setPassengers(passengers);
-            p.setPrice(price);
-            int r = dao.agregar(p);
-            if(r == 1){
-                JOptionPane.showMessageDialog(null, "Paquete agregado exitosamente");
-            }else{
-                JOptionPane.showMessageDialog(null, "Paquete fallido");
+            boolean i = validacionI(vista.gPaquete_genteTF.getText());
+            boolean f = validacionF(vista.gPaquete_precioTF.getText());
+            if(!i || !f)
+            {
+                JOptionPane.showMessageDialog(null, "Los campos pasajeros y precio no pueden contener letras, verificalos de nuevo");
+                boolean[] arr = {false, true, false, false};
+                estadosBotones(arr);
             }
-            areTextFieldEditable(false);
-            cleanForm();
+            else {
+                String name = vista.gPaquete_nombreTF.getText();
+                String description = vista.gPaquete_descripcionTF.getText();
+                int passengers = Integer.parseInt(vista.gPaquete_genteTF.getText());
+                float price = Float.parseFloat(vista.gPaquete_precioTF.getText());
+                p.setName(name);
+                p.setDescription(description);
+                p.setPassengers(passengers);
+                p.setPrice(price);
+                int r = dao.agregar(p);
+                if (r == 1) {
+                    JOptionPane.showMessageDialog(null, "Paquete agregado exitosamente");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Paquete fallido");
+                }
+                areTextFieldEditable(false);
+                cleanForm();
+                boolean[] arr = {true, false, true, true};
+                estadosBotones(arr);
+            }
         }
     }
 
@@ -168,27 +180,38 @@ public class PaquetesController implements ActionListener
         }
         else
         {
-            int id = Integer.parseInt(vista.gPaquete_idTF.getText());
-            String name = vista.gPaquete_nombreTF.getText();
-            String description = vista.gPaquete_descripcionTF.getText();
-            int passengers = Integer.parseInt(vista.gPaquete_genteTF.getText());
-            float price = Float.parseFloat(vista.gPaquete_precioTF.getText());
-            p.setID(id);
-            p.setName(name);
-            p.setDescription(description);
-            p.setPassengers(passengers);
-            p.setPrice(price);
-            dao.Actualizar(p);
-            int r = dao.Actualizar(p);
-            if (r == 1) {
-                JOptionPane.showMessageDialog(null, "Registro actualizado exitosamente");
-            } else {
-                JOptionPane.showMessageDialog(null, "Registro fallido");
+            boolean i = validacionI(vista.gPaquete_genteTF.getText());
+            boolean f = validacionF(vista.gPaquete_precioTF.getText());
+            if(!i || !f)
+            {
+                JOptionPane.showMessageDialog(null, "Los campos pasajeros y precio no pueden contener letras, verificalos de nuevo");
+                boolean[] arr = {false, true, false, false};
+                estadosBotones(arr);
             }
-            areTextFieldEditable(false);
-            limpiar();
-            cleanForm();
-            listar(vista.gPaqueteTable);
+            else
+            {
+                int id = Integer.parseInt(vista.gPaquete_idTF.getText());
+                String name = vista.gPaquete_nombreTF.getText();
+                String description = vista.gPaquete_descripcionTF.getText();
+                int passengers = Integer.parseInt(vista.gPaquete_genteTF.getText());
+                float price = Float.parseFloat(vista.gPaquete_precioTF.getText());
+                p.setID(id);
+                p.setName(name);
+                p.setDescription(description);
+                p.setPassengers(passengers);
+                p.setPrice(price);
+                dao.Actualizar(p);
+                int r = dao.Actualizar(p);
+                if (r == 1) {
+                    JOptionPane.showMessageDialog(null, "Registro actualizado exitosamente");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Registro fallido");
+                }
+                areTextFieldEditable(false);
+                limpiar();
+                cleanForm();
+                listar(vista.gPaqueteTable);
+            }
         }
     }
 
@@ -275,5 +298,34 @@ public class PaquetesController implements ActionListener
         vista.gPaquete_editB.setEnabled(a[2]);
         vista.gPaquete_deleteB.setEnabled(a[3]);
     }
-}
 
+    //Validar si pasajeros es un numero
+    private boolean validacionI(String cadena)
+    {
+        int num;
+        try
+        {
+            num = Integer.parseInt(cadena);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
+    //Validar si el precio es un numero
+    private boolean validacionF(String cadena)
+    {
+        float num;
+        try
+        {
+            num = Float.parseFloat(cadena);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+}
