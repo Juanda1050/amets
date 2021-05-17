@@ -1,6 +1,7 @@
 package cuarta;
 
 import controlador.ControladorEmpleado;
+import modelo.EmpleadoDAO;
 import tercera.VistaMA;
 
 import java.awt.EventQueue;
@@ -48,9 +49,8 @@ public class GestionarEmpleados {
             public void run() {
                 try {
                     GestionarEmpleados window = new GestionarEmpleados();
-
-
-                    ControladorEmpleado controladorEmpleado = new ControladorEmpleado(window);
+                    EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+                    ControladorEmpleado controladorEmpleado = new ControladorEmpleado(window, empleadoDAO);
 
                     window.gEmpleadoFrame.setVisible(true);
                 } catch (Exception e) {
