@@ -200,9 +200,9 @@ public class GestionarPaquetes{
         gPaquete_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPaqueteBottom.add(gPaquete_backB, BorderLayout.EAST);
         gPaquete_backB.addActionListener(e -> {
-                VistaMA maFrame = new VistaMA();
-                maFrame.runFrame();
-                gPaqueteFrame.setVisible(false);
+            VistaMA maFrame = new VistaMA();
+            maFrame.runFrame();
+            gPaqueteFrame.setVisible(false);
         });
     }
 
