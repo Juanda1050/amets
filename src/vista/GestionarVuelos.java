@@ -7,8 +7,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.toedter.calendar.JDateChooser;
 import controlador.VuelosController;
 import modelo.Vuelos;
 import modelo.VuelosDAO;
@@ -20,8 +22,11 @@ import javax.swing.table.JTableHeader;
 
 public class GestionarVuelos {
 
+    public JDateChooser gVuelos_salidaDC, gVuelos_llegadaDC;
     private JFrame gVuelosFrame;
-    public JTextField gVuelos_idTF, gVuelos_origenTF, gVuelos_claseTF, gVuelos_precioTF;
+    public JTextField gVuelos_idTF, gVuelos_origenTF, gVuelos_genteTF;
+    public JComboBox<String> gVuelos_destinoCB, gVuelos_aerolineaCB;
+    public JSpinner gVuelos_salidaJS, gVuelos_llegadaJS;
     public JButton gVuelos_addB, gVuelos_saveB, gVuelos_editB, gVuelos_deleteB;
     public JTable gVuelosTable;
 
@@ -106,7 +111,7 @@ public class GestionarVuelos {
         gVuelos_destinoL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosLeft.add(gVuelos_destinoL);
 
-        JComboBox<String> gVuelos_destinoCB = new JComboBox<>(gvDAO.listarDestinos().toArray(new String[0]));
+        gVuelos_destinoCB = new JComboBox<>(gvDAO.listarDestinos().toArray(new String[0]));
         gVuelos_destinoCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelos_destinoCB.setToolTipText("");
         gVuelosLeft.add(gVuelos_destinoCB);
@@ -115,49 +120,35 @@ public class GestionarVuelos {
         gVuelos_aerolineaL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosLeft.add(gVuelos_aerolineaL);
 
-        JComboBox<String> gVuelos_aerolineaCB = new JComboBox<>(gvDAO.listarAerolinea().toArray(new String[0]));
+        gVuelos_aerolineaCB = new JComboBox<>(gvDAO.listarAerolinea().toArray(new String[0]));
         gVuelos_aerolineaCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelos_aerolineaCB.setToolTipText("");
         gVuelosLeft.add(gVuelos_aerolineaCB);
 
-        JLabel gVuelos_claseL = new JLabel("Clase");
-        gVuelos_claseL.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosLeft.add(gVuelos_claseL);
+        JLabel gVuelos_genteL = new JLabel("Pasajeros");
+        gVuelos_genteL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gVuelosLeft.add(gVuelos_genteL);
 
-        gVuelos_claseTF = new JTextField();
-        gVuelos_claseTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        gVuelosLeft.add(gVuelos_claseTF);
-        gVuelos_claseTF.setColumns(10);
+        gVuelos_genteTF = new JTextField();
+        gVuelos_genteTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        gVuelosLeft.add(gVuelos_genteTF);
+        gVuelos_genteTF.setColumns(10);
 
         JLabel gVuelos_salidaL = new JLabel("Fecha de salida");
         gVuelos_salidaL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosLeft.add(gVuelos_salidaL);
 
-        Date date = new Date();
-        JSpinner gVuelos_salidaJS = new JSpinner( new SpinnerDateModel());
-        JSpinner.DateEditor gVuelos_salidaE = new JSpinner.DateEditor(gVuelos_salidaJS, "yyyy-MM-dd HH:mm:ss");
-        gVuelos_salidaJS.setEditor(gVuelos_salidaE);
-        gVuelos_salidaJS.setValue(date);
-        gVuelosLeft.add(gVuelos_salidaJS);
+        gVuelos_salidaDC = new JDateChooser();
+        gVuelos_salidaDC.setDateFormatString("yyyy-MM-dd HH:mm:ss");
+        gVuelosLeft.add(gVuelos_salidaDC);
 
         JLabel gVuelos_llegadaL = new JLabel("Fecha de llegada");
         gVuelos_llegadaL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosLeft.add(gVuelos_llegadaL);
 
-        JSpinner gVuelos_llegadaJS = new JSpinner( new SpinnerDateModel());
-        JSpinner.DateEditor gVuelos_llegadaE = new JSpinner.DateEditor(gVuelos_llegadaJS, "yyyy-MM-dd HH:mm:ss");
-        gVuelos_llegadaJS.setEditor(gVuelos_llegadaE);
-        gVuelos_llegadaJS.setValue(date);
-        gVuelosLeft.add(gVuelos_llegadaJS);
-
-        JLabel gVuelos_precioL = new JLabel("Precio");
-        gVuelos_precioL.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosLeft.add(gVuelos_precioL);
-
-        gVuelos_precioTF = new JTextField();
-        gVuelos_precioTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        gVuelosLeft.add(gVuelos_precioTF);
-        gVuelos_precioTF.setColumns(10);
+        gVuelos_llegadaDC = new JDateChooser();
+        gVuelos_llegadaDC.setDateFormatString("yyyy-MM-dd HH:mm:ss");
+        gVuelosLeft.add(gVuelos_llegadaDC);
 
         gVuelos_addB = new JButton("Nuevo");
         gVuelos_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -174,9 +165,11 @@ public class GestionarVuelos {
 
         JScrollPane gVuelosSP = new JScrollPane();
         gVuelosSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        gVuelosSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         gVuelosMid.add(gVuelosSP, BorderLayout.CENTER);
 
         gVuelosTable = new JTable();
+        gVuelosTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         gVuelosTable = new JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex){
                 return false;
@@ -193,7 +186,9 @@ public class GestionarVuelos {
         tModel.addColumn("Llegada");
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-        gVuelosTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+        for(int i = 0; i < gVuelosTable.getModel().getColumnCount(); i++){
+            gVuelosTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+        }
         gVuelosTable.setRowHeight(50);
 
         //Generando estilo de JTable

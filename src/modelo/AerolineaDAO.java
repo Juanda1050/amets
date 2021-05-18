@@ -46,7 +46,7 @@ public class AerolineaDAO {
                 return 0;
             }
         }catch (SQLException e){
-            System.out.println("Error en editar un registro");
+            System.out.println("Error en actualizar un registro");
             e.printStackTrace();
         }
         return r;

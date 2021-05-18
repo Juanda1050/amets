@@ -5,6 +5,7 @@ import modelo.Destinos;
 import cuarta.GestionarDestinos;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -121,8 +122,6 @@ public class DestinoController implements ActionListener {
 
     public void listar(JTable destinosTable){
         modelo = (DefaultTableModel) destinosTable.getModel();
-        destinosTable.setModel(modelo);
-
         Object[]object = new Object[4];
         int registro = dao.listar().size();
         for (int i = 0; i < registro; i++){
@@ -132,6 +131,7 @@ public class DestinoController implements ActionListener {
             object[3] = dao.listar().get(i).getCountry();
             modelo.addRow(object);
         }
+        vistaD.gDestinoTable.setModel(modelo);
     }
 
     private void limpiar(){
