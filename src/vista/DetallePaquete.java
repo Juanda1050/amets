@@ -3,7 +3,6 @@ package vista;
 import vista.GestionarVuelos;
 
 import java.awt.*;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;

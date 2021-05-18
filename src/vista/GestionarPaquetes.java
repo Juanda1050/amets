@@ -42,8 +42,8 @@ public class GestionarPaquetes{
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    GestionarPaquetes window = new GestionarPaquetes();
                     PaquetesDAO dao = new PaquetesDAO();
+                    GestionarPaquetes window = new GestionarPaquetes();
                     PaquetesController c = new PaquetesController(window, dao);
                     window.gPaqueteFrame.setVisible(true);
                 } catch (Exception e) {
@@ -195,6 +195,15 @@ public class GestionarPaquetes{
         gPaquete_deleteB = new JButton("Eliminar");
         gPaquete_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPaqueteMid_B.add(gPaquete_deleteB);
+
+        JButton gPaquete_packB = new JButton("Detalles");
+        gPaquete_packB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPaqueteMid_B.add(gPaquete_packB);
+        gPaquete_packB.addActionListener(e -> {
+            DetallePaquete dpFrame = new DetallePaquete();
+            dpFrame.runFrame();
+            gPaqueteFrame.setVisible(false);
+        });
 
         JPanel gPaqueteBottom = new JPanel();
         gPaqueteBottom.setBorder(new EmptyBorder(20, 20, 20, 20));
