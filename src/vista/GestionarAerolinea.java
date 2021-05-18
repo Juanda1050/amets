@@ -1,10 +1,11 @@
 package vista;
 
-import com.toedter.calendar.JDateChooser;
-import tercera.VistaMA;
+import controlador.AerolineaController;
+import modelo.AerolineaDAO;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
@@ -13,13 +14,10 @@ import java.awt.event.WindowEvent;
 
 public class GestionarAerolinea {
 
-    private JFrame gVuelosFrame;
-    private JTextField textField;
-    private JTextField textField_4;
-    private JTable gVuelosTable;
-    private JTextField textField_1;
-    private JTextField textField_2;
-    private JTextField textField_3;
+    private JFrame gAerolineaFrame;
+    public JTextField gAerolinea_idTF, gAerolinea_nombreTF, gAerolinea_precioTF, gAerolinea_claseTF;
+    public JButton gAerolinea_addB, gAerolinea_saveB, gAerolinea_editB, gAerolinea_deleteB;
+    public JTable gAerolineaTable;
 
     /**
      * Launch the application.
@@ -30,7 +28,9 @@ public class GestionarAerolinea {
             public void run() {
                 try {
                     GestionarAerolinea window = new GestionarAerolinea();
-                    window.gVuelosFrame.setVisible(true);
+                    AerolineaDAO dao = new AerolineaDAO();
+                    AerolineaController controller = new AerolineaController(window, dao);
+                    window.gAerolineaFrame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -49,134 +49,152 @@ public class GestionarAerolinea {
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        gVuelosFrame = new JFrame();
-        gVuelosFrame.setTitle("Gestionar Aerolineas");
-        gVuelosFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        gVuelosFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\DELL\\OneDrive\\Documentos\\Tercer Semestre\\POO\\agenciaAmets\\resources\\amets.jpg"));
-        gVuelosFrame.setBounds(100, 100, 1280, 720);
-        gVuelosFrame.addWindowListener(new WindowAdapter() {
+        gAerolineaFrame = new JFrame();
+        gAerolineaFrame.setTitle("Gestionar Aerolineas");
+        gAerolineaFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        gAerolineaFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\DELL\\OneDrive\\Documentos\\Tercer Semestre\\POO\\agenciaAmets\\resources\\amets.jpg"));
+        gAerolineaFrame.setBounds(100, 100, 1280, 720);
+        gAerolineaFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
-                int result = JOptionPane.showConfirmDialog(gVuelosFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
+                int result = JOptionPane.showConfirmDialog(gAerolineaFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
                 if (result == JOptionPane.YES_OPTION)
                 {
-                    gVuelosFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    gAerolineaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 }
                 else if (result == JOptionPane.NO_OPTION)
                 {
-                    gVuelosFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    gAerolineaFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 }
             }
         });
 
-        JPanel gVuelosTop = new JPanel();
-        gVuelosTop.setBorder(new EmptyBorder(20, 20, 20, 20));
-        gVuelosFrame.getContentPane().add(gVuelosTop, BorderLayout.NORTH);
-        gVuelosTop.setLayout(new BorderLayout(0, 0));
+        JPanel gAerolineaTop = new JPanel();
+        gAerolineaTop.setBorder(new EmptyBorder(20, 20, 20, 20));
+        gAerolineaFrame.getContentPane().add(gAerolineaTop, BorderLayout.NORTH);
+        gAerolineaTop.setLayout(new BorderLayout(0, 0));
 
-        JLabel lblAadirVuelo = new JLabel("Agregar Aerolinea");
-        lblAadirVuelo.setFont(new Font("Tahoma", Font.BOLD, 18));
-        lblAadirVuelo.setHorizontalAlignment(SwingConstants.LEFT);
-        gVuelosTop.add(lblAadirVuelo, BorderLayout.WEST);
+        JLabel gAerolinea_addL = new JLabel("Nueva Aerolinea");
+        gAerolinea_addL.setFont(new Font("Tahoma", Font.BOLD, 18));
+        gAerolinea_addL.setHorizontalAlignment(SwingConstants.LEFT);
+        gAerolineaTop.add(gAerolinea_addL, BorderLayout.WEST);
 
-        JLabel lblNewLabel_1 = new JLabel("Aerolineas");
-        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 18));
-        gVuelosTop.add(lblNewLabel_1, BorderLayout.CENTER);
+        JLabel gAerolineaL = new JLabel("Aerolineas");
+        gAerolineaL.setHorizontalAlignment(SwingConstants.CENTER);
+        gAerolineaL.setFont(new Font("Tahoma", Font.BOLD, 18));
+        gAerolineaTop.add(gAerolineaL, BorderLayout.CENTER);
 
-        JPanel gVuelosTop_left = new JPanel();
-        gVuelosTop_left.setBorder(new EmptyBorder(20, 20, 20, 20));
-        gVuelosFrame.getContentPane().add(gVuelosTop_left, BorderLayout.WEST);
-        gVuelosTop_left.setLayout(new GridLayout(0, 2, 15, 30));
+        JPanel gAerolineaLeft = new JPanel();
+        gAerolineaLeft.setBorder(new EmptyBorder(20, 20, 20, 20));
+        gAerolineaFrame.getContentPane().add(gAerolineaLeft, BorderLayout.WEST);
+        gAerolineaLeft.setLayout(new GridLayout(0, 2, 15, 30));
 
-        JLabel lblNewLabel_2 = new JLabel("Nombre");
-        lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosTop_left.add(lblNewLabel_2);
+        JLabel gAerolinea_idL = new JLabel("Nombre");
+        gAerolinea_idL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolineaLeft.add(gAerolinea_idL);
 
-        textField = new JTextField();
-        textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        textField.setColumns(10);
-        gVuelosTop_left.add(textField);
+        gAerolinea_idTF = new JTextField();
+        gAerolinea_idTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        gAerolinea_idTF.setColumns(10);
+        gAerolinea_idTF.setEditable(false);
+        gAerolineaLeft.add(gAerolinea_idTF);
 
-        JLabel lblNewLabel_4 = new JLabel("Clase");
-        lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosTop_left.add(lblNewLabel_4);
+        JLabel gAerolinea_nombreL = new JLabel("Nombre");
+        gAerolinea_nombreL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolineaLeft.add(gAerolinea_nombreL);
 
-        JComboBox comboBox = new JComboBox();
-        comboBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosTop_left.add(comboBox);
+        gAerolinea_nombreTF = new JTextField();
+        gAerolinea_nombreTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        gAerolinea_nombreTF.setColumns(10);
+        gAerolineaLeft.add(gAerolinea_nombreTF);
 
-        JLabel lblNewLabel_5 = new JLabel("Precio");
-        lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosTop_left.add(lblNewLabel_5);
+        JLabel gAerolinea_claseL= new JLabel("Clase");
+        gAerolinea_claseL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolineaLeft.add(gAerolinea_claseL);
 
-        textField_1 = new JTextField();
-        textField_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        gVuelosTop_left.add(textField_1);
-        textField_1.setColumns(10);
+        gAerolinea_claseTF = new JTextField();
+        gAerolinea_claseTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolineaLeft.add(gAerolinea_claseTF);
 
-        JButton gHoteles_añadirButton = new JButton("A\u00F1adir");
-        gHoteles_añadirButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosTop_left.add(gHoteles_añadirButton);
+        JLabel gAerolinea_precioL = new JLabel("Precio");
+        gAerolinea_precioL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolineaLeft.add(gAerolinea_precioL);
 
-        JButton gHoteles_limpiarButton = new JButton("Limpiar");
-        gHoteles_limpiarButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gVuelosTop_left.add(gHoteles_limpiarButton);
+        gAerolinea_precioTF = new JTextField();
+        gAerolinea_precioTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolineaLeft.add(gAerolinea_precioTF);
+        gAerolinea_precioTF.setColumns(10);
 
-        JPanel gVuelosMid = new JPanel();
-        gVuelosMid.setBorder(new EmptyBorder(20, 20, 40, 20));
-        gVuelosFrame.getContentPane().add(gVuelosMid, BorderLayout.CENTER);
-        gVuelosMid.setLayout(new BorderLayout(0, 10));
+        gAerolinea_addB = new JButton("Nuevo");
+        gAerolinea_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolineaLeft.add(gAerolinea_addB);
+
+        gAerolinea_saveB = new JButton("Guardar");
+        gAerolinea_saveB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolineaLeft.add(gAerolinea_saveB);
+
+        JPanel gAerolineaMid = new JPanel();
+        gAerolineaMid.setBorder(new EmptyBorder(20, 20, 40, 16));
+        gAerolineaFrame.getContentPane().add(gAerolineaMid, BorderLayout.CENTER);
+        gAerolineaMid.setLayout(new BorderLayout(0, 10));
 
         JScrollPane gVuelosSP = new JScrollPane();
         gVuelosSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        gVuelosMid.add(gVuelosSP, BorderLayout.CENTER);
+        gAerolineaMid.add(gVuelosSP, BorderLayout.CENTER);
 
-        gVuelosTable = new JTable();
-        gVuelosTable.setModel(new DefaultTableModel(
-                new Object[][] {
-                },
-                new String[] {
-                        "ID Vuelo", "Origen", "Destino", "Aerolinea", "Pasajeros", "Clase", "Salida", "Llegada", "Precio"
-                }
-        ));
-
+        gAerolineaTable = new JTable();
+        gAerolineaTable = new JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        DefaultTableModel tModel = new DefaultTableModel();
+        gAerolineaTable.setModel(tModel);
+        tModel.addColumn("ID Aerolinea");
+        tModel.addColumn("Nombre");
+        tModel.addColumn("Clase");
+        tModel.addColumn("Precio");
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        gAerolineaTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+        gAerolineaTable.setRowHeight(50);
+        
         //Generando estilo de JTable
-        JTableHeader tHeader = gVuelosTable.getTableHeader();
+        JTableHeader tHeader = gAerolineaTable.getTableHeader();
         tHeader.setPreferredSize(new Dimension(0, 25));
         tHeader.setBackground(Color.decode("#094293"));
         tHeader.setForeground(Color.white);
         tHeader.setFont(new Font("Tahome", Font.BOLD, 16));
-        gVuelosTable.setFont(new Font("Tahome", Font.PLAIN, 14));
-        gVuelosSP.setViewportView(gVuelosTable);
+        gAerolineaTable.setFont(new Font("Tahome", Font.PLAIN, 14));
+        gVuelosSP.setViewportView(gAerolineaTable);
 
-        JPanel gHotelesMid_bottom = new JPanel();
-        gHotelesMid_bottom.setBorder(new EmptyBorder(0, 0, 20, 20));
-        gVuelosMid.add(gHotelesMid_bottom, BorderLayout.SOUTH);
-        gHotelesMid_bottom.setLayout(new GridLayout(0, 6, 20, 0));
+        JPanel gAerolineaMid_B = new JPanel();
+        gAerolineaMid_B.setBorder(new EmptyBorder(0, 0, 20, 20));
+        gAerolineaMid.add(gAerolineaMid_B, BorderLayout.SOUTH);
+        gAerolineaMid_B.setLayout(new GridLayout(0, 6, 20, 0));
 
-        JButton gVuelos_editarButton = new JButton("Editar");
-        gVuelos_editarButton.setVerticalAlignment(SwingConstants.TOP);
-        gVuelos_editarButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gHotelesMid_bottom.add(gVuelos_editarButton);
+        gAerolinea_editB = new JButton("Editar");
+        gAerolinea_editB.setVerticalAlignment(SwingConstants.TOP);
+        gAerolinea_editB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolineaMid_B.add(gAerolinea_editB);
 
-        JButton gVuelos_eliminarButton = new JButton("Eliminar");
-        gVuelos_eliminarButton.setVerticalAlignment(SwingConstants.TOP);
-        gVuelos_eliminarButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gHotelesMid_bottom.add(gVuelos_eliminarButton);
+        gAerolinea_deleteB = new JButton("Eliminar");
+        gAerolinea_deleteB.setVerticalAlignment(SwingConstants.TOP);
+        gAerolinea_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolineaMid_B.add(gAerolinea_deleteB);
 
-        JPanel gHotelesBottom = new JPanel();
-        gHotelesBottom.setBorder(new EmptyBorder(20, 20, 20, 20));
-        gVuelosFrame.getContentPane().add(gHotelesBottom, BorderLayout.SOUTH);
-        gHotelesBottom.setLayout(new BorderLayout(0, 0));
+        JPanel gAerolineaBottom = new JPanel();
+        gAerolineaBottom.setBorder(new EmptyBorder(20, 20, 20, 20));
+        gAerolineaFrame.getContentPane().add(gAerolineaBottom, BorderLayout.SOUTH);
+        gAerolineaBottom.setLayout(new BorderLayout(0, 0));
 
-        JButton btnNewButton = new JButton("VOLVER");
-        btnNewButton.setIcon(new ImageIcon("C:\\Users\\DELL\\OneDrive\\Documentos\\Tercer Semestre\\POO\\AmetsTravels\\resources\\left.png"));
-        btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gHotelesBottom.add(btnNewButton, BorderLayout.EAST);
-        btnNewButton.addActionListener(e -> {
+        JButton gAerolinea_backB = new JButton("VOLVER");
+        gAerolinea_backB.setIcon(new ImageIcon("resources/left.png"));
+        gAerolinea_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolineaBottom.add(gAerolinea_backB, BorderLayout.EAST);
+        gAerolinea_backB.addActionListener(e -> {
             GestionarVuelos gvFrame = new GestionarVuelos();
             gvFrame.runFrame();
-            gVuelosFrame.setVisible(false);
+            gAerolineaFrame.setVisible(false);
         });
     }
 

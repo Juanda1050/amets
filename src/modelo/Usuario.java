@@ -10,6 +10,16 @@ public class Usuario
     String Telefono;
     int ID;
 
+    public Usuario(String nombre, String apellido, String nacimiento, String direccion, String email, String telefono, int ID) {
+        Nombre = nombre;
+        Apellido = apellido;
+        Nacimiento = nacimiento;
+        Direccion = direccion;
+        Email = email;
+        Telefono = telefono;
+        this.ID = ID;
+    }
+
     public Usuario() {
     }
 

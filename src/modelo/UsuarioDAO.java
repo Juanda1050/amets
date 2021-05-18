@@ -3,6 +3,7 @@ package modelo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 import static modelo.Conexion.conectar;
 
@@ -15,7 +16,6 @@ public class UsuarioDAO
 
     public int agregar(Usuario p)
     {
-
         String sql = "INSERT INTO usuarios(userName, userLastName, birthDate, email, address, phone) VALUES (?,?,?,?,?,?)";
         try
         {
@@ -31,7 +31,6 @@ public class UsuarioDAO
         }
         catch(Exception e)
         {
-
         }
         return 1;
     }
