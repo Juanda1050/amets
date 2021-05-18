@@ -5,12 +5,16 @@ import java.awt.*;
 import javax.swing.*;
 
 import javax.swing.border.EmptyBorder;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 import controlador.VuelosController;
 import modelo.Vuelos;
 import modelo.VuelosDAO;
@@ -22,11 +26,10 @@ import javax.swing.table.JTableHeader;
 
 public class GestionarVuelos {
 
-    public JDateChooser gVuelos_salidaDC, gVuelos_llegadaDC;
+    public JTextFieldDateEditor gVuelos_salidaDC, gVuelos_llegadaDC;
     private JFrame gVuelosFrame;
     public JTextField gVuelos_idTF, gVuelos_origenTF, gVuelos_genteTF;
     public JComboBox<String> gVuelos_destinoCB, gVuelos_aerolineaCB;
-    public JSpinner gVuelos_salidaJS, gVuelos_llegadaJS;
     public JButton gVuelos_addB, gVuelos_saveB, gVuelos_editB, gVuelos_deleteB;
     public JTable gVuelosTable;
 
@@ -105,6 +108,19 @@ public class GestionarVuelos {
         gVuelos_origenTF = new JTextField();
         gVuelos_origenTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelos_origenTF.setColumns(10);
+        gVuelos_origenTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if(Character.isLetter(ch) || Character.isISOControl(ch)){
+                    String txtOrigen = String.valueOf(ch);
+                    gVuelos_origenTF.setText("" + txtOrigen);
+                }else{
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Escriba solo letras");
+                }
+            }
+        });
         gVuelosLeft.add(gVuelos_origenTF);
 
         JLabel gVuelos_destinoL = new JLabel("Destino");
@@ -131,23 +147,35 @@ public class GestionarVuelos {
 
         gVuelos_genteTF = new JTextField();
         gVuelos_genteTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        gVuelosLeft.add(gVuelos_genteTF);
         gVuelos_genteTF.setColumns(10);
+        gVuelos_genteTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if(Character.isDigit(ch) || Character.isISOControl(ch)){
+                    String txtGente = String.valueOf(ch);
+                    gVuelos_origenTF.setText("" + txtGente);
+                }else{
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Solo admite numeros");
+                }
+            }
+        });
+        gVuelosLeft.add(gVuelos_genteTF);
 
         JLabel gVuelos_salidaL = new JLabel("Fecha de salida");
         gVuelos_salidaL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosLeft.add(gVuelos_salidaL);
 
-        gVuelos_salidaDC = new JDateChooser();
-        gVuelos_salidaDC.setDateFormatString("yyyy-MM-dd HH:mm:ss");
+        gVuelos_salidaDC = new JTextFieldDateEditor("yyyy-MM-dd HH:mm", "####-##-## ##:##", '_');
         gVuelosLeft.add(gVuelos_salidaDC);
 
         JLabel gVuelos_llegadaL = new JLabel("Fecha de llegada");
         gVuelos_llegadaL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosLeft.add(gVuelos_llegadaL);
 
-        gVuelos_llegadaDC = new JDateChooser();
-        gVuelos_llegadaDC.setDateFormatString("yyyy-MM-dd HH:mm:ss");
+        gVuelos_llegadaDC = new JTextFieldDateEditor("yyyy-MM-dd HH:mm", "####-##-## ##:##", '_');
+        gVuelos_llegadaDC.setDate(new Date());
         gVuelosLeft.add(gVuelos_llegadaDC);
 
         gVuelos_addB = new JButton("Nuevo");

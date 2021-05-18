@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 public class VuelosController implements ActionListener {
@@ -19,13 +20,28 @@ public class VuelosController implements ActionListener {
     private boolean AU = true;
 
     public VuelosController(GestionarVuelos vistaV, VuelosDAO dao){
-        this.dao = dao;
-        this.vistaV = vistaV;
-        this.vistaV.gVuelos_addB.addActionListener(this);
-        this.vistaV.gVuelos_saveB.addActionListener(this);
-        this.vistaV.gVuelos_editB.addActionListener(this);
-        this.vistaV.gVuelos_deleteB.addActionListener(this);
-        listFly(vistaV.gVuelosTable);
+        int lista = dao.listar().size();
+        if (lista > 0){
+            this.dao = dao;
+            this.vistaV = vistaV;
+            this.vistaV.gVuelos_addB.addActionListener(this);
+            this.vistaV.gVuelos_saveB.addActionListener(this);
+            this.vistaV.gVuelos_editB.addActionListener(this);
+            this.vistaV.gVuelos_deleteB.addActionListener(this);
+            listFly(vistaV.gVuelosTable);
+            boolean[] arr = {true, false, true, true};
+            areButtonEnable(arr);
+        }else{
+            this.dao = dao;
+            this.vistaV = vistaV;
+            this.vistaV.gVuelos_addB.addActionListener(this);
+            this.vistaV.gVuelos_saveB.addActionListener(this);
+            this.vistaV.gVuelos_editB.addActionListener(this);
+            this.vistaV.gVuelos_deleteB.addActionListener(this);
+            listFly(vistaV.gVuelosTable);
+            boolean[] arr = {true, false, false, false};
+            areButtonEnable(arr);
+        }
         areTextFieldEditable(false);
     }
 
@@ -34,15 +50,14 @@ public class VuelosController implements ActionListener {
         if(e.getSource() == vistaV.gVuelos_addB){
             AU = true;
             areTextFieldEditable(true);
+            boolean[] arr = {false, true, false, false};
+            areButtonEnable(arr);
         }
         if(e.getSource() == vistaV.gVuelos_saveB){
             saveFly();
         }
         if(e.getSource() == vistaV.gVuelos_editB){
             editFly();
-        }
-        if(e.getSource() == vistaV.gVuelos_saveB){
-            saveFly();
         }
         if(e.getSource() == vistaV.gVuelos_deleteB){
             deleteFly();
@@ -52,16 +67,18 @@ public class VuelosController implements ActionListener {
     }
 
     public void addFly(){
-        if(vistaV.gVuelos_origenTF.getText().isEmpty() || vistaV.gVuelos_destinoCB.getSelectedIndex() == 0 || vistaV.gVuelos_aerolineaCB.getSelectedIndex() == 0 || vistaV.gVuelos_genteTF.getText().isEmpty()){
+        if(vistaV.gVuelos_origenTF.getText().isEmpty() || vistaV.gVuelos_destinoCB.getSelectedIndex() == 0 || vistaV.gVuelos_aerolineaCB.getSelectedIndex() == 0 || vistaV.gVuelos_genteTF.getText().isEmpty() || vistaV.gVuelos_salidaDC.getText().isEmpty() || vistaV.gVuelos_llegadaDC.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
+            boolean[] arr = {true, false, true, true};
+            areButtonEnable(arr);
         }
         else{
             String origen = vistaV.gVuelos_origenTF.getText();
             int destino = vistaV.gVuelos_destinoCB.getSelectedIndex();
             int aero = vistaV.gVuelos_aerolineaCB.getSelectedIndex();
             int gente = Integer.parseInt(vistaV.gVuelos_genteTF.getText());
-            String salida = vistaV.gVuelos_salidaDC.getDateFormatString();
-            String llegada = vistaV.gVuelos_llegadaDC.getDateFormatString();
+            String salida = vistaV.gVuelos_salidaDC.getText();
+            String llegada = vistaV.gVuelos_llegadaDC.getText();
             v.setOrigin(origen);
             v.setDestinationID(destino);
             v.setAirlineID(aero);
@@ -75,12 +92,19 @@ public class VuelosController implements ActionListener {
             else{
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            boolean[] arr = {true, false, true, true};
+            areButtonEnable(arr);
         }
     }
 
     public void updateFly(){
-        if(vistaV.gVuelos_origenTF.getText().isEmpty() || vistaV.gVuelos_destinoCB.getSelectedIndex() == 0 || vistaV.gVuelos_aerolineaCB.getSelectedIndex() == 0 || vistaV.gVuelos_genteTF.getText().isEmpty()){
+        if(vistaV.gVuelos_origenTF.getText().isEmpty() || vistaV.gVuelos_destinoCB.getSelectedIndex() == 0 || vistaV.gVuelos_aerolineaCB.getSelectedIndex() == 0 || vistaV.gVuelos_genteTF.getText().isEmpty() || vistaV.gVuelos_salidaDC.getText().isEmpty() || vistaV.gVuelos_llegadaDC.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
+            boolean[] arr = {true, false, true, true};
+            areButtonEnable(arr);
+            if(!validarOrigen(vistaV.gVuelos_origenTF.getText().trim())){
+                JOptionPane.showMessageDialog(null, "Origen solo contiene caracteres");
+            }
         }
         else{
             int id = Integer.parseInt(vistaV.gVuelos_idTF.getText());
@@ -88,8 +112,8 @@ public class VuelosController implements ActionListener {
             int destino = vistaV.gVuelos_destinoCB.getSelectedIndex();
             int aero = vistaV.gVuelos_aerolineaCB.getSelectedIndex();
             int gente = Integer.parseInt(vistaV.gVuelos_genteTF.getText());
-            String salida = vistaV.gVuelos_salidaDC.getDateFormatString();
-            String llegada = vistaV.gVuelos_llegadaDC.getDateFormatString();
+            String salida = vistaV.gVuelos_salidaDC.getText();
+            String llegada = vistaV.gVuelos_llegadaDC.getText();
             v.setFlightID(id);
             v.setOrigin(origen);
             v.setDestinationID(destino);
@@ -112,9 +136,19 @@ public class VuelosController implements ActionListener {
         if (row == 1){
             JOptionPane.showMessageDialog(null, "Seleccione un vuelo");
         }else{
-            int id = Integer.parseInt(vistaV.gVuelosTable.getValueAt(row, 0).toString());
-            dao.eliminar(id);
-            JOptionPane.showMessageDialog(null, "Vuelo eliminado exitosamente");
+            int lista = dao.listar().size();
+            if (lista > 1){
+                int id = Integer.parseInt(vistaV.gVuelosTable.getValueAt(row, 0).toString());
+                dao.eliminar(id);
+                JOptionPane.showMessageDialog(null, "Vuelo eliminado exitosamente");
+            }else{
+                boolean[] arr = {true, false, false, false};
+                areButtonEnable(arr);
+                int id = Integer.parseInt(vistaV.gVuelosTable.getValueAt(row, 0).toString());
+                dao.eliminar(id);
+                JOptionPane.showMessageDialog(null, "Vuelo eliminado exitosamente");
+            }
+
         }
     }
 
@@ -141,6 +175,8 @@ public class VuelosController implements ActionListener {
             JOptionPane.showMessageDialog(null, "Seleccione un vuelo");
         }else{
             areTextFieldEditable(true);
+            boolean[] arr = {false, true, false, false};
+            areButtonEnable(arr);
             int id = Integer.parseInt(vistaV.gVuelosTable.getValueAt(row, 0).toString());
             String origen = (String) vistaV.gVuelosTable.getValueAt(row, 1);
             int gente = Integer.parseInt(vistaV.gVuelosTable.getValueAt(row, 4).toString());
@@ -151,8 +187,8 @@ public class VuelosController implements ActionListener {
             vistaV.gVuelos_destinoCB.setSelectedIndex(0);
             vistaV.gVuelos_aerolineaCB.setSelectedIndex(0);
             vistaV.gVuelos_genteTF.setText("" + gente);
-            vistaV.gVuelos_salidaJS.setValue(salida);
-            vistaV.gVuelos_llegadaJS.setValue(llegada);
+            vistaV.gVuelos_salidaDC.setText(salida);
+            vistaV.gVuelos_llegadaDC.setText(llegada);
         }
     }
 
@@ -192,9 +228,28 @@ public class VuelosController implements ActionListener {
     }
 
     private void cleanForm(){
+        vistaV.gVuelos_idTF.setText("");
         vistaV.gVuelos_origenTF.setText("");
         vistaV.gVuelos_destinoCB.setSelectedIndex(0);
         vistaV.gVuelos_aerolineaCB.setSelectedIndex(0);
         vistaV.gVuelos_genteTF.setText("");
+        vistaV.gVuelos_salidaDC.setText("");
+        vistaV.gVuelos_llegadaDC.setText("");
+    }
+
+    private void areButtonEnable(boolean[] a){
+        vistaV.gVuelos_addB.setEnabled(a[0]);
+        vistaV.gVuelos_saveB.setEnabled(a[1]);
+        vistaV.gVuelos_editB.setEnabled(a[2]);
+        vistaV.gVuelos_deleteB.setEnabled(a[3]);
+    }
+
+    private boolean validarOrigen(String datos){
+        return datos.matches("[a-zA-z]{1,45}");
+    }
+
+    private void keyTyped(KeyEvent event){
+        char c = event.getKeyChar();
+        if(Character.isLetter(c)) vistaV.gVuelos_origenTF.setText(vistaV.gVuelos_origenTF.getText() + c);
     }
 }
