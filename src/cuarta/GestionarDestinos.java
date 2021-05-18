@@ -180,9 +180,9 @@ public class GestionarDestinos {
 
         gDestinoTable = new JTable();
         gDestinoTable = new JTable(){
-          public boolean isCellEditable(int rowIndex, int colIndex){
-              return false;
-          }
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
         };
         DefaultTableModel tModel = new DefaultTableModel();
         gDestinoTable.setModel(tModel);

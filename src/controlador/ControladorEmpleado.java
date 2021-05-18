@@ -137,26 +137,26 @@ public class ControladorEmpleado implements ActionListener {
         }
         else
         {
-                String name = vista.gEmpleado_nombreTF.getText();
-                String apellido = vista.gEmpleado_apellidoTF.getText();
-                String contraseña = vista.gEmpleado_contraTF.getText();
-                int turno = vista.gEmpleado_turnoCB.getSelectedIndex();
-                int puesto = vista.gEmpleado_puestoCB.getSelectedIndex();
-                empleado.setNombreEmpleado(name);
-                empleado.setApellidoEmpleado(apellido);
-                empleado.setContraseña(contraseña);
-                empleado.setTurno(turno);
-                empleado.setPuesto(puesto);
-                int r = dao.agregar(empleado);
-                if (r == 1) {
-                    JOptionPane.showMessageDialog(null, "Empleado agregado exitosamente");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Empleado fallido");
-                }
-                areTextFieldEditable(false);
-                cleanForm();
-                boolean[] arr = {true, false, true, true};
-                estadosBotones(arr);
+            String name = vista.gEmpleado_nombreTF.getText();
+            String apellido = vista.gEmpleado_apellidoTF.getText();
+            String contraseña = vista.gEmpleado_contraTF.getText();
+            int turno = vista.gEmpleado_turnoCB.getSelectedIndex();
+            int puesto = vista.gEmpleado_puestoCB.getSelectedIndex();
+            empleado.setNombreEmpleado(name);
+            empleado.setApellidoEmpleado(apellido);
+            empleado.setContraseña(contraseña);
+            empleado.setTurno(turno);
+            empleado.setPuesto(puesto);
+            int r = dao.agregar(empleado);
+            if (r == 1) {
+                JOptionPane.showMessageDialog(null, "Empleado agregado exitosamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "Empleado fallido");
+            }
+            areTextFieldEditable(false);
+            cleanForm();
+            boolean[] arr = {true, false, true, true};
+            estadosBotones(arr);
         }
     }
 
@@ -171,29 +171,29 @@ public class ControladorEmpleado implements ActionListener {
         }
         else
         {
-                int id = Integer.parseInt(vista.gEmpleado_idTF.getText());
-                String name = vista.gEmpleado_nombreTF.getText();
-                String apellido = vista.gEmpleado_apellidoTF.getText();
-                String contraseña = vista.gEmpleado_contraTF.getText();
-                int turno = vista.gEmpleado_turnoCB.getSelectedIndex();
-                int puesto = vista.gEmpleado_puestoCB.getSelectedIndex();
-                empleado.setIDempleado(id);
-                empleado.setNombreEmpleado(name);
-                empleado.setApellidoEmpleado(apellido);
-                empleado.setContraseña(contraseña);;
-                empleado.setTurno(turno);
-                empleado.setPuesto(puesto);
+            int id = Integer.parseInt(vista.gEmpleado_idTF.getText());
+            String name = vista.gEmpleado_nombreTF.getText();
+            String apellido = vista.gEmpleado_apellidoTF.getText();
+            String contraseña = vista.gEmpleado_contraTF.getText();
+            int turno = vista.gEmpleado_turnoCB.getSelectedIndex();
+            int puesto = vista.gEmpleado_puestoCB.getSelectedIndex();
+            empleado.setIDempleado(id);
+            empleado.setNombreEmpleado(name);
+            empleado.setApellidoEmpleado(apellido);
+            empleado.setContraseña(contraseña);;
+            empleado.setTurno(turno);
+            empleado.setPuesto(puesto);
 
-                int r = dao.Actualizar(empleado);
-                if (r == 1) {
-                    JOptionPane.showMessageDialog(null, "Registro actualizado exitosamente");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Registro fallido");
-                }
-                areTextFieldEditable(false);
-                limpiar();
-                cleanForm();
-                listar(vista.gEmpleadoTable);
+            int r = dao.Actualizar(empleado);
+            if (r == 1) {
+                JOptionPane.showMessageDialog(null, "Registro actualizado exitosamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "Registro fallido");
+            }
+            areTextFieldEditable(false);
+            limpiar();
+            cleanForm();
+            listar(vista.gEmpleadoTable);
         }
     }
 
