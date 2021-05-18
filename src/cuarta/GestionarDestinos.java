@@ -13,8 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 import javax.swing.table.JTableHeader;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 public class GestionarDestinos {
 
@@ -94,10 +93,25 @@ public class GestionarDestinos {
         gDestino_ciudadL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gDestinoLeft.add(gDestino_ciudadL);
 
+
         gDestino_ciudadTF = new JTextField();
         gDestino_ciudadTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gDestinoLeft.add(gDestino_ciudadTF);
         gDestino_ciudadTF.setColumns(20);
+        gDestino_ciudadTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (Character.isLetter(ch) || Character.isISOControl(ch)) {
+                    String txtCiudad = String.valueOf(ch);
+                    gDestino_ciudadTF.setText(txtCiudad);
+                }
+                else {
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Escriba solo letras");
+                }
+            }
+        });
 
         JLabel gDestino_estadoL = new JLabel("Estado");
         gDestino_estadoL.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -109,6 +123,21 @@ public class GestionarDestinos {
         gDestinoLeft.add(gDestino_estadoTF);
         gDestino_estadoTF.setColumns(20);
 
+        gDestino_estadoTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (Character.isLetter(ch) || Character.isISOControl(ch)) {
+                    String txtEstado = String.valueOf(ch);
+                    gDestino_estadoTF.setText(txtEstado);
+                }
+                else {
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Escriba solo letras");
+                }
+            }
+        });
+
         JLabel gDestino_paisL = new JLabel("Pais");
         gDestino_paisL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gDestinoLeft.add(gDestino_paisL);
@@ -117,6 +146,20 @@ public class GestionarDestinos {
         gDestino_paisTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gDestinoLeft.add(gDestino_paisTF);
         gDestino_paisTF.setColumns(20);
+        gDestino_paisTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (Character.isLetter(ch) || Character.isISOControl(ch)) {
+                    String txtPais = String.valueOf(ch);
+                    gDestino_paisTF.setText(txtPais);
+                }
+                else {
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Escriba solo letras");
+                }
+            }
+        });
 
         gDestino_addB = new JButton("Nuevo");
         gDestino_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));

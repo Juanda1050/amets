@@ -29,8 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.JButton;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 import javax.swing.SwingConstants;
 import javax.swing.DefaultComboBoxModel;
@@ -122,6 +121,20 @@ public class GestionarEmpleados {
         gEmpleado_nombreTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gEmpleadoLeft.add(gEmpleado_nombreTF);
         gEmpleado_nombreTF.setColumns(10);
+        gEmpleado_nombreTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (Character.isLetter(ch) || Character.isISOControl(ch)) {
+                    String txtNombre = String.valueOf(ch);
+                    gEmpleado_nombreTF.setText(txtNombre);
+                }
+                else {
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Escriba solo letras");
+                }
+            }
+        });
 
         JLabel gEmpleado_apellidoL = new JLabel("Apellidos");
         gEmpleado_apellidoL.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -131,6 +144,20 @@ public class GestionarEmpleados {
         gEmpleado_apellidoTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gEmpleadoLeft.add(gEmpleado_apellidoTF);
         gEmpleado_apellidoTF.setColumns(10);
+        gEmpleado_apellidoTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (Character.isLetter(ch) || Character.isISOControl(ch)) {
+                    String txtApellido = String.valueOf(ch);
+                    gEmpleado_apellidoTF.setText(txtApellido);
+                }
+                else {
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Escriba solo letras");
+                }
+            }
+        });
 
         JLabel gEmpleado_contraL = new JLabel("Contrase\u00F1a");
         gEmpleado_contraL.setBackground(new Color(240, 240, 240));
