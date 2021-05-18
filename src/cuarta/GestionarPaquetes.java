@@ -71,6 +71,10 @@ public class GestionarPaquetes{
         });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> Cuarta
         JPanel gPaqueteTop = new JPanel();
         gPaqueteTop.setBorder(new EmptyBorder(20, 20, 20, 20));
         gPaqueteFrame.getContentPane().add(gPaqueteTop, BorderLayout.NORTH);
@@ -192,6 +196,7 @@ public class GestionarPaquetes{
         gPaquete_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPaqueteBottom.add(gPaquete_backB, BorderLayout.EAST);
         gPaquete_backB.addActionListener(e -> {
+<<<<<<< HEAD
 =======
         JPanel gestPaq_centerPanel = new JPanel();
         gestPaq_centerPanel.setBorder(new EmptyBorder(0, 20, 20, 20));
@@ -358,6 +363,9 @@ public class GestionarPaquetes{
         gestPaq_centerPanel.add(gestPaq_volverButton, gbc_gestPaq_volverButton);
         gestPaq_volverButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
         gestPaq_volverButton.addActionListener(e -> {
+>>>>>>> Cuarta
+=======
+
 >>>>>>> Cuarta
             VistaMA maFrame = new VistaMA();
             maFrame.runFrame();

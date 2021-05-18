@@ -3,6 +3,7 @@ package modelo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 public class EmpleadoDAO {
@@ -34,42 +35,61 @@ public class EmpleadoDAO {
         return datos;
     }
 
-    public int agregar(Empleado empleado){
-        if(empleado.getNombreEmpleado().equals("") || empleado.getApellidoEmpleado().equals("") || empleado.getContraseña().equals("") || empleado.getTurno() == 0 || empleado.getPuesto() == 0){
-            return 2;
-        }
-        else{
-            String sql = "INSERT INTO empleado(agentName,agentLastName,password,workShift,jobTitle) VALUES(?,?,?,?,?)";
-            try{
-                con = conectar.conectar();
-                ps = con.prepareStatement(sql);
-                ps.setString(1, empleado.getNombreEmpleado());
-                ps.setString(2, empleado.getApellidoEmpleado());
-                ps.setString(3, empleado.getContraseña());
-                ps.setInt(4,empleado.getTurno());
-                ps.setInt(5,empleado.getPuesto());
-                ps.executeUpdate();
-            }catch (Exception e){
-
-            }
-            return 1;
-        }
-    }
-
-    public int actualizar(Empleado empleado){
-        String sql = "UPDATE empleado SET agentName = ? agentLastName = ? password = ? workShift = ? jobTitle = ?";
+    public int agregar(Empleado empleado)
+    {
+        String sql = "INSERT INTO empleado(agentName, agentLastName, password, workShift, jobTitle) VALUES (?, ?, ?, ?, ?)";
         try{
             con = conectar.conectar();
             ps = con.prepareStatement(sql);
             ps.setString(1, empleado.getNombreEmpleado());
             ps.setString(2, empleado.getApellidoEmpleado());
             ps.setString(3, empleado.getContraseña());
-            ps.setInt(4,empleado.getTurno());
-            ps.setInt(5,empleado.getPuesto());
+            ps.setInt(4, empleado.getTurno());
+            ps.setInt(5, empleado.getPuesto());
             ps.executeUpdate();
-        }catch (Exception e){
+        }catch (SQLException e){
+            System.out.println("Error");
+            e.printStackTrace();
+        }
+
+        return 1;
+    }
+
+    public int Actualizar(Empleado empleado)
+    {
+        String sql = "UPDATE empleado SET agentName=?, agentLastName=?, password=?, workShift=?, jobTitle=? WHERE agentID=?";
+        int r = 0;
+        try
+        {
+            con = conectar.conectar();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, empleado.getNombreEmpleado());
+            ps.setString(2, empleado.getApellidoEmpleado());
+            ps.setString(3, empleado.getContraseña());
+            ps.setInt(4, empleado.getTurno());
+            ps.setInt(5, empleado.getPuesto());
+            ps.setInt(6, empleado.getIDempleado());
+            ps.executeUpdate();
+            r = ps.executeUpdate();
+        }
+        catch (Exception e)
+        {
+        }
+        return r;
+    }
+
+    public void eliminar(int id)
+    {
+        String sql = "DELETE FROM empleado WHERE agentID="+id;
+        try
+        {
+            con = conectar.conectar();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        }
+        catch (Exception e)
+        {
 
         }
-        return 1;
     }
 }

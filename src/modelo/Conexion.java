@@ -7,9 +7,14 @@ import java.sql.SQLException;
 public class Conexion
 {
     private static final String CONTROLADOR = "com.mysql.cj.jdbc.Driver";
+<<<<<<< HEAD:src/modelo/Conexion.java
     private static final String URL = "jdbc:mysql://localhost:3306/poo";
+=======
+
+    private static final String URL = "jdbc:mysql://localhost:3306/amets_travels";
+>>>>>>> Cuarta:src/Conexion.java
     private static final String USUARIO = "root";
-    private static final String CLAVE = "";
+    private static final String CLAVE = "!Pa2131xamL";
 
     public static Connection conectar()
     {

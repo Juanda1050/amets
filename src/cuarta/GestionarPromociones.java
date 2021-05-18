@@ -7,15 +7,21 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+<<<<<<< HEAD
 import java.awt.GridBagLayout;
+=======
+>>>>>>> Cuarta
 import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+<<<<<<< HEAD
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+=======
+>>>>>>> Cuarta
 import java.awt.Font;
 import java.awt.Frame;
 
@@ -23,16 +29,23 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+<<<<<<< HEAD
 import javax.swing.ScrollPaneConstants;
+=======
+>>>>>>> Cuarta
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.JButton;
+<<<<<<< HEAD
 import java.awt.Panel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import java.awt.SystemColor;
+=======
+import javax.swing.SwingConstants;
+>>>>>>> Cuarta
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.GridLayout;
@@ -80,6 +93,10 @@ public class GestionarPromociones{
         });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> Cuarta
         JPanel gPromoTop = new JPanel();
         gPromoTop.setBorder(new EmptyBorder(20, 20, 20, 20));
         gPromoFrame.getContentPane().add(gPromoTop, BorderLayout.NORTH);
@@ -217,6 +234,7 @@ public class GestionarPromociones{
         gPromo_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPromoBottom.add(gPromo_backB, BorderLayout.EAST);
         gPromo_backB.addActionListener(e -> {
+<<<<<<< HEAD
 =======
         JPanel gestPromo_centerPanel = new JPanel();
         gestPromo_centerPanel.setBorder(new EmptyBorder(0, 20, 20, 20));
@@ -412,6 +430,9 @@ public class GestionarPromociones{
         gestPromo_centerPanel.add(gestPromo_volverButton, gbc_gestPromo_volverButton);
         gestPromo_volverButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
         gestPromo_volverButton.addActionListener(e -> {
+>>>>>>> Cuarta
+=======
+
 >>>>>>> Cuarta
             VistaMA maFrame = new VistaMA();
             maFrame.runFrame();
