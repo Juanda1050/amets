@@ -15,7 +15,7 @@ public class PaquetesController implements ActionListener
     Paquetes p = new Paquetes();
     GestionarPaquetes vista = new GestionarPaquetes();
     DefaultTableModel modelo = new DefaultTableModel();
-    Boolean key;
+    boolean key;
 
     public PaquetesController(GestionarPaquetes v, PaquetesDAO dao)
     {

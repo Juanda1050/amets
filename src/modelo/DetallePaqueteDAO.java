@@ -15,6 +15,29 @@ public class DetallePaqueteDAO
     PreparedStatement ps;
     ResultSet rs;
 
+    public ArrayList<DP> sizeDP()
+    {
+        ArrayList<DP> listaDP = new ArrayList();
+        String sql = "SELECT * FROM detallepaquete";
+        try{
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                DP dp = new DP();
+                dp.setIdpaquete(rs.getInt(1));
+                dp.setIdVuelo(rs.getInt(2));
+                dp.setIdhotel(rs.getInt(3));
+                dp.setIddestino(rs.getInt(4));
+                listaDP.add(dp);
+            }
+        }catch (Exception e){
+
+        }
+        return listaDP;
+    }
+
     public int agregar(DP dp)
     {
         String sql = "INSERT INTO detallepaquete(packID, flightID, hotelID, destinationID) VALUES (?, ?, ?, ?)";
@@ -32,6 +55,25 @@ public class DetallePaqueteDAO
         }
 
         return 1;
+    }
+
+    public void eliminar(int packID, int flightID, int hotelID, int destID)
+    {
+        String sql = "DELETE FROM detallepaquete WHERE packID = ? AND flightID= ? AND hotelID= ? AND destinationID= ?; ";
+        try
+        {
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, packID);
+            ps.setInt(2, flightID);
+            ps.setInt(3, hotelID);
+            ps.setInt(4, destID);
+            ps.executeUpdate();
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     public ArrayList<Paquetes> listarPaquetes()
@@ -77,6 +119,24 @@ public class DetallePaqueteDAO
 
         }
         return listaDestinos;
+    }
+
+    public int paqueteID(String name)
+    {
+        int id=0;
+        String sql = "SELECT packID FROM paquetes WHERE packName= ?";
+        try{
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                id = rs.getInt("packID");
+            }
+            return id;
+        }catch (Exception e){
+            return 0;
+        }
     }
 
     public int destinoID(String city)
@@ -161,6 +221,73 @@ public class DetallePaqueteDAO
         }
         return listaHoteles;
     }
+
+    //Obtengo el nombre del hotel mediante su id
+    public String packName(int idPack)
+    {
+        String name=null;
+        ArrayList<String> names = new ArrayList<>();
+        String sql = "SELECT packName FROM paquetes WHERE packID=?";
+        try{
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idPack);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                name = rs.getString("packName");
+            }
+            return name;
+        }
+        catch (Exception e)
+        {
+            return "";
+        }
+    }
+
+    //Obtengo el nombre del hotel mediante su id
+    public String hotelName(int idHotel)
+    {
+        String name=null;
+        ArrayList<String> names = new ArrayList<>();
+        String sql = "SELECT hotelName FROM hotel WHERE hotelID=?";
+        try{
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idHotel);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                name = rs.getString("hotelName");
+            }
+            return name;
+        }
+        catch (Exception e)
+        {
+            return "";
+        }
+    }
+
+    //Obtengo el nombre del destino mediante su id
+    public String destName(int idDestino)
+    {
+        String name=null;
+        ArrayList<String> names = new ArrayList<>();
+        String sql = "SELECT city FROM destino WHERE destinationID=?";
+        try{
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idDestino);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                name = rs.getString("city");
+            }
+            return name;
+        }
+        catch (Exception e)
+        {
+            return "";
+        }
+    }
+
 
 
 
