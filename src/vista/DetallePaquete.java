@@ -1,5 +1,7 @@
 package vista;
 
+import modelo.DetallePaqueteController;
+import modelo.DetallePaqueteDAO;
 import vista.GestionarVuelos;
 
 import java.awt.*;
@@ -16,11 +18,14 @@ public class DetallePaquete {
     private JFrame dPaqueteFrame;
     public JTable dPaqueteTable;
     public JButton dPaquete_addB, dPaquete_saveB, dPaquete_editB, dPaquete_deleteB;
+    public JComboBox dPaquete_paqueteCB, dPaquete_vueloCB, dPaquete_hotelCB, dPaquete_destinoCB;
 
     public void runFrame() {
         EventQueue.invokeLater(() -> {
             try {
                 DetallePaquete window = new DetallePaquete();
+                DetallePaqueteDAO dao = new DetallePaqueteDAO();
+                DetallePaqueteController c = new DetallePaqueteController(window, dao);
                 window.dPaqueteFrame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -73,16 +78,25 @@ public class DetallePaquete {
         dPaquete_paqueteL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         dPaqueteLeft.add(dPaquete_paqueteL);
 
-        JComboBox dPaquete_paqueteCB = new JComboBox();
+        dPaquete_paqueteCB = new JComboBox();
         dPaquete_paqueteCB.setModel(new DefaultComboBoxModel(new String[] {"Seleccione un paquete"}));
         dPaquete_paqueteCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         dPaqueteLeft.add(dPaquete_paqueteCB);
+
+        JLabel dPaquete_destinoL = new JLabel("Destino");
+        dPaquete_destinoL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        dPaqueteLeft.add(dPaquete_destinoL);
+
+        dPaquete_destinoCB = new JComboBox();
+        dPaquete_destinoCB.setModel(new DefaultComboBoxModel(new String[] {"Seleccione un destino"}));
+        dPaquete_destinoCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        dPaqueteLeft.add(dPaquete_destinoCB);
 
         JLabel dPaquete_vueloL = new JLabel("Vuelo");
         dPaquete_vueloL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         dPaqueteLeft.add(dPaquete_vueloL);
 
-        JComboBox dPaquete_vueloCB = new JComboBox();
+        dPaquete_vueloCB = new JComboBox();
         dPaquete_vueloCB.setModel(new DefaultComboBoxModel(new String[] {"Seleccione un vuelo"}));
         dPaquete_vueloCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         dPaqueteLeft.add(dPaquete_vueloCB);
@@ -91,19 +105,10 @@ public class DetallePaquete {
         dPaquete_hotelL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         dPaqueteLeft.add(dPaquete_hotelL);
 
-        JComboBox dPaquete_hotelCB = new JComboBox();
+        dPaquete_hotelCB = new JComboBox();
         dPaquete_hotelCB.setModel(new DefaultComboBoxModel(new String[] {"Seleccione un hotel"}));
         dPaquete_hotelCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         dPaqueteLeft.add(dPaquete_hotelCB);
-
-        JLabel dPaquete_destinoL = new JLabel("Destino");
-        dPaquete_destinoL.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        dPaqueteLeft.add(dPaquete_destinoL);
-
-        JComboBox dPaquete_destinoCB = new JComboBox();
-        dPaquete_destinoCB.setModel(new DefaultComboBoxModel(new String[] {"Seleccione un destino"}));
-        dPaquete_destinoCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        dPaqueteLeft.add(dPaquete_destinoCB);
 
         dPaquete_addB = new JButton("Nuevo");
         dPaquete_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
