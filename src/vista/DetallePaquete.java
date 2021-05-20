@@ -1,8 +1,7 @@
 package vista;
 
-import modelo.DetallePaqueteController;
+import controlador.DetallePaqueteController;
 import modelo.DetallePaqueteDAO;
-import vista.GestionarVuelos;
 
 import java.awt.*;
 import javax.swing.*;

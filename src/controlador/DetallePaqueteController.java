@@ -1,5 +1,7 @@
-package modelo;
+package controlador;
 
+import modelo.DP;
+import modelo.DetallePaqueteDAO;
 import vista.DetallePaquete;
 
 import javax.swing.*;
@@ -25,6 +27,7 @@ public class DetallePaqueteController implements ActionListener
         this.vista.dPaquete_destinoCB.addActionListener(this);
         this.vista.dPaquete_addB.addActionListener(this);
         this.vista.dPaquete_saveB.addActionListener(this);
+        this.vista.dPaquete_editB.addActionListener(this);
         this.vista.dPaquete_deleteB.addActionListener(this);
         mostrarPaquetes();
         mostrarDestinos();
@@ -32,9 +35,22 @@ public class DetallePaqueteController implements ActionListener
 
     public void mostrarPaquetes()
     {
+        boolean k;
         for (int i =0; i<dao.listarPaquetes().size(); i++)
         {
-            vista.dPaquete_paqueteCB.addItem(dao.listarPaquetes().get(i).getName());
+            k=true;
+            int paqueteID = dao.paqueteID(dao.listarPaquetes().get(i).getName());
+            for(int j=0; j<dao.sizeDP().size(); j++)
+            {
+                if(paqueteID == dao.sizeDP().get(j).getIdpaquete())
+                {
+                    k=false;
+                }
+            }
+            if (k)
+            {
+                vista.dPaquete_paqueteCB.addItem(dao.listarPaquetes().get(i).getName());
+            }
         }
     }
     public void mostrarDestinos()
@@ -79,7 +95,14 @@ public class DetallePaqueteController implements ActionListener
         }
         if (e.getSource() == vista.dPaquete_saveB)
         {
+            boolean[] arr = {true, false, true, true};
+            estadosBotones(arr);
             guardar();
+        }
+        if (e.getSource() == vista.dPaquete_editB)
+        {
+            key = false;
+            Editar();
         }
         if(e.getSource() == vista.dPaquete_deleteB)
         {
@@ -121,11 +144,8 @@ public class DetallePaqueteController implements ActionListener
         }
         else
         {
-            int Ip = vista.dPaquete_paqueteCB.getSelectedIndex() - 1;
-            int Id = vista.dPaquete_destinoCB.getSelectedIndex() -1 ;
-
-            int paqueteID = dao.listarPaquetes().get(Ip).getID();
-            int destinoID = dao.listarDestinos().get(Id).getDestinationID();
+            int paqueteID = dao.paqueteID((String) vista.dPaquete_paqueteCB.getSelectedItem());
+            int destinoID = dao.destinoID((String) vista.dPaquete_destinoCB.getSelectedItem());
             int vueloID = (int) vista.dPaquete_vueloCB.getSelectedItem();
             int hotelID = dao.hotelID((String) vista.dPaquete_hotelCB.getSelectedItem());
             System.out.println(hotelID);
@@ -173,7 +193,7 @@ public class DetallePaqueteController implements ActionListener
         }
         else
         {
-            //Actualizar();
+            Actualizar();
         }
     }
 
@@ -194,18 +214,50 @@ public class DetallePaqueteController implements ActionListener
         else
         {
             areComboBoxEnabled(true);
+            vista.dPaquete_paqueteCB.setEnabled(false);
             boolean[] arr = {false, true, false, false};
             estadosBotones(arr);
-            String paquete = (String) vista.dPaqueteTable.getValueAt(fila, 0);
-            int flightID = Integer.parseInt((String) vista.dPaqueteTable.getValueAt(fila, 1).toString());
-            String hotelName = (String) vista.dPaqueteTable.getValueAt(fila, 2);
-            String destName = (String) vista.dPaqueteTable.getValueAt(fila, 3);
+            String paqueteEd = (String) vista.dPaqueteTable.getValueAt(fila, 0);
+            int flightIdEd = Integer.parseInt((String) vista.dPaqueteTable.getValueAt(fila, 1).toString());
+            String hotelNameEd = (String) vista.dPaqueteTable.getValueAt(fila, 2);
+            String destNameEd = (String) vista.dPaqueteTable.getValueAt(fila, 3);
+            rellenarCB(paqueteEd, flightIdEd, hotelNameEd, destNameEd);
+        }
+    }
 
-            /*vista.gPaquete_idTF.setText(""+id);
-            vista.gPaquete_nombreTF.setText(""+name);
-            vista.gPaquete_descripcionTF.setText(""+description);
-            vista.gPaquete_genteTF.setText(""+passengers);
-            vista.gPaquete_precioTF.setText(""+price);*/
+    public void Actualizar()
+    {
+        boolean k=true;
+        String p = (String) vista.dPaquete_paqueteCB.getSelectedItem();
+        String d = (String) vista.dPaquete_destinoCB.getSelectedItem();
+        String v = vista.dPaquete_vueloCB.getSelectedItem().toString();
+        String h = (String) vista.dPaquete_hotelCB.getSelectedItem();
+        if(p.compareTo("Seleccione paquete")==0 || d.compareTo("Seleccione destino")==0 || v.compareTo("Seleccione vuelo")==0 || h.compareTo("Seleccione hotel")==0)
+        {
+            JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
+            boolean[] arr = {false, true, false, false};
+            estadosBotones(arr);
+        }
+        else
+        {
+            int paqueteID = dao.paqueteID((String) vista.dPaquete_paqueteCB.getSelectedItem());
+            int destinoID = dao.destinoID((String) vista.dPaquete_destinoCB.getSelectedItem());
+            int vueloID = (int) vista.dPaquete_vueloCB.getSelectedItem();
+            int hotelID = dao.hotelID((String) vista.dPaquete_hotelCB.getSelectedItem());
+            dp.setIdpaquete(paqueteID);
+            dp.setIddestino(destinoID);
+            dp.setIdVuelo(vueloID);
+            dp.setIdhotel(hotelID);
+            int r = dao.Actualizar(dp);
+            if (r == 1) {
+                JOptionPane.showMessageDialog(null, "Registro actualizado exitosamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "Registro fallido");
+            }
+            areComboBoxEnabled(false);
+            limpiar();
+            cleanCB();
+            listar(vista.dPaqueteTable);
         }
     }
 
@@ -255,14 +307,55 @@ public class DetallePaqueteController implements ActionListener
     private void cleanCB()
     {
         vista.dPaquete_paqueteCB.removeAllItems();
-        vista.dPaquete_paqueteCB.addItem("Seleccione un paquete");
+        vista.dPaquete_paqueteCB.addItem("Seleccione paquete");
         mostrarPaquetes();
         vista.dPaquete_destinoCB.removeAllItems();
-        vista.dPaquete_destinoCB.addItem("Seleccione un destino");
+        vista.dPaquete_destinoCB.addItem("Seleccione destino");
         mostrarDestinos();
         vista.dPaquete_vueloCB.removeAllItems();
-        vista.dPaquete_vueloCB.addItem("Seleccione un vuelo");
+        vista.dPaquete_vueloCB.addItem("Seleccione vuelo");
         vista.dPaquete_hotelCB.removeAllItems();
-        vista.dPaquete_hotelCB.addItem("Seleccione un hotel");
+        vista.dPaquete_hotelCB.addItem("Seleccione hotel");
+    }
+
+    private void rellenarCB(String paqueteEd, int flightIdEd, String hotelNameEd , String destNameEd)
+    {
+        vista.dPaquete_paqueteCB.removeAllItems();
+        vista.dPaquete_paqueteCB.addItem(paqueteEd);
+        for (int i =0; i<dao.listarPaquetes().size(); i++)
+        {
+            if(dao.listarPaquetes().get(i).getName().compareTo(paqueteEd) != 0)
+            {
+                vista.dPaquete_paqueteCB.addItem(dao.listarPaquetes().get(i).getName());
+            }
+        }
+        vista.dPaquete_destinoCB.removeAllItems();
+        vista.dPaquete_destinoCB.addItem(destNameEd);
+        for (int i=0; i<dao.listarDestinos().size(); i++)
+        {
+            if (dao.listarDestinos().get(i).getCity().compareTo(destNameEd) != 0)
+            {
+                vista.dPaquete_destinoCB.addItem(dao.listarDestinos().get(i).getCity());
+            }
+        }
+        String city = (String) vista.dPaquete_destinoCB.getSelectedItem();
+        vista.dPaquete_vueloCB.removeAllItems();
+        vista.dPaquete_vueloCB.addItem(flightIdEd);
+        for (int i =0; i<dao.vuelosId(city).size(); i++)
+        {
+            if (dao.vuelosId(city).get(i) != flightIdEd)
+            {
+                vista.dPaquete_vueloCB.addItem(dao.vuelosId(city).get(i));
+            }
+        }
+        vista.dPaquete_hotelCB.removeAllItems();
+        vista.dPaquete_hotelCB.addItem(hotelNameEd);
+        for(int i =0; i<dao.nombresHoteles(city).size(); i++)
+        {
+            if (dao.nombresHoteles(city).get(i).compareTo(hotelNameEd) != 0)
+            {
+                vista.dPaquete_hotelCB.addItem(dao.nombresHoteles(city).get(i));
+            }
+        }
     }
 }

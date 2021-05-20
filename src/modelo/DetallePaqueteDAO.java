@@ -76,6 +76,34 @@ public class DetallePaqueteDAO
         }
     }
 
+    public int Actualizar(DP dp)
+    {
+        String sql2 = "UPDATE detallepaquete SET flightID=?, hotelID=?, destinationID=? WHERE packID = ?";
+        int r=0;
+        try
+        {
+            con = conectar();
+            ps = con.prepareStatement(sql2);
+            ps.setInt(1, dp.getIdVuelo());
+            ps.setInt(2, dp.getIdhotel());
+            ps.setInt(3, dp.getIddestino());
+            ps.setInt(4, dp.getIdpaquete());
+            r = ps.executeUpdate();
+            if(r==1)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        catch (Exception e)
+        {
+        }
+        return r;
+    }
+
     public ArrayList<Paquetes> listarPaquetes()
     {
         ArrayList<Paquetes> listaPaquetes = new ArrayList();

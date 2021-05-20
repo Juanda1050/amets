@@ -200,7 +200,6 @@ public class PaquetesController implements ActionListener
                 p.setDescription(description);
                 p.setPassengers(passengers);
                 p.setPrice(price);
-                dao.Actualizar(p);
                 int r = dao.Actualizar(p);
                 if (r == 1) {
                     JOptionPane.showMessageDialog(null, "Registro actualizado exitosamente");
