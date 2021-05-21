@@ -1,7 +1,5 @@
 package segunda;
 
-import primera.Credenciales;
-
 import java.awt.*;
 
 import javax.swing.*;
@@ -9,7 +7,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class RegistroUsuarios {
+public class RegistroUsuarios extends MenuPrincipal{
 
     private JFrame ruFrame;
     private JTextField ruDireccionTF;
@@ -19,34 +17,9 @@ public class RegistroUsuarios {
     private JTextField ruApellidoTF;
     private JTextField ruNacimientoTF;
 
-    /**
-     * Launch the application.
-     */
-    public void runFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    RegistroUsuarios window = new RegistroUsuarios();
-                    window.ruFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
-     * Create the application.
-     */
-    public RegistroUsuarios() {
-        initialize();
-    }
-
-    /**
-     * Initialize the contents of the frame.
-     */
-    private void initialize() {
+    public void initialize(int agentID) {
         ruFrame = new JFrame();
+        ruFrame.setVisible(true);
         ruFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
         ruFrame.setTitle("Amets Travel");
         ruFrame.setBounds(100, 100, 1280, 720);
@@ -158,8 +131,8 @@ public class RegistroUsuarios {
         ruSiguienteBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         ruBottom.add(ruSiguienteBtn, BorderLayout.EAST);
         ruSiguienteBtn.addActionListener(e -> {
-            SeleccionarPaquetes spFrame = new SeleccionarPaquetes();
-            spFrame.runFrame();
+            SeleccionarPaquete sp = new SeleccionarPaquete();
+            sp.initialize(agentID);
             ruFrame.setVisible(false);
         });
 
@@ -167,9 +140,7 @@ public class RegistroUsuarios {
         ruVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         ruBottom.add(ruVolverBtn, BorderLayout.WEST);
         ruVolverBtn.addActionListener(e -> {
-            MenuPrincipal mpFrame = new MenuPrincipal();
-            mpFrame.runFrame();
-            ruFrame.setVisible(false);
+
         });
     }
 

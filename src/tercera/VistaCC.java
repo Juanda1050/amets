@@ -1,7 +1,6 @@
 package tercera;
 
 import primera.Retorno;
-import segunda.MenuPrincipal;
 
 import java.awt.*;
 
@@ -23,6 +22,10 @@ public class VistaCC {
     /**
      * Launch the application.
      */
+    public static void main(String[] args) {
+        VistaCC cc = new VistaCC();
+        cc.runFrame();
+    }
     public void runFrame(){
         EventQueue.invokeLater(new Runnable() {
             public void run() {

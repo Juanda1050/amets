@@ -14,7 +14,7 @@ public class SelecPaqDAO {
     ResultSet rs;
     ArrayList<String> listaPaquetes;
 
-    public int listarPaquetes(int destino) {
+    public void listarPaquetes(int destino) {
 
         listaPaquetes = new ArrayList<>();
         PreparedStatement ps2;
@@ -39,7 +39,6 @@ public class SelecPaqDAO {
         }catch (Exception e){
 
         }
-        return 0;
     }
 
     public ArrayList<String> getListaPaquete(){
@@ -65,42 +64,70 @@ public class SelecPaqDAO {
         return arrayDestinos;
     }
 
-    public ArrayList<String> getData(int index){
+    public ArrayList<String> getData(String name){
 
         ArrayList<String> arrayTFData = new ArrayList<>();
-        PreparedStatement ps2,ps3;
-        ResultSet rs2, rs3;
+        PreparedStatement ps2,ps3,ps4,ps5;
+        ResultSet rs2,rs3,rs4,rs5;
+        int packID = 0, flightID = 0, hotelID = 0, airlineID = 0;
 
-        String sql = "SELECT * FROM paquetes WHERE `packID` = ?";
         try{
             con = conectar();
-            ps = con.prepareStatement(sql);
-            ps.setInt(1,index);
+            //Get pack data
+            ps = con.prepareStatement("SELECT * FROM paquetes WHERE packName = ?");
+            ps.setString(1,name);
             rs = ps.executeQuery();
-            while(rs.next()) {
-                String packName = rs.getString("packName");
-                arrayTFData.add(packName);
-                String packDesc = rs.getString("packDescription");
-                arrayTFData.add(packDesc);
-                int pass = rs.getInt("passengers");
-                arrayTFData.add(String.valueOf(pass));
-                double price = rs.getDouble("price");
-                arrayTFData.add(String.valueOf(price));
+            while(rs.next()){
+                packID = rs.getInt("packID");
+                arrayTFData.add(rs.getString("packDescription"));
+                arrayTFData.add(String.valueOf(rs.getFloat("price")));
+                arrayTFData.add(String.valueOf(rs.getInt("passengers")));
+            }
 
-                ps2 = con.prepareStatement("SELECT destinationID FROM detallepaquete WHERE `packID` = ?");
-                ps2.setInt(1,index);
-                rs2 = ps2.executeQuery();
-                while(rs2.next()){
-                    int destinoID = rs2.getInt("destinationID");
+            //Get IDs
+            ps2 = con.prepareStatement("SELECT * FROM detallepaquete WHERE packID = ?");
+            ps2.setInt(1,packID);
+            rs2 = ps2.executeQuery();
+            while(rs2.next()){
+                flightID = rs2.getInt("flightID");
+                hotelID = rs2.getInt("hotelID");
+            }
 
-                    ps3 =  con.prepareStatement("SELECT city FROM destino WHERE `destinationID` = ?");
-                    ps3.setInt(1,destinoID);
-                    rs3 = ps3.executeQuery();
-                    while(rs3.next()){
-                        String cityName = rs3.getString("city");
-                        arrayTFData.add(cityName);
-                    }
+            //Get hotel data
+            ps3 = con.prepareStatement("SELECT * FROM hotel WHERE hotelID = ?");
+            ps3.setInt(1,hotelID);
+            rs3 = ps3.executeQuery();
+            while(rs3.next()){
+                arrayTFData.add(rs3.getString("hotelName"));
+                arrayTFData.add(rs3.getString("location"));
+                int regimen = rs3.getInt("regime");
+                if(regimen==1){
+                    arrayTFData.add("Media Pensión");
+                }else if(regimen==2){
+                    arrayTFData.add("Pensión Completa");
                 }
+                arrayTFData.add(String.valueOf(rs3.getTime("entryDate")));
+                arrayTFData.add(String.valueOf(rs3.getTime("exitDate")));
+            }
+
+            //Get vuelo data
+            ps4 = con.prepareStatement("SELECT * FROM vuelo WHERE flightID = ?");
+            ps4.setInt(1,flightID);
+            rs4 = ps4.executeQuery();
+            while(rs4.next()){
+                arrayTFData.add(rs4.getString("origin"));
+                airlineID = rs4.getInt("airlineID");
+                arrayTFData.add(rs4.getDate("departureDate")+" - "+rs4.getTime("departureDate"));
+                arrayTFData.add(rs4.getDate("landingDate")+" - "+rs4.getTime("landingDate"));
+            }
+
+            //Get aerolinea data
+            ps5 = con.prepareStatement("SELECT * FROM aerolinea WHERE airlineID = ?");
+            ps5.setInt(1,airlineID);
+            rs5 = ps5.executeQuery();
+            while(rs5.next()){
+                arrayTFData.add(rs5.getString("airlineName"));
+                arrayTFData.add(rs5.getString("flyClass"));
             }
         }catch (Exception e){
 

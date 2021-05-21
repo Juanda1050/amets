@@ -1,7 +1,6 @@
-package primera;
+package segunda;
 
 import modelo.Conexion;
-import segunda.MenuPrincipal;
 import tercera.VistaMA;
 
 import java.awt.*;
@@ -19,40 +18,12 @@ public class Credenciales {
     private JTextField VcUsuarioTF;
     private JPasswordField VcContraTF;
 
-    /**
-     * Launch the application.
-     */
     public static void main(String[] args) {
-        Credenciales cFrame = new Credenciales();
-        cFrame.runFrame();
+        Credenciales credenciales = new Credenciales();
+        credenciales.initialize();
     }
-
-    public void runFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Credenciales window = new Credenciales();
-                    window.VcFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
-     * Create the application.
-     */
-    public Credenciales() {
-        initialize();
-    }
-
-    /**
-     * Initialize the contents of the frame.
-     */
-    private void initialize() {
+    public void initialize() {
         VcFrame = new JFrame();
-
         VcFrame.setBounds(100, 100, 500, 300);
         VcFrame.setResizable(false);
         VcFrame.setTitle("Amets Travels");
@@ -105,6 +76,8 @@ public class Credenciales {
         VcButton.addActionListener(e -> {
             Login();
         });
+
+        VcFrame.setVisible(true);
     }
 
     public void Login(){
@@ -129,7 +102,7 @@ public class Credenciales {
                 {
                     case 1:
                         MenuPrincipal mpFrame = new MenuPrincipal();
-                        mpFrame.runFrame();
+                        mpFrame.initialize(rs.getInt("agentID"));
                         VcFrame.setVisible(false);
                         break;
 

@@ -1,11 +1,7 @@
-package tercera;
+package segunda;
 
 import primera.Retorno;
-import segunda.RegistroUsuarios;
-import segunda.SeleccionarPaquetes;
-
 import java.awt.*;
-
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -17,18 +13,20 @@ import javax.swing.border.EmptyBorder;
 
 public class Ticket {
 
-    private JFrame frame;
+    protected JFrame frame;
     private JPanel panel;
-
+    protected JTextArea txtrCompraRealizada,txtrNumDeTarjeta;
+    protected JTextPane txtrAsfdas;
     /**
      * Launch the application.
      */
+
     public void runFrame(){
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     Ticket window = new Ticket();
-                    window.frame.setVisible(true);
+                    window.frame.setVisible(false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -46,10 +44,7 @@ public class Ticket {
     /**
      * Initialize the contents of the frame.
      */
-    private void initialize() {
-
-        VistaPP pp = new VistaPP();
-        SeleccionarPaquetes sp = new SeleccionarPaquetes();
+    public void initialize() {
 
         frame = new JFrame();
         frame.setResizable(false);
@@ -96,23 +91,23 @@ public class Ticket {
         panel.add(mid, BorderLayout.CENTER);
         mid.setLayout(new GridLayout(3, 1, 0, 0));
 
-        JTextArea txtrCompraRealizada = new JTextArea();
-        txtrCompraRealizada.setText("Compra Realizada\nTipo de pago: ");
+        txtrCompraRealizada = new JTextArea();
+        txtrCompraRealizada.setEditable(false);
         mid.add(txtrCompraRealizada);
 
-        JTextArea txtrNumDeTarjeta = new JTextArea();
-        txtrNumDeTarjeta.setText("Num. de Tarjeta: ");
+        txtrNumDeTarjeta = new JTextArea();
+        txtrNumDeTarjeta.setEditable(false);
         mid.add(txtrNumDeTarjeta);
 
-        JTextArea txtrAsfdas = new JTextArea();
-        txtrAsfdas.setText("Descripcion: ");
+        txtrAsfdas = new JTextPane();
+        txtrAsfdas.setEditable(false);
         mid.add(txtrAsfdas);
 
         JPanel bottompnt = new JPanel();
         panel.add(bottompnt, BorderLayout.SOUTH);
 
         JLabel lblNewLabel_2 = new JLabel("");
-        lblNewLabel_2.setIcon(new ImageIcon("F:\\david\\Documents\\FIME\\4to Semestre\\TPOO\\AMETS TRAVELS 70x70.png"));
+        lblNewLabel_2.setIcon(new ImageIcon("resources/AMETS TRAVELS 70x70.png"));
         lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
         bottompnt.add(lblNewLabel_2);
 

@@ -23,7 +23,7 @@ public class Retorno
         if (result == JOptionPane.OK_OPTION)
         {
             MenuPrincipal mpFrame = new MenuPrincipal();
-            mpFrame.runFrame();
+            mpFrame.initialize();
             return false;
         }
         else
