@@ -1,10 +1,13 @@
 package vista;
 
 <<<<<<< HEAD:src/vista/RegistroUsuarios.java
+<<<<<<< HEAD:src/vista/RegistroUsuarios.java
 
 import controlador.ControladorRU;
 import modelo.UsuarioDAO;
 
+=======
+>>>>>>> main:src/segunda/RegistroUsuarios.java
 =======
 >>>>>>> main:src/segunda/RegistroUsuarios.java
 import java.awt.*;
@@ -14,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+<<<<<<< HEAD:src/vista/RegistroUsuarios.java
 <<<<<<< HEAD:src/vista/RegistroUsuarios.java
 
 public class RegistroUsuarios {
@@ -48,6 +52,9 @@ public class RegistroUsuarios {
 =======
 public class RegistroUsuarios extends MenuPrincipal{
 >>>>>>> main:src/segunda/RegistroUsuarios.java
+=======
+public class RegistroUsuarios extends MenuPrincipal{
+>>>>>>> main:src/segunda/RegistroUsuarios.java
 
     public JFrame ruFrame;
     public JTextField ruDireccionTF;
@@ -57,6 +64,7 @@ public class RegistroUsuarios extends MenuPrincipal{
     public JTextField ruApellidoTF;
     public JTextField ruNacimientoTF;
     public JButton ruSiguienteBtn;
+<<<<<<< HEAD:src/vista/RegistroUsuarios.java
 
 <<<<<<< HEAD:src/vista/RegistroUsuarios.java
 
@@ -66,6 +74,10 @@ public class RegistroUsuarios extends MenuPrincipal{
     private void initialize() {
 
 =======
+    public void initialize(int agentID) {
+>>>>>>> main:src/segunda/RegistroUsuarios.java
+=======
+
     public void initialize(int agentID) {
 >>>>>>> main:src/segunda/RegistroUsuarios.java
         ruFrame = new JFrame();

@@ -11,7 +11,10 @@ public class Usuario
     int ID;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> main
     public Usuario(String nombre, String apellido, String nacimiento, String direccion, String email, String telefono, int ID) {
         Nombre = nombre;
         Apellido = apellido;
@@ -22,6 +25,9 @@ public class Usuario
         this.ID = ID;
     }
 
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
     public Usuario() {
     }
@@ -82,7 +88,11 @@ public class Usuario
         Telefono = telefono;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main
 =======
 }
 >>>>>>> main

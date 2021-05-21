@@ -1,6 +1,10 @@
 package primera;
 
+<<<<<<< HEAD
 import vista.MenuPrincipal;
+=======
+import segunda.MenuPrincipal;
+>>>>>>> main
 
 import javax.swing.*;
 import java.awt.*;

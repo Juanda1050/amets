@@ -3,8 +3,13 @@ package controlador;
 import modelo.Usuario;
 import modelo.UsuarioDAO;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import vista.RegistroUsuarios;
 import vista.SeleccionarPaquetes;
+=======
+import segunda.RegistroUsuarios;
+import segunda.SeleccionarPaquete;
+>>>>>>> main
 =======
 import segunda.RegistroUsuarios;
 import segunda.SeleccionarPaquete;
@@ -46,8 +51,13 @@ public class ControladorRU implements ActionListener
         {
             System.out.println("Exito");
 <<<<<<< HEAD
+<<<<<<< HEAD
             SeleccionarPaquetes spFrame = new SeleccionarPaquetes();
             spFrame.runFrame();
+=======
+            SeleccionarPaquete spFrame = new SeleccionarPaquete();
+            spFrame.initialize();
+>>>>>>> main
 =======
             SeleccionarPaquete spFrame = new SeleccionarPaquete();
             spFrame.initialize();
@@ -68,7 +78,11 @@ public class ControladorRU implements ActionListener
         }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main
 =======
 }
 >>>>>>> main

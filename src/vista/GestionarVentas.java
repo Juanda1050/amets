@@ -2,6 +2,10 @@ package vista;
 
 import controlador.VentaController;
 import modelo.VentaDAO;
+<<<<<<< HEAD:src/vista/GestionarVentas.java
+=======
+import tercera.VistaMA;
+>>>>>>> main:src/quinta/GestionarVentas.java
 
 import java.awt.*;
 

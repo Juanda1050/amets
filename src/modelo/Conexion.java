@@ -18,7 +18,11 @@ public class Conexion
         {
             Class.forName(CONTROLADOR);
             conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
+<<<<<<< HEAD:src/modelo/Conexion.java
             System.out.println("Modelo.Conexion OK");
+=======
+            System.out.println("modelo.Conexion OK");
+>>>>>>> main:src/Conexion.java
         }
         catch(ClassNotFoundException e)
         {

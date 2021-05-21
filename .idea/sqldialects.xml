@@ -4,8 +4,11 @@
     <file url="file://$PROJECT_DIR$/src/modelo/DestinoDAO.java" dialect="GenericSQL" />
   </component>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> main
   <component name="SqlResolveMappings">
     <file url="file://$PROJECT_DIR$/src/modelo/UsuarioDAO.java" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;@negative&quot;:&quot;1&quot;   }  } }}" />
     <file url="file://$PROJECT_DIR$/src/modelo/VuelosDAO.java" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;@negative&quot;:&quot;1&quot;   }  } }}" />
@@ -13,5 +16,8 @@
   </component>
 =======
 >>>>>>> Tercera
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
 </project>

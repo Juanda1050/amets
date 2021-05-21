@@ -1,7 +1,11 @@
 package controlador;
 
 
+<<<<<<< HEAD
 import vista.GestionarEmpleados;
+=======
+import cuarta.GestionarEmpleados;
+>>>>>>> main
 import modelo.Empleado;
 import modelo.EmpleadoDAO;
 

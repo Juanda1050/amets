@@ -2,8 +2,11 @@ package modelo;
 
 public class Vuelos {
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> main
     private int flightID;
     private String origin;
     private int destinationID;
@@ -88,5 +91,8 @@ public class Vuelos {
     public void setLanding(String landing) {
         this.landing = landing;
     }
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
 }

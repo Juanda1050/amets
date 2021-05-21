@@ -2,9 +2,16 @@ package controlador;
 
 import modelo.DestinoDAO;
 import modelo.Destinos;
+<<<<<<< HEAD
 import vista.GestionarDestinos;
 
 import javax.swing.*;
+=======
+import cuarta.GestionarDestinos;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+>>>>>>> main
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
