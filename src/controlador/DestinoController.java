@@ -2,7 +2,7 @@ package controlador;
 
 import modelo.DestinoDAO;
 import modelo.Destinos;
-import cuarta.GestionarDestinos;
+import vista.GestionarDestinos;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -84,12 +84,12 @@ public class DestinoController implements ActionListener {
         d.setCity(ciudad);
         d.setState(estado);
         d.setCountry(pais);
-       int r = dao.agregar(d);
-       if(r == 1){
-           JOptionPane.showMessageDialog(null, "Registro agregado exitosamente");
-       }else{
-           JOptionPane.showMessageDialog(null, "Registro fallido");
-       }
+        int r = dao.agregar(d);
+        if(r == 1){
+            JOptionPane.showMessageDialog(null, "Registro agregado exitosamente");
+        }else{
+            JOptionPane.showMessageDialog(null, "Registro fallido");
+        }
     }
 
     public void actualizar(){

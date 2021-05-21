@@ -1,10 +1,5 @@
 package vista;
 
-
-import controlador.ControladorRU;
-import modelo.UsuarioDAO;
-import segunda.MenuPrincipal;
-
 import java.awt.*;
 
 import javax.swing.*;
@@ -12,10 +7,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+public class RegistroUsuarios extends MenuPrincipal{
 
-public class RegistroUsuarios {
-
-    private JFrame ruFrame;
+    public JFrame ruFrame;
     public JTextField ruDireccionTF;
     public JTextField ruTelefonoTF;
     public JTextField ruEmailTF;
@@ -23,42 +17,12 @@ public class RegistroUsuarios {
     public JTextField ruApellidoTF;
     public JTextField ruNacimientoTF;
     public JButton ruSiguienteBtn;
-    public JButton ruVolverBtn;
 
-    /**
-     * Launch the application.
-     */
-    public void runFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    RegistroUsuarios window = new RegistroUsuarios();
-                    UsuarioDAO dao = new UsuarioDAO();
-                    ControladorRU c = new ControladorRU(window, dao);
-                    window.ruFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
-     * Create the application.
-     */
-    public RegistroUsuarios() {
-        initialize();
-    }
-
-
-    /**
-     * Initialize the contents of the frame.
-     */
-    private void initialize() {
-
+    public void initialize(int agentID) {
         ruFrame = new JFrame();
+        ruFrame.setVisible(true);
         ruFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        ruFrame.setTitle("Amets Travel");
+        ruFrame.setTitle("Registrar Usuario");
         ruFrame.setBounds(100, 100, 1280, 720);
         ruFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
@@ -167,14 +131,17 @@ public class RegistroUsuarios {
         ruSiguienteBtn = new JButton("Siguiente");
         ruSiguienteBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         ruBottom.add(ruSiguienteBtn, BorderLayout.EAST);
+        ruSiguienteBtn.addActionListener(e -> {
+            SeleccionarPaquete sp = new SeleccionarPaquete();
+            sp.initialize(agentID);
+            ruFrame.setVisible(false);
+        });
 
-        ruVolverBtn = new JButton("Volver");
+        JButton ruVolverBtn = new JButton("Volver");
         ruVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         ruBottom.add(ruVolverBtn, BorderLayout.WEST);
         ruVolverBtn.addActionListener(e -> {
-            MenuPrincipal mpFrame = new MenuPrincipal();
-            mpFrame.runFrame();
-            ruFrame.setVisible(false);
+
         });
     }
 
