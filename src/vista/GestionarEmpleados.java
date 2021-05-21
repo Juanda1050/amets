@@ -1,8 +1,7 @@
-package cuarta;
+package vista;
 
-import controlador.ControladorEmpleado;
+import controlador.EmpleadoController;
 import modelo.EmpleadoDAO;
-import tercera.VistaMA;
 
 import java.awt.EventQueue;
 
@@ -49,7 +48,7 @@ public class GestionarEmpleados {
                 try {
                     GestionarEmpleados window = new GestionarEmpleados();
                     EmpleadoDAO empleadoDAO = new EmpleadoDAO();
-                    ControladorEmpleado controladorEmpleado = new ControladorEmpleado(window, empleadoDAO);
+                    EmpleadoController controladorEmpleado = new EmpleadoController(window, empleadoDAO);
 
                     window.gEmpleadoFrame.setVisible(true);
                 } catch (Exception e) {
@@ -126,8 +125,6 @@ public class GestionarEmpleados {
             public void keyTyped(KeyEvent e) {
                 char ch = e.getKeyChar();
                 if (Character.isLetter(ch) || Character.isISOControl(ch)) {
-                    String txtNombre = String.valueOf(ch);
-                    gEmpleado_nombreTF.setText(txtNombre);
                 }
                 else {
                     e.consume();
@@ -149,8 +146,6 @@ public class GestionarEmpleados {
             public void keyTyped(KeyEvent e) {
                 char ch = e.getKeyChar();
                 if (Character.isLetter(ch) || Character.isISOControl(ch)) {
-                    String txtApellido = String.valueOf(ch);
-                    gEmpleado_apellidoTF.setText(txtApellido);
                 }
                 else {
                     e.consume();
@@ -159,7 +154,7 @@ public class GestionarEmpleados {
             }
         });
 
-        JLabel gEmpleado_contraL = new JLabel("Contrase\u00F1a");
+        JLabel gEmpleado_contraL = new JLabel("Contraseña");
         gEmpleado_contraL.setBackground(new Color(240, 240, 240));
         gEmpleado_contraL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gEmpleadoLeft.add(gEmpleado_contraL);

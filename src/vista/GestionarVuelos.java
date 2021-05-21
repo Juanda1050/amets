@@ -15,7 +15,6 @@ import java.util.Date;
 import com.toedter.calendar.JTextFieldDateEditor;
 import controlador.VuelosController;
 import modelo.VuelosDAO;
-import tercera.VistaMA;
 
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;

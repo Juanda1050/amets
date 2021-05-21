@@ -1,6 +1,4 @@
-package tercera;
-
-import primera.Retorno;
+package vista;
 
 import java.awt.*;
 

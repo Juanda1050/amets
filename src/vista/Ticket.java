@@ -1,6 +1,5 @@
-package segunda;
+package vista;
 
-import primera.Retorno;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;

@@ -2,7 +2,6 @@ package vista;
 
 import controlador.PaquetesController;
 import modelo.PaquetesDAO;
-import tercera.VistaMA;
 
 import java.awt.EventQueue;
 

@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class Conexion
 {
     private static final String CONTROLADOR = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/amets_travels";
+    private static final String URL = "jdbc:mysql://localhost:3306/ametsTravels";
     private static final String USUARIO = "root";
-    private static final String CLAVE = "!Pa2131xamL";
+    private static final String CLAVE = "";
 
     public static Connection conectar()
     {
@@ -18,7 +18,7 @@ public class Conexion
         {
             Class.forName(CONTROLADOR);
             conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-            System.out.println("modelo.Conexion OK");
+            System.out.println("Conexion OK");
         }
         catch(ClassNotFoundException e)
         {

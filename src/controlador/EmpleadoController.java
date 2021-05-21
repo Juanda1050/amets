@@ -1,7 +1,7 @@
 package controlador;
 
 
-import cuarta.GestionarEmpleados;
+import vista.GestionarEmpleados;
 import modelo.Empleado;
 import modelo.EmpleadoDAO;
 
@@ -11,14 +11,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class ControladorEmpleado implements ActionListener {
+public class EmpleadoController implements ActionListener {
     EmpleadoDAO dao = new EmpleadoDAO();
     Empleado empleado = new Empleado();
     GestionarEmpleados vista = new GestionarEmpleados();
     DefaultTableModel modelo = new DefaultTableModel();
     Boolean key;
 
-    public ControladorEmpleado(GestionarEmpleados v, EmpleadoDAO dao)
+    public EmpleadoController(GestionarEmpleados v, EmpleadoDAO dao)
     {
         int lista = dao.listar().size();
         if(lista>0)

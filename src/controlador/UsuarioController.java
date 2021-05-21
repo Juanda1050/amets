@@ -2,24 +2,23 @@ package controlador;
 
 import modelo.Usuario;
 import modelo.UsuarioDAO;
-import segunda.RegistroUsuarios;
-import segunda.SeleccionarPaquete;
+import vista.RegistroUsuarios;
+import vista.SeleccionarPaquete;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ControladorRU implements ActionListener
+public class UsuarioController implements ActionListener
 {
     UsuarioDAO dao;
     Usuario u = new Usuario();
     RegistroUsuarios vista = new RegistroUsuarios();
 
-    public ControladorRU(RegistroUsuarios v, UsuarioDAO dao)
+    public UsuarioController(RegistroUsuarios v, UsuarioDAO dao)
     {
         this.vista = v;
         this.dao = dao;
         this.vista.ruSiguienteBtn.addActionListener(this);
-
     }
 
     public void agregar()

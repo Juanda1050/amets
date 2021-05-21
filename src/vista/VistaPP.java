@@ -1,9 +1,7 @@
-package segunda;
+package vista;
 
 import com.toedter.calendar.JTextFieldDateEditor;
 import modelo.PagoDAO;
-import modelo.SelecPaqDAO;
-import primera.Retorno;
 
 import java.awt.*;
 import javax.swing.*;
@@ -27,7 +25,7 @@ public class VistaPP extends SeleccionarPaquete{
      * Launch the application.
      */
 
-    public void initialize(String desc, double precio, int agentID) {
+    public void initialize(String desc, double precio, int agentID, int userID) {
 
         frmAmetsTravel = new JFrame();
         frmAmetsTravel.setVisible(true);
@@ -233,7 +231,7 @@ public class VistaPP extends SeleccionarPaquete{
                     char last4digit = ppNumTarjetaTF.getText().charAt(18);
                     ticket.txtrNumDeTarjeta.setText("Tipo de Tarjeta: " + ppTarjetaBox.getSelectedItem() + "\nNum. de Tarjeta: ****-****-****-" + last1digit+last2digit+last3digit+last4digit + "\nTitular: " + ppTitularTF.getText());
                     ticket.txtrAsfdas.setText("Descripcion: " + desc);
-                    pagoDAO.guardarVenta(agentID, desc, String.valueOf(comboBox.getSelectedItem()), precio);
+                    pagoDAO.guardarVenta(agentID, desc, String.valueOf(comboBox.getSelectedItem()), precio, userID);
                     frmAmetsTravel.setVisible(false);
                     ticket.frame.setVisible(true);
                 }
@@ -241,7 +239,7 @@ public class VistaPP extends SeleccionarPaquete{
             }else if(comboBox.getSelectedItem()=="Efectivo"){
                 ticket.txtrCompraRealizada.setText("Compra Realizada\nTipo de pago: Efectivo");
                 ticket.txtrAsfdas.setText("Descripcion: " + desc);
-                pagoDAO.guardarVenta(agentID, desc, String.valueOf(comboBox.getSelectedItem()), precio);
+                pagoDAO.guardarVenta(agentID, desc, String.valueOf(comboBox.getSelectedItem()), precio, userID);
                 frmAmetsTravel.setVisible(false);
                 ticket.frame.setVisible(true);
             }else{

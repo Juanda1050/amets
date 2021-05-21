@@ -1,6 +1,4 @@
-package segunda;
-
-import tercera.VistaCC;
+package vista;
 
 import java.awt.*;
 

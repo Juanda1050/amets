@@ -1,6 +1,6 @@
-package primera;
+package vista;
 
-import segunda.MenuPrincipal;
+import vista.MenuPrincipal;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,8 +1,8 @@
-package cuarta;
+
+package vista;
 
 import controlador.DestinoController;
 import modelo.DestinoDAO;
-import tercera.VistaMA;
 
 import java.awt.*;
 

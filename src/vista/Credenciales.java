@@ -1,7 +1,6 @@
-package segunda;
+package vista;
 
 import modelo.Conexion;
-import tercera.VistaMA;
 
 import java.awt.*;
 

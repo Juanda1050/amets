@@ -16,7 +16,7 @@ public class PagoDAO {
     Connection con;
     PreparedStatement ps;
 
-    public void guardarVenta(int agentID, String description, String tpago, double price){
+    public void guardarVenta(int agentID, String description, String tpago, double price, int userID){
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
@@ -25,7 +25,7 @@ public class PagoDAO {
         try{
             con = conectar();
             ps = con.prepareStatement(sql);
-            ps.setInt(1,1);
+            ps.setInt(1,userID);
             ps.setInt(2, agentID);
             ps.setInt(3,1);
             ps.setString(4, description);

@@ -1,6 +1,4 @@
-package quinta;
-
-import vista.GestionarVuelos;
+package vista;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;

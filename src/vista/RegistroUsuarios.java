@@ -1,4 +1,4 @@
-package segunda;
+package vista;
 
 import java.awt.*;
 
@@ -22,7 +22,7 @@ public class RegistroUsuarios extends MenuPrincipal{
         ruFrame = new JFrame();
         ruFrame.setVisible(true);
         ruFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        ruFrame.setTitle("Amets Travel");
+        ruFrame.setTitle("Registrar Usuario");
         ruFrame.setBounds(100, 100, 1280, 720);
         ruFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {

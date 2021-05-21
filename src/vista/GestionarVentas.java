@@ -2,7 +2,6 @@ package vista;
 
 import controlador.VentaController;
 import modelo.VentaDAO;
-import tercera.VistaMA;
 
 import java.awt.*;
 

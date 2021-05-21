@@ -10,6 +10,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class VuelosController implements ActionListener {
@@ -50,6 +52,8 @@ public class VuelosController implements ActionListener {
         if(e.getSource() == vistaV.gVuelos_addB){
             AU = true;
             areTextFieldEditable(true);
+            vistaV.gVuelos_salidaDC.setText(vistaV.systemDate);
+            vistaV.gVuelos_llegadaDC.setText(vistaV.systemDate);
             boolean[] arr = {false, true, false, false};
             areButtonEnable(arr);
         }
@@ -69,6 +73,11 @@ public class VuelosController implements ActionListener {
     public void addFly(){
         if(vistaV.gVuelos_origenTF.getText().isEmpty() || vistaV.gVuelos_destinoCB.getSelectedIndex() == 0 || vistaV.gVuelos_aerolineaCB.getSelectedIndex() == 0 || vistaV.gVuelos_genteTF.getText().isEmpty() || vistaV.gVuelos_salidaDC.getText().isEmpty() || vistaV.gVuelos_llegadaDC.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
+            boolean[] arr = {true, false, true, true};
+            areButtonEnable(arr);
+        }
+        else if (vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate) || vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate)){
+            JOptionPane.showMessageDialog(null, "Ingrese una fecha mayor a la actual");
             boolean[] arr = {true, false, true, true};
             areButtonEnable(arr);
         }
@@ -102,9 +111,10 @@ public class VuelosController implements ActionListener {
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
             boolean[] arr = {true, false, true, true};
             areButtonEnable(arr);
-            if(!validarOrigen(vistaV.gVuelos_origenTF.getText().trim())){
-                JOptionPane.showMessageDialog(null, "Origen solo contiene caracteres");
-            }
+        }else if (vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate) || vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate)){
+            JOptionPane.showMessageDialog(null, "Ingrese una fecha mayor a la actual");
+            boolean[] arr = {true, false, true, true};
+            areButtonEnable(arr);
         }
         else{
             int id = Integer.parseInt(vistaV.gVuelos_idTF.getText());
@@ -242,14 +252,5 @@ public class VuelosController implements ActionListener {
         vistaV.gVuelos_saveB.setEnabled(a[1]);
         vistaV.gVuelos_editB.setEnabled(a[2]);
         vistaV.gVuelos_deleteB.setEnabled(a[3]);
-    }
-
-    private boolean validarOrigen(String datos){
-        return datos.matches("[a-zA-z]{1,45}");
-    }
-
-    private void keyTyped(KeyEvent event){
-        char c = event.getKeyChar();
-        if(Character.isLetter(c)) vistaV.gVuelos_origenTF.setText(vistaV.gVuelos_origenTF.getText() + c);
     }
 }

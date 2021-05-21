@@ -1,11 +1,12 @@
-package segunda;
+package vista;
 
-import modelo.PagoDAO;
 import modelo.SelecPaqDAO;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class SeleccionarPaquete extends RegistroUsuarios{
 
@@ -27,7 +28,7 @@ public class SeleccionarPaquete extends RegistroUsuarios{
     private JTextField spHoraSalidaSpn;
     Ticket ticket = new Ticket();
 
-    public void initialize(int agentID) {
+    public void initialize(int agentID, int userID) {
 
         SelecPaqDAO spDAO = new SelecPaqDAO();
 
@@ -35,7 +36,22 @@ public class SeleccionarPaquete extends RegistroUsuarios{
         spFrame.setVisible(true);
         spFrame.setBounds(100, 100, 1280, 720);
         spFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        spFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        spFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
         spFrame.getContentPane().setLayout(new BorderLayout(0, 0));
+        spFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                int result = JOptionPane.showConfirmDialog(spFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION)
+                {
+                    spFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                }
+                else if (result == JOptionPane.NO_OPTION)
+                {
+                    spFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                }
+            }
+        });
 
         JPanel spTop = new JPanel();
         spTop.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -291,7 +307,7 @@ public class SeleccionarPaquete extends RegistroUsuarios{
             /* Se genera el ticket */
             ticket.runFrame();
             VistaPP pp = new VistaPP();
-            pp.initialize(spDescripcionTF.getText(),Double.parseDouble(spPrecioTF.getText()),agentID);
+            pp.initialize(spDescripcionTF.getText(),Double.parseDouble(spPrecioTF.getText()),agentID, userID);
             spFrame.setVisible(false);
         });
     }
