@@ -10,6 +10,19 @@ public class Usuario
     String Telefono;
     int ID;
 
+<<<<<<< HEAD
+=======
+    public Usuario(String nombre, String apellido, String nacimiento, String direccion, String email, String telefono, int ID) {
+        Nombre = nombre;
+        Apellido = apellido;
+        Nacimiento = nacimiento;
+        Direccion = direccion;
+        Email = email;
+        Telefono = telefono;
+        this.ID = ID;
+    }
+
+>>>>>>> main
     public Usuario() {
     }
 
@@ -68,4 +81,8 @@ public class Usuario
     public void setTelefono(String telefono) {
         Telefono = telefono;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

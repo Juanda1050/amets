@@ -1,8 +1,5 @@
 package vista;
 
-import com.toedter.calendar.JDateChooser;
-import tercera.VistaMA;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;

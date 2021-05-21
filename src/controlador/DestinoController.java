@@ -2,7 +2,7 @@ package controlador;
 
 import modelo.DestinoDAO;
 import modelo.Destinos;
-import cuarta.GestionarDestinos;
+import vista.GestionarDestinos;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -83,12 +83,12 @@ public class DestinoController implements ActionListener {
         d.setCity(ciudad);
         d.setState(estado);
         d.setCountry(pais);
-       int r = dao.agregar(d);
-       if(r == 1){
-           JOptionPane.showMessageDialog(null, "Registro agregado exitosamente");
-       }else{
-           JOptionPane.showMessageDialog(null, "Registro fallido");
-       }
+        int r = dao.agregar(d);
+        if(r == 1){
+            JOptionPane.showMessageDialog(null, "Registro agregado exitosamente");
+        }else{
+            JOptionPane.showMessageDialog(null, "Registro fallido");
+        }
     }
 
     public void actualizar(){
@@ -113,7 +113,7 @@ public class DestinoController implements ActionListener {
         if(row == 1){
             JOptionPane.showMessageDialog(null, "Seleccione un Destino");
         }else{
-            int id = Integer.parseInt((String) vistaD.gDestinoTable.getValueAt(row, 0).toString());
+            int id = Integer.parseInt(vistaD.gDestinoTable.getValueAt(row, 0).toString());
             dao.delete(id);
             JOptionPane.showMessageDialog(null, "Destino eliminado exitosamente");
         }
@@ -121,8 +121,6 @@ public class DestinoController implements ActionListener {
 
     public void listar(JTable destinosTable){
         modelo = (DefaultTableModel) destinosTable.getModel();
-        destinosTable.setModel(modelo);
-
         Object[]object = new Object[4];
         int registro = dao.listar().size();
         for (int i = 0; i < registro; i++){
@@ -132,6 +130,7 @@ public class DestinoController implements ActionListener {
             object[3] = dao.listar().get(i).getCountry();
             modelo.addRow(object);
         }
+        vistaD.gDestinoTable.setModel(modelo);
     }
 
     private void limpiar(){

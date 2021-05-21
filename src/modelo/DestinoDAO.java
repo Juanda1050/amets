@@ -2,10 +2,12 @@ package modelo;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import static modelo.Conexion.conectar;
 
 public class DestinoDAO{
+    Conexion conectar = new Conexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
@@ -13,7 +15,7 @@ public class DestinoDAO{
     public int agregar(Destinos d){
         String sql = "INSERT INTO destino(city, state, country) VALUES (?, ?, ?)";
         try{
-            con = conectar();
+            con = conectar.conectar();
             ps = con.prepareStatement(sql);
             ps.setString(1, d.getCity());
             ps.setString(2, d.getState());
@@ -30,7 +32,7 @@ public class DestinoDAO{
         int r = 0;
         String sql = "UPDATE destino SET city=?, state=?, country=? WHERE destinationID=?";
         try {
-            con = conectar();
+            con = conectar.conectar();
             ps = con.prepareStatement(sql);
             ps.setString(1, d.getCity());
             ps.setString(2, d.getState());
@@ -50,20 +52,19 @@ public class DestinoDAO{
     public void delete(int id){
         String sql = "DELETE FROM destino WHERE destinationID="+id;
         try{
-            con = conectar();
+            con = conectar.conectar();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
         }catch (Exception e){
         }
     }
 
-    public ArrayList<Destinos> listar()
+    public List<Destinos> listar()
     {
-        ArrayList<Destinos> listaDestino = new ArrayList();
-        Destinos destinos;
+        List<Destinos> listaDestino = new ArrayList();
         String sql = "SELECT * FROM destino";
         try{
-            con = conectar();
+            con = conectar.conectar();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
