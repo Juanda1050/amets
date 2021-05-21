@@ -1,18 +1,4 @@
-<<<<<<< HEAD:src/vista/VistaMA.java
 package vista;
-=======
-package tercera;
-
-import quinta.GestionarHoteles;
-import quinta.GestionarReportes;
-import vista.GestionarVentas;
-import vista.GestionarVuelos;
-import cuarta.GestionarDestinos;
-import cuarta.GestionarEmpleados;
-import vista.GestionarPaquetes;
-import cuarta.GestionarPromociones;
-import segunda.Credenciales;
->>>>>>> main:src/tercera/VistaMA.java
 
 import java.awt.*;
 

@@ -1,8 +1,5 @@
 package vista;
 
-import tercera.VistaCC;
-import vista.RegistroUsuarios;
-
 import java.awt.*;
 
 import javax.swing.*;

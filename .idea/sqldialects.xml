@@ -6,18 +6,15 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
-<<<<<<< HEAD
-=======
->>>>>>> main
+>>>>>>> Quinta
   <component name="SqlResolveMappings">
     <file url="file://$PROJECT_DIR$/src/modelo/UsuarioDAO.java" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;@negative&quot;:&quot;1&quot;   }  } }}" />
     <file url="file://$PROJECT_DIR$/src/modelo/VuelosDAO.java" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;@negative&quot;:&quot;1&quot;   }  } }}" />
     <file url="PROJECT" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;@negative&quot;:&quot;1&quot;   }  } }}" />
   </component>
+<<<<<<< HEAD
 =======
 >>>>>>> Tercera
-<<<<<<< HEAD
->>>>>>> main
 =======
->>>>>>> main
+>>>>>>> Quinta
 </project>

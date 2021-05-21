@@ -1,15 +1,5 @@
 package vista;
 
-<<<<<<< HEAD:src/vista/RegistroUsuarios.java
-<<<<<<< HEAD:src/vista/RegistroUsuarios.java
-
-import controlador.ControladorRU;
-import modelo.UsuarioDAO;
-
-=======
->>>>>>> main:src/segunda/RegistroUsuarios.java
-=======
->>>>>>> main:src/segunda/RegistroUsuarios.java
 import java.awt.*;
 
 import javax.swing.*;
@@ -17,44 +7,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-<<<<<<< HEAD:src/vista/RegistroUsuarios.java
-<<<<<<< HEAD:src/vista/RegistroUsuarios.java
-
-public class RegistroUsuarios {
-
-    private JFrame ruFrame;
-    public JTextField ruDireccionTF;
-    public JTextField ruTelefonoTF;
-    public JTextField ruEmailTF;
-    public JTextField ruNombreTF;
-    public JTextField ruApellidoTF;
-    public JTextField ruNacimientoTF;
-    public JButton ruSiguienteBtn;
-    public JButton ruVolverBtn;
-
-    /**
-     * Launch the application.
-     */
-    public void runFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    RegistroUsuarios window = new RegistroUsuarios();
-                    UsuarioDAO dao = new UsuarioDAO();
-                    ControladorRU c = new ControladorRU(window, dao);
-                    window.ruFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-=======
 public class RegistroUsuarios extends MenuPrincipal{
->>>>>>> main:src/segunda/RegistroUsuarios.java
-=======
-public class RegistroUsuarios extends MenuPrincipal{
->>>>>>> main:src/segunda/RegistroUsuarios.java
 
     public JFrame ruFrame;
     public JTextField ruDireccionTF;
@@ -64,26 +17,12 @@ public class RegistroUsuarios extends MenuPrincipal{
     public JTextField ruApellidoTF;
     public JTextField ruNacimientoTF;
     public JButton ruSiguienteBtn;
-<<<<<<< HEAD:src/vista/RegistroUsuarios.java
-
-<<<<<<< HEAD:src/vista/RegistroUsuarios.java
-
-    /**
-     * Initialize the contents of the frame.
-     */
-    private void initialize() {
-
-=======
-    public void initialize(int agentID) {
->>>>>>> main:src/segunda/RegistroUsuarios.java
-=======
 
     public void initialize(int agentID) {
->>>>>>> main:src/segunda/RegistroUsuarios.java
         ruFrame = new JFrame();
         ruFrame.setVisible(true);
         ruFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        ruFrame.setTitle("Amets Travel");
+        ruFrame.setTitle("Registrar Usuario");
         ruFrame.setBounds(100, 100, 1280, 720);
         ruFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
@@ -192,16 +131,13 @@ public class RegistroUsuarios extends MenuPrincipal{
         ruSiguienteBtn = new JButton("Siguiente");
         ruSiguienteBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         ruBottom.add(ruSiguienteBtn, BorderLayout.EAST);
-<<<<<<< HEAD:src/vista/RegistroUsuarios.java
-=======
         ruSiguienteBtn.addActionListener(e -> {
             SeleccionarPaquete sp = new SeleccionarPaquete();
             sp.initialize(agentID);
             ruFrame.setVisible(false);
         });
->>>>>>> main:src/segunda/RegistroUsuarios.java
 
-        ruVolverBtn = new JButton("Volver");
+        JButton ruVolverBtn = new JButton("Volver");
         ruVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         ruBottom.add(ruVolverBtn, BorderLayout.WEST);
         ruVolverBtn.addActionListener(e -> {

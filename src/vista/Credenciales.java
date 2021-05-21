@@ -1,13 +1,6 @@
-<<<<<<< HEAD:src/vista/Credenciales.java
 package vista;
 
 import modelo.Conexion;
-=======
-package segunda;
-
-import modelo.Conexion;
-import tercera.VistaMA;
->>>>>>> main:src/segunda/Credenciales.java
 
 import java.awt.*;
 
