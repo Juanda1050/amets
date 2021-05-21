@@ -2,8 +2,9 @@ package controlador;
 
 import modelo.Usuario;
 import modelo.UsuarioDAO;
-import vista.RegistroUsuarios;
-import segunda.SeleccionarPaquetes;
+import segunda.MenuPrincipal;
+import segunda.RegistroUsuarios;
+import segunda.SeleccionarPaquete;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,17 +14,19 @@ public class ControladorRU implements ActionListener
     UsuarioDAO dao;
     Usuario u = new Usuario();
     RegistroUsuarios vista = new RegistroUsuarios();
+    int UserId;
 
-    public ControladorRU(RegistroUsuarios v, UsuarioDAO dao)
+    public ControladorRU(RegistroUsuarios v, UsuarioDAO dao, int UserId)
     {
         this.vista = v;
         this.dao = dao;
-        this.vista.ruSiguienteBtn.addActionListener(this);
-
+        this.UserId = UserId;
+        vista.ruSiguienteBtn.addActionListener(this);
     }
 
     public void agregar()
     {
+        System.out.println("Holaaa");
         String Nom = vista.ruNombreTF.getText();
         String Ap = vista.ruApellidoTF.getText();
         String Nacimiento = vista.ruNacimientoTF.getText();
@@ -40,8 +43,9 @@ public class ControladorRU implements ActionListener
         if(r==1)
         {
             System.out.println("Exito");
-            SeleccionarPaquetes spFrame = new SeleccionarPaquetes();
-            spFrame.runFrame();
+            SeleccionarPaquete spFrame = new SeleccionarPaquete();
+            vista.ruFrame.setVisible(false);
+            spFrame.initialize(UserId);
 
         }
         else

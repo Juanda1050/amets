@@ -1,8 +1,7 @@
 package segunda;
 
-import primera.Credenciales;
 import tercera.VistaCC;
-import vista.RegistroUsuarios;
+import segunda.RegistroUsuarios;
 
 import java.awt.*;
 
@@ -11,37 +10,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class MenuPrincipal{
+public class MenuPrincipal extends Credenciales{
 
     private JFrame mpFrame;
-    /**
-     * Launch the application.
-     */
-    public void runFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    MenuPrincipal window = new MenuPrincipal();
-                    window.mpFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
-    /**
-     * Create the application.
-     */
-    public MenuPrincipal() {
-        initialize();
-    }
+    public void initialize(int agentID) {
 
-    /**
-     * Initialize the contents of the frame.
-     */
-    private void initialize() {
         mpFrame = new JFrame();
+        mpFrame.setVisible(true);
         mpFrame.setTitle("Amets Travels");
         mpFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
         mpFrame.setBounds(100, 100, 1280, 720);
@@ -88,9 +64,10 @@ public class MenuPrincipal{
         mpVentaBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         mpMidWest.add(mpVentaBtn);
         mpVentaBtn.addActionListener(e -> {
-            RegistroUsuarios ruFrame = new RegistroUsuarios();
-            ruFrame.runFrame();
             mpFrame.setVisible(false);
+            RegistroUsuarios ru = new RegistroUsuarios();
+            ru.runFrame(agentID);
+
         });
 
         JButton mpCajaBtn = new JButton("Corte de Caja");
@@ -112,7 +89,7 @@ public class MenuPrincipal{
         mpBottom.add(mpSalirBtn, BorderLayout.EAST);
         mpSalirBtn.addActionListener(e -> {
             Credenciales credentials = new Credenciales();
-            credentials.runFrame();
+            credentials.initialize();
             mpFrame.setVisible(false);
         });
     }

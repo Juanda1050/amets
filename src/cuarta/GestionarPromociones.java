@@ -29,7 +29,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.JButton;
-import java.awt.Panel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import java.awt.SystemColor;

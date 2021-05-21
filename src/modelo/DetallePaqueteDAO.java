@@ -149,6 +149,7 @@ public class DetallePaqueteDAO
         return listaDestinos;
     }
 
+    //Obtener el id del paquete mediante su nombre
     public int paqueteID(String name)
     {
         int id=0;
@@ -167,6 +168,7 @@ public class DetallePaqueteDAO
         }
     }
 
+    //Obtener el id del destino mediante la ciudad
     public int destinoID(String city)
     {
         int id=0;
@@ -185,6 +187,7 @@ public class DetallePaqueteDAO
         }
     }
 
+    //Obtener el id del hotel mediante su nombre
     public int hotelID(String hotel)
     {
         int id=0;
@@ -315,9 +318,6 @@ public class DetallePaqueteDAO
             return "";
         }
     }
-
-
-
 
 
 }
