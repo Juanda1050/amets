@@ -76,7 +76,7 @@ public class VuelosController implements ActionListener {
             boolean[] arr = {true, false, true, true};
             areButtonEnable(arr);
         }
-        else if (vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate) || !vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate)){
+        else if (vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate) || vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate)){
             JOptionPane.showMessageDialog(null, "Ingrese una fecha mayor a la actual");
             boolean[] arr = {true, false, true, true};
             areButtonEnable(arr);
@@ -111,7 +111,7 @@ public class VuelosController implements ActionListener {
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
             boolean[] arr = {true, false, true, true};
             areButtonEnable(arr);
-        }else if (vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate) || !vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate)){
+        }else if (vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate) || vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate)){
             JOptionPane.showMessageDialog(null, "Ingrese una fecha mayor a la actual");
             boolean[] arr = {true, false, true, true};
             areButtonEnable(arr);
