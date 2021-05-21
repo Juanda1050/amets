@@ -2,8 +2,8 @@ package controlador;
 
 import modelo.Usuario;
 import modelo.UsuarioDAO;
-import vista.RegistroUsuarios;
-import segunda.SeleccionarPaquetes;
+import segunda.RegistroUsuarios;
+import segunda.SeleccionarPaquete;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,8 +40,8 @@ public class ControladorRU implements ActionListener
         if(r==1)
         {
             System.out.println("Exito");
-            SeleccionarPaquetes spFrame = new SeleccionarPaquetes();
-            spFrame.runFrame();
+            SeleccionarPaquete spFrame = new SeleccionarPaquete();
+            spFrame.initialize();
 
         }
         else

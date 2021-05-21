@@ -1,6 +1,6 @@
-package primera;
+package segunda;
 
-import segunda.MenuPrincipal;
+import modelo.Conexion;
 import tercera.VistaMA;
 
 import java.awt.*;
@@ -8,50 +8,25 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Credenciales {
 
     private JFrame VcFrame;
     private JTextField VcUsuarioTF;
-    private JTextField VcContraTF;
+    private JPasswordField VcContraTF;
 
-    /**
-     * Launch the application.|
-     */
     public static void main(String[] args) {
-        Credenciales cFrame = new Credenciales();
-        cFrame.runFrame();
+        Credenciales credenciales = new Credenciales();
+        credenciales.initialize();
     }
-
-    public void runFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Credenciales window = new Credenciales();
-                    window.VcFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
-     * Create the application.
-     */
-    public Credenciales() {
-        initialize();
-    }
-
-    /**
-     * Initialize the contents of the frame.
-     */
-    private void initialize() {
+    public void initialize() {
         VcFrame = new JFrame();
         VcFrame.setBounds(100, 100, 500, 300);
-        VcFrame.setTitle("Amets Travels");
-        VcFrame.setLocationRelativeTo(null);
         VcFrame.setResizable(false);
+        VcFrame.setTitle("Amets Travels");
         VcFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 int result = JOptionPane.showConfirmDialog(VcFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
@@ -90,35 +65,61 @@ public class Credenciales {
         panel_1.add(VcContraL);
         VcContraL.setBounds(0, 137, 76, 24);
 
-        VcContraTF = new JTextField();
+        VcContraTF = new JPasswordField();
         panel_1.add(VcContraTF);
         VcContraTF.setColumns(10);
         VcContraTF.setBounds(80, 137, 119, 24);
-
-        Object[] items = new Object[] {"Tipo de usuario 1", "Tipo de usuario 2"};
-        JComboBox VcComboBox = new JComboBox(items);
-        VcComboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        panel_1.add(VcComboBox);
-        VcComboBox.setBounds(80, 57, 119, 24);
 
         JButton VcButton = new JButton("Ingresar");
         panel_1.add(VcButton);
         VcButton.setBounds(99, 174, 81, 24);
         VcButton.addActionListener(e -> {
-            switch(VcComboBox.getSelectedIndex())
-            {
-                case 0:
-                    MenuPrincipal mpFrame = new MenuPrincipal();
-                    mpFrame.runFrame();
-                    VcFrame.setVisible(false);
-                    break;
-
-                case 1:
-                    VistaMA maFrame = new VistaMA();
-                    maFrame.runFrame();
-                    VcFrame.setVisible(false);
-                    break;
-            }
+            Login();
         });
+
+        VcFrame.setVisible(true);
+    }
+
+    public void Login(){
+
+        PreparedStatement st;
+        ResultSet rs;
+
+        String user = VcUsuarioTF.getText();
+        String password = String.valueOf(VcContraTF.getPassword());
+
+        String userSearch = "SELECT * FROM `empleado` WHERE `agentName` = ? AND `password` = ?";
+        Conexion con = new Conexion();
+        try {
+            st = con.conectar().prepareStatement(userSearch);
+            st.setString(1, user);
+            st.setString(2, password);
+            rs = st.executeQuery();
+
+            if(rs.next()){
+                int type = rs.getInt("jobTitle");
+                switch(type)
+                {
+                    case 1:
+                        MenuPrincipal mpFrame = new MenuPrincipal();
+                        mpFrame.initialize(rs.getInt("agentID"));
+                        VcFrame.setVisible(false);
+                        break;
+
+                    case 2:
+                        VistaMA maFrame = new VistaMA();
+                        maFrame.runFrame();
+                        VcFrame.setVisible(false);
+                        break;
+
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Revisa tus credenciales y vuelve a intentarlo", "Credenciales Inválidas", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 }

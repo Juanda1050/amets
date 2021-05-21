@@ -8,7 +8,7 @@ import cuarta.GestionarDestinos;
 import cuarta.GestionarEmpleados;
 import cuarta.GestionarPaquetes;
 import cuarta.GestionarPromociones;
-import primera.Credenciales;
+import segunda.Credenciales;
 
 import java.awt.*;
 
@@ -176,7 +176,7 @@ public class VistaMA {
         Bottom.add(maVolverButton);
         maVolverButton.addActionListener(e -> {
             Credenciales credentials = new Credenciales();
-            credentials.runFrame();
+            credentials.initialize();
             frame.setVisible(false);
         });
     }
