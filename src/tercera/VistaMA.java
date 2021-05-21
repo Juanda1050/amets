@@ -2,11 +2,11 @@ package tercera;
 
 import quinta.GestionarHoteles;
 import quinta.GestionarReportes;
-import quinta.GestionarVentas;
+import vista.GestionarVentas;
 import vista.GestionarVuelos;
 import cuarta.GestionarDestinos;
 import cuarta.GestionarEmpleados;
-import cuarta.GestionarPaquetes;
+import vista.GestionarPaquetes;
 import cuarta.GestionarPromociones;
 import segunda.Credenciales;
 

@@ -1,38 +1,47 @@
 package modelo;
 
-public class Paquetes {
-    private int packID;
-    private String packName;
-    private String packDescription;
-    private int passengers;
-    private double price;
+public class Paquetes
+{
+    int ID;
+    String name;
+    String description;
+    int passengers;
+    float price;
 
-    public Paquetes(){
-
+    public Paquetes()
+    {
     }
 
-    public int getPackID() {
-        return packID;
+    public Paquetes(int ID, String name, String description, int passengers, float price) {
+        this.ID = ID;
+        this.name = name;
+        this.description = description;
+        this.passengers = passengers;
+        this.price = price;
     }
 
-    public void setPackID(int packID) {
-        this.packID = packID;
+    public int getID() {
+        return ID;
     }
 
-    public String getPackName() {
-        return packName;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
-    public void setPackName(String packName) {
-        this.packName = packName;
+    public String getName() {
+        return name;
     }
 
-    public String getPackDescription() {
-        return packDescription;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setPackDescription(String packDescription) {
-        this.packDescription = packDescription;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getPassengers() {
@@ -43,12 +52,11 @@ public class Paquetes {
         this.passengers = passengers;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
-
 }

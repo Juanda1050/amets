@@ -1,5 +1,7 @@
-package cuarta;
+package vista;
 
+import controlador.PaquetesController;
+import modelo.PaquetesDAO;
 import tercera.VistaMA;
 
 import java.awt.EventQueue;
@@ -32,7 +34,7 @@ import java.awt.GridLayout;
 public class GestionarPaquetes{
 
     private JFrame gPaqueteFrame;
-    public JTextField gPaquete_nombreTF, gPaquete_genteTF, gPaquete_precioTF, gPaquete_descripcionTF;
+    public JTextField gPaquete_idTF, gPaquete_nombreTF, gPaquete_genteTF, gPaquete_precioTF, gPaquete_descripcionTF;
     public JButton gPaquete_addB, gPaquete_saveB, gPaquete_editB, gPaquete_deleteB;
     public JTable gPaqueteTable;
 
@@ -40,7 +42,9 @@ public class GestionarPaquetes{
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+                    PaquetesDAO dao = new PaquetesDAO();
                     GestionarPaquetes window = new GestionarPaquetes();
+                    PaquetesController c = new PaquetesController(window, dao);
                     window.gPaqueteFrame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -88,6 +92,16 @@ public class GestionarPaquetes{
         gPaqueteLeft.setBorder(new EmptyBorder(20, 20, 2, 20));
         gPaqueteFrame.getContentPane().add(gPaqueteLeft, BorderLayout.WEST);
         gPaqueteLeft.setLayout(new GridLayout(0, 2, 20, 100));
+
+        JLabel gPaquete_idL = new JLabel("ID");
+        gPaquete_idL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPaqueteLeft.add(gPaquete_idL);
+
+        gPaquete_idTF = new JTextField();
+        gPaquete_idTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPaqueteLeft.add(gPaquete_idTF);
+        gPaquete_idTF.setColumns(10);
+        gPaquete_idTF.setEditable(false);
 
         JLabel gPaquete_nombreL = new JLabel("Nombre");
         gPaquete_nombreL.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -150,8 +164,8 @@ public class GestionarPaquetes{
         gPaqueteTable.setModel(tModel);
         tModel.addColumn("ID Paquete");
         tModel.addColumn("Nombre");
-        tModel.addColumn("Personas");
         tModel.addColumn("Descripcion");
+        tModel.addColumn("Personas");
         tModel.addColumn("Precio");
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );

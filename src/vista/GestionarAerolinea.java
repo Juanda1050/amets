@@ -157,7 +157,7 @@ public class GestionarAerolinea {
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         gAerolineaTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
         gAerolineaTable.setRowHeight(50);
-        
+
         //Generando estilo de JTable
         JTableHeader tHeader = gAerolineaTable.getTableHeader();
         tHeader.setPreferredSize(new Dimension(0, 25));

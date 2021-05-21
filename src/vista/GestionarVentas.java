@@ -1,5 +1,7 @@
-package quinta;
+package vista;
 
+import controlador.VentaController;
+import modelo.VentaDAO;
 import tercera.VistaMA;
 
 import java.awt.*;
@@ -7,7 +9,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.event.ActionListener;
@@ -28,11 +29,13 @@ public class GestionarVentas {
     /**
      * Launch the application.
      */
-    private JTable gVentasTable;
+    public JTable gVentasTable;
     public void runFrame(){
         EventQueue.invokeLater(() -> {
             try {
                 GestionarVentas window = new GestionarVentas();
+                VentaDAO dao = new VentaDAO();
+                VentaController c = new VentaController(window, dao);
                 window.gVentasFrame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();

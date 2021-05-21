@@ -9,14 +9,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 import controlador.VuelosController;
-import modelo.Vuelos;
 import modelo.VuelosDAO;
 import tercera.VistaMA;
 
@@ -32,6 +29,11 @@ public class GestionarVuelos {
     public JComboBox<String> gVuelos_destinoCB, gVuelos_aerolineaCB;
     public JButton gVuelos_addB, gVuelos_saveB, gVuelos_editB, gVuelos_deleteB;
     public JTable gVuelosTable;
+    Date fechaActual = new Date();
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public String systemDate = format.format(fechaActual);
+    private int limiteGente = 1;
+    private int limiteOrigen = 45;
 
     public void runFrame(){
         EventQueue.invokeLater(() -> {
@@ -99,7 +101,7 @@ public class GestionarVuelos {
         gVuelos_idTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelos_idTF.setEditable(false);
         gVuelosLeft.add(gVuelos_idTF);
-        gVuelos_idTF.setColumns(20);
+        gVuelos_idTF.setColumns(10);
 
         JLabel gVuelos_origenL = new JLabel("Origen");
         gVuelos_origenL.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -113,11 +115,13 @@ public class GestionarVuelos {
             public void keyTyped(KeyEvent e) {
                 char ch = e.getKeyChar();
                 if(Character.isLetter(ch) || Character.isISOControl(ch)){
-                    String txtOrigen = String.valueOf(ch);
-                    gVuelos_origenTF.setText("" + txtOrigen);
                 }else{
                     e.consume();
-                    JOptionPane.showMessageDialog(null, "Escriba solo letras");
+                    JOptionPane.showMessageDialog(null, "Solo admite letras");
+                }
+                if (gVuelos_origenTF.getText().length() >= limiteOrigen){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
                 }
             }
         });
@@ -146,18 +150,21 @@ public class GestionarVuelos {
         gVuelosLeft.add(gVuelos_genteL);
 
         gVuelos_genteTF = new JTextField();
-        gVuelos_genteTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        gVuelos_genteTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelos_genteTF.setColumns(10);
         gVuelos_genteTF.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 char ch = e.getKeyChar();
                 if(Character.isDigit(ch) || Character.isISOControl(ch)){
-                    String txtGente = String.valueOf(ch);
-                    gVuelos_origenTF.setText("" + txtGente);
-                }else{
+                }
+                else {
                     e.consume();
-                    JOptionPane.showMessageDialog(null, "Solo admite numeros");
+                    JOptionPane.showMessageDialog(null, "Solo admite números");
+                }
+                if (gVuelos_genteTF.getText().length() >= limiteGente){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
                 }
             }
         });
@@ -175,7 +182,6 @@ public class GestionarVuelos {
         gVuelosLeft.add(gVuelos_llegadaL);
 
         gVuelos_llegadaDC = new JTextFieldDateEditor("yyyy-MM-dd HH:mm", "####-##-## ##:##", '_');
-        gVuelos_llegadaDC.setDate(new Date());
         gVuelosLeft.add(gVuelos_llegadaDC);
 
         gVuelos_addB = new JButton("Nuevo");
