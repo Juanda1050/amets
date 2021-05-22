@@ -67,8 +67,8 @@ public class SelecPaqDAO {
     public ArrayList<String> getData(String name){
 
         ArrayList<String> arrayTFData = new ArrayList<>();
-        PreparedStatement ps2,ps3,ps4,ps5;
-        ResultSet rs2,rs3,rs4,rs5;
+        PreparedStatement ps2,ps3,ps4,ps5, ps6;
+        ResultSet rs2,rs3,rs4,rs5, rs6;
         int packID = 0, flightID = 0, hotelID = 0, airlineID = 0;
 
         try{
@@ -80,7 +80,14 @@ public class SelecPaqDAO {
             while(rs.next()){
                 packID = rs.getInt("packID");
                 arrayTFData.add(rs.getString("packDescription"));
-                arrayTFData.add(String.valueOf(rs.getFloat("price")));
+                ps6 = con.prepareStatement("SELECT * FROM promociones WHERE packID = ?");
+                ps6.setInt(1, packID);
+                rs6 = ps6.executeQuery();
+                if(rs6.next()){
+                    arrayTFData.add(String.valueOf((rs.getFloat("price"))-(rs6.getFloat("discount"))));
+                }else{
+                    arrayTFData.add(String.valueOf(rs.getFloat("price")));
+                }
                 arrayTFData.add(String.valueOf(rs.getInt("passengers")));
             }
 

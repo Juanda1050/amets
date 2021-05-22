@@ -133,7 +133,7 @@ public class Ticket {
         job.setJobName("Print Data");
 
         job.setPrintable(new Printable() {
-
+\
             public int print(Graphics pg, PageFormat pf, int pageNum){
                 pf.setOrientation(PageFormat.LANDSCAPE);
                 if(pageNum>0){

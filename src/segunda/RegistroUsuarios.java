@@ -29,6 +29,7 @@ public class RegistroUsuarios {
      * Launch the application.
      */
     public void runFrame(int UserId){
+        System.out.println(UserId);
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {

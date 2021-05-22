@@ -57,17 +57,14 @@ public class DetallePaqueteDAO
         return 1;
     }
 
-    public void eliminar(int packID, int flightID, int hotelID, int destID)
+    public void eliminar(int packID)
     {
-        String sql = "DELETE FROM detallepaquete WHERE packID = ? AND flightID= ? AND hotelID= ? AND destinationID= ?; ";
+        String sql = "DELETE FROM detallepaquete WHERE packID = ?";
         try
         {
             con = conectar();
             ps = con.prepareStatement(sql);
             ps.setInt(1, packID);
-            ps.setInt(2, flightID);
-            ps.setInt(3, hotelID);
-            ps.setInt(4, destID);
             ps.executeUpdate();
         }
         catch (Exception e)

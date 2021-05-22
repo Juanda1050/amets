@@ -227,7 +227,6 @@ public class DetallePaqueteController implements ActionListener
 
     public void Actualizar()
     {
-        boolean k=true;
         String p = (String) vista.dPaquete_paqueteCB.getSelectedItem();
         String d = (String) vista.dPaquete_destinoCB.getSelectedItem();
         String v = vista.dPaquete_vueloCB.getSelectedItem().toString();
@@ -273,10 +272,7 @@ public class DetallePaqueteController implements ActionListener
             if(lista>1)
             {
                 int packID = dao.paqueteID((String) vista.dPaqueteTable.getValueAt(fila, 0).toString());
-                int flightID = Integer.parseInt((String) vista.dPaqueteTable.getValueAt(fila, 1).toString());
-                int hotelID = dao.hotelID((String) vista.dPaqueteTable.getValueAt(fila, 2).toString());
-                int destID = dao.destinoID((String) vista.dPaqueteTable.getValueAt(fila, 3).toString());
-                dao.eliminar(packID, flightID, hotelID, destID);
+                dao.eliminar(packID);
                 JOptionPane.showMessageDialog(null, "Datos de paquete eliminado");
             }
             else
@@ -284,10 +280,7 @@ public class DetallePaqueteController implements ActionListener
                 boolean[] arr = {true, false, false, false};
                 estadosBotones(arr);
                 int packID = dao.paqueteID((String) vista.dPaqueteTable.getValueAt(fila, 0).toString());
-                int flightID = Integer.parseInt((String) vista.dPaqueteTable.getValueAt(fila, 1).toString());
-                int hotelID = dao.hotelID((String) vista.dPaqueteTable.getValueAt(fila, 2).toString());
-                int destID = dao.destinoID((String) vista.dPaqueteTable.getValueAt(fila, 3).toString());
-                dao.eliminar(packID, flightID, hotelID, destID);
+                dao.eliminar(packID);
                 JOptionPane.showMessageDialog(null, "Usuario eliminado");
             }
 
