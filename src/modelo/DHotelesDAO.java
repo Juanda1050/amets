@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static modelo.Conexion.conectar;
+
 public class DHotelesDAO {
     Conexion conectar = new Conexion();
     Connection con;
@@ -17,7 +19,7 @@ public class DHotelesDAO {
     public int agregar(DHoteles dh){
         String sql = "INSERT INTO detallehotel(hotelID, roomID, price) VALUES (?, ?, ?)";
         try{
-            con = conectar.conectar();
+            con = conectar();
             ps = con.prepareStatement(sql);
             ps.setInt(1, dh.getHotelID());
             ps.setInt(2, dh.getRoomID());
@@ -31,14 +33,14 @@ public class DHotelesDAO {
     }
 
     public int actualizar(DHoteles dh){
-        String sql = "UPDATE detallehotel SET  hotelID = ?, roomID = ?, price = ? ";
         int r = 0;
+        String sql = "UPDATE detallehotel SET roomID = ?, price = ? WHERE hotelID = ?";
         try{
-            con = conectar.conectar();
+            con = conectar();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, dh.getHotelID());
-            ps.setInt(2, dh.getRoomID());
-            ps.setFloat(3, dh.getPrice());
+            ps.setInt(1, dh.getRoomID());
+            ps.setFloat(2, dh.getPrice());
+            ps.setInt(3, dh.getHotelID());
             r = ps.executeUpdate();
             if(r == 1){
                 return 1;
@@ -53,15 +55,83 @@ public class DHotelesDAO {
     }
 
     public void eliminar(int id){
-        String sql = "DELETE FROM detallehotel WHERE hotelID = "+id;
+        String sql = "DELETE FROM detallehotel WHERE hotelID = ?";
         try{
-            con = conectar.conectar();
+            con = conectar();
             ps = con.prepareStatement(sql);
+            ps.setInt(1,id);
             ps.executeUpdate();
         }catch (SQLException e){
             System.out.println("Error en eliminar un registro");
             e.printStackTrace();
         }
+    }
+
+    public int hotelID(String hotel)
+    {
+        int id=0;
+        String sql = "SELECT hotelID FROM hotel WHERE hotelName= ?";
+        try
+        {
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, hotel);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                id = rs.getInt("hotelID");
+            }
+            return id;
+        }
+        catch (Exception e)
+        {
+            return 0;
+        }
+    }
+    public int roomID(String room)
+    {
+        int id=0;
+        String sql = "SELECT roomID FROM categoriahotel WHERE roomName= ?";
+        try
+        {
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, room);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                id = rs.getInt("roomID");
+            }
+            return id;
+        }
+        catch (Exception e)
+        {
+            return 0;
+        }
+    }
+
+    public ArrayList<Hoteles> listarhoteles(){
+        ArrayList<Hoteles> hoteles = new ArrayList<>();
+        String sql = "SELECT * FROM hotel";
+        try{
+            con = conectar.conectar();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Hoteles h = new Hoteles();
+                h.setHotelID(rs.getInt(1));
+                h.setDestinationID(rs.getInt(2));
+                h.setHotelName(rs.getString(3));
+                h.setLocation(rs.getString(4));
+                h.setRating(rs.getString(5));
+                h.setGuests(rs.getInt(6));
+                h.setRegime(rs.getInt(7));
+                h.setAvailability(rs.getString(8));
+                h.setEntryDate(rs.getString(9));
+                h.setExitDate(rs.getString(10));
+                hoteles.add(h);
+            }
+        }catch (Exception e){
+        }
+        return hoteles;
     }
 
     public List listar(){
@@ -70,7 +140,7 @@ public class DHotelesDAO {
         PreparedStatement ps2, ps3;
         ResultSet rs2, rs3;
         try{
-            con = conectar.conectar();
+            con = conectar();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()) {
@@ -100,7 +170,7 @@ public class DHotelesDAO {
         ArrayList<String> hotel = new ArrayList<>();
         String sql = "SELECT * FROM hotel";
         try{
-            con = conectar.conectar();
+            con = conectar();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             hotel.add("Seleccione un hotel");
@@ -116,12 +186,11 @@ public class DHotelesDAO {
         ArrayList<String> room = new ArrayList<>();
         String sql = "SELECT * FROM categoriahotel";
         try{
-            con = conectar.conectar();
+            con = conectar();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            room.add("Seleccione una habitacion");
             while(rs.next()){
-                String roomid = rs.getInt("roomID") + (" - ") + rs.getString("roomName");
+                String roomid = rs.getString("roomName");
                 room.add(roomid);
             }
         }catch (Exception e){
@@ -129,4 +198,7 @@ public class DHotelesDAO {
         return room;
     }
 }
+
+
+
 

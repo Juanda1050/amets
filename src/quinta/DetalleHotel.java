@@ -24,16 +24,16 @@ public class DetalleHotel {
 
     public void runFrame() {
         EventQueue.invokeLater(() -> {
-                try {
-                    DetalleHotel window = new DetalleHotel();
-                    DHotelesDAO dao = new DHotelesDAO();
-                    DHotelesController controller = new DHotelesController(window, dao);
-                    window.dHotelFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-        }
+            try {
+                DetalleHotel window = new DetalleHotel();
+                DHotelesDAO dao = new DHotelesDAO();
+                DHotelesController controller = new DHotelesController(window, dao);
+                window.dHotelFrame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     public DetalleHotel() {
         initialize();
