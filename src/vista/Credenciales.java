@@ -25,6 +25,7 @@ public class Credenciales {
         VcFrame = new JFrame();
         VcFrame.setBounds(100, 100, 500, 300);
         VcFrame.setResizable(false);
+        VcFrame.setLocationRelativeTo(null);
         VcFrame.setTitle("Amets Travels");
         VcFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
@@ -40,37 +41,37 @@ public class Credenciales {
             }
         });
 
-        JPanel panel = new JPanel();
-        VcFrame.getContentPane().add(panel, BorderLayout.WEST);
-        panel.setLayout(new BorderLayout(10, 10));
+        JPanel paquete = new JPanel();
+        VcFrame.getContentPane().add(paquete, BorderLayout.WEST);
+        paquete.setLayout(new BorderLayout(10, 10));
 
         JLabel VcLogoL = new JLabel(new ImageIcon("resources/logo.png"));
-        panel.add(VcLogoL, BorderLayout.WEST);
+        paquete.add(VcLogoL, BorderLayout.WEST);
 
-        JPanel panel_1 = new JPanel();
-        VcFrame.getContentPane().add(panel_1);
-        panel_1.setLayout(null);
+        JPanel paquete_1 = new JPanel();
+        VcFrame.getContentPane().add(paquete_1);
+        paquete_1.setLayout(null);
 
         JLabel VcUsuarioL = new JLabel("Usuario");
-        panel_1.add(VcUsuarioL);
+        paquete_1.add(VcUsuarioL);
         VcUsuarioL.setBounds(0, 100, 60, 24);
 
         VcUsuarioTF = new JTextField();
-        panel_1.add(VcUsuarioTF);
+        paquete_1.add(VcUsuarioTF);
         VcUsuarioTF.setColumns(10);
         VcUsuarioTF.setBounds(80, 100, 119, 24);
 
         JLabel VcContraL = new JLabel("Contraseña");
-        panel_1.add(VcContraL);
+        paquete_1.add(VcContraL);
         VcContraL.setBounds(0, 137, 76, 24);
 
         VcContraTF = new JPasswordField();
-        panel_1.add(VcContraTF);
+        paquete_1.add(VcContraTF);
         VcContraTF.setColumns(10);
         VcContraTF.setBounds(80, 137, 119, 24);
 
         JButton VcButton = new JButton("Ingresar");
-        panel_1.add(VcButton);
+        paquete_1.add(VcButton);
         VcButton.setBounds(99, 174, 81, 24);
         VcButton.addActionListener(e -> {
             Login();
