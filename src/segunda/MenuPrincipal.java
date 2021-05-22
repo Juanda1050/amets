@@ -13,7 +13,7 @@ public class MenuPrincipal extends Credenciales{
 
     private JFrame mpFrame;
 
-    public void initialize(int agentID) {
+    public void initializeMenu(int agentID) {
 
         mpFrame = new JFrame();
         mpFrame.setVisible(true);
@@ -64,7 +64,7 @@ public class MenuPrincipal extends Credenciales{
         mpMidWest.add(mpVentaBtn);
         mpVentaBtn.addActionListener(e -> {
             RegistroUsuarios ru = new RegistroUsuarios();
-            ru.initialize(agentID);
+            ru.initializeRU(agentID);
             mpFrame.setVisible(false);
         });
 
@@ -73,7 +73,7 @@ public class MenuPrincipal extends Credenciales{
         mpMidWest.add(mpCajaBtn);
         mpCajaBtn.addActionListener(e -> {
             VistaCC ccFrame = new VistaCC();
-            ccFrame.runFrame();
+            ccFrame.runFrame(agentID);
             mpFrame.setVisible(false);
         });
 
@@ -87,7 +87,7 @@ public class MenuPrincipal extends Credenciales{
         mpBottom.add(mpSalirBtn, BorderLayout.EAST);
         mpSalirBtn.addActionListener(e -> {
             Credenciales credentials = new Credenciales();
-            credentials.initialize();
+            credentials.initializeCred();
             mpFrame.setVisible(false);
         });
     }

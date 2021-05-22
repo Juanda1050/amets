@@ -9,7 +9,7 @@ import java.awt.event.WindowEvent;
 
 public class RegistroUsuarios extends MenuPrincipal{
 
-    private JFrame ruFrame;
+    protected JFrame ruFrame;
     private JTextField ruDireccionTF;
     private JTextField ruTelefonoTF;
     private JTextField ruEmailTF;
@@ -17,7 +17,7 @@ public class RegistroUsuarios extends MenuPrincipal{
     private JTextField ruApellidoTF;
     private JTextField ruNacimientoTF;
 
-    public void initialize(int agentID) {
+    public void initializeRU(int agentID) {
         ruFrame = new JFrame();
         ruFrame.setVisible(true);
         ruFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -132,7 +132,7 @@ public class RegistroUsuarios extends MenuPrincipal{
         ruBottom.add(ruSiguienteBtn, BorderLayout.EAST);
         ruSiguienteBtn.addActionListener(e -> {
             SeleccionarPaquete sp = new SeleccionarPaquete();
-            sp.initialize(agentID);
+            sp.initializeSP(agentID);
             ruFrame.setVisible(false);
         });
 
@@ -140,7 +140,8 @@ public class RegistroUsuarios extends MenuPrincipal{
         ruVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         ruBottom.add(ruVolverBtn, BorderLayout.WEST);
         ruVolverBtn.addActionListener(e -> {
-
+            mpFrame.setVisible(true);
+            ruFrame.setVisible(false);
         });
     }
 

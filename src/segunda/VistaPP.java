@@ -27,7 +27,7 @@ public class VistaPP extends SeleccionarPaquete{
      * Launch the application.
      */
 
-    public void initialize(String desc, double precio, int agentID) {
+    public void initializePP(String desc, double precio, int agentID) {
 
         frmAmetsTravel = new JFrame();
         frmAmetsTravel.setVisible(true);
@@ -205,7 +205,8 @@ public class VistaPP extends SeleccionarPaquete{
         ppVolverButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
         Bottom.add(ppVolverButton);
         ppVolverButton.addActionListener(e -> {
-
+            spFrame.setVisible(true);
+            frmAmetsTravel.setVisible(false);
         });
 
         JButton ppMenuButton = new JButton("Menu");

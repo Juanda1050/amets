@@ -2,6 +2,7 @@ package segunda;
 
 import modelo.PagoDAO;
 import modelo.SelecPaqDAO;
+import primera.Retorno;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -9,7 +10,7 @@ import java.awt.*;
 
 public class SeleccionarPaquete extends RegistroUsuarios{
 
-    private JFrame spFrame;
+    protected JFrame spFrame;
     public JTextPane spDescripcionTF;
     private JTextField spOrigenFT;
     private JTextField spHotelTF;
@@ -27,7 +28,7 @@ public class SeleccionarPaquete extends RegistroUsuarios{
     private JTextField spHoraSalidaSpn;
     Ticket ticket = new Ticket();
 
-    public void initialize(int agentID) {
+    public void initializeSP(int agentID) {
 
         SelecPaqDAO spDAO = new SelecPaqDAO();
 
@@ -280,10 +281,18 @@ public class SeleccionarPaquete extends RegistroUsuarios{
         JButton spVolverBtn = new JButton("Volver");
         spVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
         spBottom.add(spVolverBtn);
+        spVolverBtn.addActionListener(e -> {
+            ruFrame.setVisible(true);
+            spFrame.setVisible(false);
+        });
 
         JButton spMenuBtn = new JButton("Men\u00FA");
         spMenuBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
         spBottom.add(spMenuBtn);
+        spMenuBtn.addActionListener(e -> {
+            Retorno rtn = new Retorno();
+            spFrame.setVisible(rtn.runReturn());
+        });
 
         btnSiguiente.setFont(new Font("Tahoma", Font.PLAIN, 14));
         spBottom.add(btnSiguiente);
@@ -291,7 +300,7 @@ public class SeleccionarPaquete extends RegistroUsuarios{
             /* Se genera el ticket */
             ticket.runFrame();
             VistaPP pp = new VistaPP();
-            pp.initialize(spDescripcionTF.getText(),Double.parseDouble(spPrecioTF.getText()),agentID);
+            pp.initializePP(spDescripcionTF.getText(),Double.parseDouble(spPrecioTF.getText()),agentID);
             spFrame.setVisible(false);
         });
     }

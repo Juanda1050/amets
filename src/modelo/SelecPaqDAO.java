@@ -80,7 +80,7 @@ public class SelecPaqDAO {
             while(rs.next()){
                 packID = rs.getInt("packID");
                 arrayTFData.add(rs.getString("packDescription"));
-                arrayTFData.add(String.valueOf(rs.getFloat("price")));
+                arrayTFData.add(String.valueOf(rs.getInt("price")));
                 arrayTFData.add(String.valueOf(rs.getInt("passengers")));
             }
 

@@ -176,7 +176,7 @@ public class VistaMA {
         Bottom.add(maVolverButton);
         maVolverButton.addActionListener(e -> {
             Credenciales credentials = new Credenciales();
-            credentials.initialize();
+            credentials.initializeCred();
             frame.setVisible(false);
         });
     }
