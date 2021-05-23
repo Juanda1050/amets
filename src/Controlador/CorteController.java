@@ -2,18 +2,21 @@ package Controlador;
 
 import modelo.CorteDAO;
 import modelo.VentaDAO;
+import primera.Retorno;
 import tercera.VistaCC;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class CorteController implements ActionListener
+public class CorteController implements ActionListener, WindowListener
 {
     VistaCC vista;
     VentaDAO vDao;
@@ -22,12 +25,14 @@ public class CorteController implements ActionListener
     DefaultTableModel modelo = new DefaultTableModel();
     float total;
 
-    public CorteController(VistaCC vista, VentaDAO dao, int agentID){
-        this.vista = vista;
+    public CorteController(VistaCC v, VentaDAO dao, int agentID){
+        this.vista = v;
         this.vDao = dao;
         this.agentID = agentID;
         listar(this.vista.table);
         vista.ccCorteButton.addActionListener(this);
+        vista.ccVolverBtn.addActionListener(this);
+        vista.frmAmetsTravels.addWindowListener(this);
     }
 
     public void listar(JTable destinosTable){
@@ -61,7 +66,13 @@ public class CorteController implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()== vista.ccCorteButton){
+
+        if(e.getSource() == vista.ccVolverBtn) {
+            Retorno rtn = new Retorno();
+            vista.frmAmetsTravels.setVisible(rtn.runReturn(agentID));
+        }
+
+        if(e.getSource() == vista.ccCorteButton){
                 /* Se realiza el corte */
                 CorteDAO corteDAO = new CorteDAO();
                 int turno = 0;
@@ -74,9 +85,57 @@ public class CorteController implements ActionListener
                 if(corteDAO.saveCorte(lastSaleID, agentID, turno, vista.ccTotalTF.getText())){
                     DefaultTableModel model = (DefaultTableModel) vista.table.getModel();
                     model.setRowCount(0);
+                    total = 0;
+                    vista.ccTotalTF.setText(String.valueOf(total));
                 }else{
                     JOptionPane.showMessageDialog(null, "ERROR AL HACER EL CORTE DE CAJA","Error", JOptionPane.ERROR_MESSAGE);
                 }
         }
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+
+        if (e.getSource() == vista.frmAmetsTravels) {
+            int result = JOptionPane.showConfirmDialog(vista.frmAmetsTravels, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION)
+            {
+                vista.frmAmetsTravels.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }
+            else if (result == JOptionPane.NO_OPTION)
+            {
+                vista.frmAmetsTravels.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            }
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }

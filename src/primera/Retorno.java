@@ -1,19 +1,17 @@
 package primera;
 
-import segunda.Credenciales;
 import segunda.MenuPrincipal;
-
 import javax.swing.*;
-import java.awt.*;
 
-public class Retorno extends MenuPrincipal
+public class Retorno
 {
-    public boolean runReturn(){
+    public boolean runReturn(int agentID){
 
         int result = JOptionPane.showConfirmDialog(null, "¿Seguro que desea regresar al menú principal?", "Regresar", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.OK_OPTION)
         {
-            mpFrame.setVisible(true);
+            MenuPrincipal mp = new MenuPrincipal();
+            mp.runFrame(agentID);
             return false;
         }
         else

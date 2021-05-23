@@ -1,41 +1,65 @@
 package segunda;
 
+
+import Controlador.ControladorRU;
+import com.toedter.calendar.JTextFieldDateEditor;
+import modelo.UsuarioDAO;
+
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
-public class RegistroUsuarios extends MenuPrincipal{
 
-    protected JFrame ruFrame;
-    private JTextField ruDireccionTF;
-    private JTextField ruTelefonoTF;
-    private JTextField ruEmailTF;
-    private JTextField ruNombreTF;
-    private JTextField ruApellidoTF;
-    private JTextField ruNacimientoTF;
+public class RegistroUsuarios {
 
-    public void initializeRU(int agentID) {
-        ruFrame = new JFrame();
-        ruFrame.setVisible(true);
-        ruFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        ruFrame.setTitle("Amets Travel");
-        ruFrame.setBounds(100, 100, 1280, 720);
-        ruFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent we) {
-                int result = JOptionPane.showConfirmDialog(ruFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION)
-                {
-                    ruFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                }
-                else if (result == JOptionPane.NO_OPTION)
-                {
-                    ruFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    public JFrame ruFrame;
+    public JTextField ruDireccionTF;
+    public JTextField ruTelefonoTF;
+    public JTextField ruEmailTF;
+    public JTextField ruNombreTF;
+    public JTextField ruApellidoTF;
+    public JTextFieldDateEditor ruNacimientoTF;
+    public JButton ruSiguienteBtn;
+    public JButton ruVolverBtn;
+
+    /**
+     * Launch the application.
+     */
+    public void runFrame(int agentID){
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    RegistroUsuarios window = new RegistroUsuarios();
+                    UsuarioDAO dao = new UsuarioDAO();
+                    ControladorRU c = new ControladorRU(window, dao, agentID);
+                    window.ruFrame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
+    }
+
+    /**
+     * Create the application.
+     */
+    public RegistroUsuarios() {
+        initialize();
+    }
+
+
+    /**
+     * Initialize the contents of the frame.
+     */
+    public void initialize() {
+
+        ruFrame = new JFrame();
+        ruFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        ruFrame.setTitle("Amets Travel");
+        ruFrame.setBounds(100, 100, 1280, 720);
 
         JPanel ruTop = new JPanel();
         ruTop.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -66,6 +90,17 @@ public class RegistroUsuarios extends MenuPrincipal{
         ruNombreTF.setColumns(10);
         ruNombreTF.setAlignmentX(1.0f);
         ruMidEast.add(ruNombreTF);
+        ruNombreTF.addKeyListener(new KeyAdapter()
+        {
+            public void keyTyped(KeyEvent e)
+            {
+                char caracter = e.getKeyChar();
+                if(!(Character.isLetter(caracter)||Character.isWhitespace(caracter)||Character.isISOControl(caracter))||ruNombreTF.getText().length()==35)
+                {
+                    e.consume();
+                }
+            }
+        });
 
         Label ruApellidoLbl = new Label("Apellidos");
         ruMidEast.add(ruApellidoLbl);
@@ -77,12 +112,23 @@ public class RegistroUsuarios extends MenuPrincipal{
         ruApellidoTF.setColumns(10);
         ruApellidoTF.setAlignmentX(1.0f);
         ruMidEast.add(ruApellidoTF);
+        ruApellidoTF.addKeyListener(new KeyAdapter()
+        {
+            public void keyTyped(KeyEvent e)
+            {
+                char caracter = e.getKeyChar();
+                if(!(Character.isLetter(caracter)||Character.isWhitespace(caracter)||Character.isISOControl(caracter))||ruApellidoTF.getText().length()==45)
+                {
+                    e.consume();
+                }
+            }
+        });
 
-        Label ruNacimientoLbl = new Label("Fecha de Nacimiento");
+        Label ruNacimientoLbl = new Label("Fecha de Nacimiento (yyyy-MM-dd)");
         ruMidEast.add(ruNacimientoLbl);
         ruNacimientoLbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
-        ruNacimientoTF = new JTextField();
+        ruNacimientoTF = new JTextFieldDateEditor("yyyy-MM-dd","####-##-##",'_');
         ruNacimientoTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
         ruNacimientoTF.setHorizontalAlignment(SwingConstants.LEFT);
         ruNacimientoTF.setColumns(10);
@@ -99,6 +145,16 @@ public class RegistroUsuarios extends MenuPrincipal{
         ruDireccionTF.setAlignmentX(1.0f);
         ruDireccionTF.setColumns(10);
         ruMidEast.add(ruDireccionTF);
+        ruDireccionTF.addKeyListener(new KeyAdapter()
+        {
+            public void keyTyped(KeyEvent e)
+            {
+                if(ruDireccionTF.getText().length()==45)
+                {
+                    e.consume();
+                }
+            }
+        });
 
         Label ruEmailLbl = new Label("Email");
         ruMidEast.add(ruEmailLbl);
@@ -110,6 +166,16 @@ public class RegistroUsuarios extends MenuPrincipal{
         ruEmailTF.setAlignmentX(Component.RIGHT_ALIGNMENT);
         ruEmailTF.setColumns(10);
         ruMidEast.add(ruEmailTF);
+        ruEmailTF.addKeyListener(new KeyAdapter()
+        {
+            public void keyTyped(KeyEvent e)
+            {
+                if(ruEmailTF.getText().length()==45)
+                {
+                    e.consume();
+                }
+            }
+        });
 
         Label ruTelefonoLbl = new Label("Tel\u00E9fono");
         ruMidEast.add(ruTelefonoLbl);
@@ -121,28 +187,30 @@ public class RegistroUsuarios extends MenuPrincipal{
         ruTelefonoTF.setAlignmentX(1.0f);
         ruTelefonoTF.setColumns(10);
         ruMidEast.add(ruTelefonoTF);
+        ruTelefonoTF.addKeyListener(new KeyAdapter()
+        {
+            public void keyTyped(KeyEvent e)
+            {
+                char caracter = e.getKeyChar();
+                if(((caracter < '0') || (caracter > '9')) && (caracter != '\b' /*corresponde a BACK_SPACE*/) || ruTelefonoTF.getText().length()== 10)
+                {
+                    e.consume();
+                }
+            }
+        });
 
         JPanel ruBottom = new JPanel();
         ruBottom.setBorder(new EmptyBorder(30, 20, 20, 20));
         ruFrame.getContentPane().add(ruBottom, BorderLayout.SOUTH);
         ruBottom.setLayout(new BorderLayout(0, 0));
 
-        JButton ruSiguienteBtn = new JButton("Siguiente");
+        ruSiguienteBtn = new JButton("Siguiente");
         ruSiguienteBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         ruBottom.add(ruSiguienteBtn, BorderLayout.EAST);
-        ruSiguienteBtn.addActionListener(e -> {
-            SeleccionarPaquete sp = new SeleccionarPaquete();
-            sp.initializeSP(agentID);
-            ruFrame.setVisible(false);
-        });
 
-        JButton ruVolverBtn = new JButton("Volver");
+        ruVolverBtn = new JButton("Volver");
         ruVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         ruBottom.add(ruVolverBtn, BorderLayout.WEST);
-        ruVolverBtn.addActionListener(e -> {
-            mpFrame.setVisible(true);
-            ruFrame.setVisible(false);
-        });
     }
 
 }

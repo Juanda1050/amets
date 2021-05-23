@@ -4,7 +4,6 @@ import Controlador.CorteController;
 import modelo.CorteDAO;
 import modelo.VentaDAO;
 import primera.Retorno;
-import segunda.MenuPrincipal;
 
 import java.awt.*;
 
@@ -15,19 +14,18 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 public class VistaCC {
 
-    private JFrame frmAmetsTravels;
+    public JFrame frmAmetsTravels;
     public JTextField ccHorarioTF;
     public JTextField ccTotalTF;
     public JTextField ccFechaTF;
     public JTable table;
     public JButton ccCorteButton;
-    CorteDAO corteDAO = new CorteDAO();
+    public JButton ccVolverBtn;
     /**
      * Launch the application.
      */
@@ -40,6 +38,7 @@ public class VistaCC {
                     VentaDAO dao = new VentaDAO();
                     CorteController c = new CorteController(window, dao, agentID);
                     window.frmAmetsTravels.setVisible(true);
+                    CorteDAO corteDAO = new CorteDAO();
                     window.ccHorarioTF.setText(corteDAO.getHorario(agentID));
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     LocalDateTime now = LocalDateTime.now();
@@ -69,19 +68,6 @@ public class VistaCC {
         frmAmetsTravels.setExtendedState(Frame.MAXIMIZED_BOTH);
         frmAmetsTravels.setBounds(100, 100, 1280, 720);
         frmAmetsTravels.getContentPane().setLayout(new BorderLayout(0, 0));
-        frmAmetsTravels.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent we) {
-                int result = JOptionPane.showConfirmDialog(frmAmetsTravels, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION)
-                {
-                    frmAmetsTravels.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                }
-                else if (result == JOptionPane.NO_OPTION)
-                {
-                    frmAmetsTravels.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                }
-            }
-        });
 
         JPanel Top = new JPanel();
         Top.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -170,13 +156,9 @@ public class VistaCC {
         Buttom.add(ButtomSouth, BorderLayout.SOUTH);
         ButtomSouth.setLayout(new GridLayout(0, 2, 600, 0));
 
-        JButton ccVolverButton = new JButton("Volver");
-        ccVolverButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        ButtomSouth.add(ccVolverButton);
-        ccVolverButton.addActionListener(e -> {
-            Retorno rtn = new Retorno();
-            frmAmetsTravels.setVisible(rtn.runReturn());
-        });
+        ccVolverBtn = new JButton("Volver");
+        ccVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        ButtomSouth.add(ccVolverBtn);
 
         ccCorteButton = new JButton("Hacer corte");
         ccCorteButton.setFont(new Font("Tahoma", Font.PLAIN, 16));

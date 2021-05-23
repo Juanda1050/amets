@@ -1,39 +1,56 @@
 package segunda;
 
-import modelo.PagoDAO;
+import Controlador.SelecPaqController;
 import modelo.SelecPaqDAO;
-import primera.Retorno;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class SeleccionarPaquete extends RegistroUsuarios{
+public class SeleccionarPaquete {
 
-    protected JFrame spFrame;
+    public JFrame spFrame;
     public JTextPane spDescripcionTF;
-    private JTextField spOrigenFT;
-    private JTextField spHotelTF;
-    private JTextField spPlazasTF;
-    private JTextField spAerolineaTF;
-    protected JTextPane spDireccionTF;
-    private JTextField spPrecioTF;
-    private JTextField spTipodeVueloTF;
-    private JTextField spRegimenTF;
-    private JComboBox spPaqueteCB;
-    private JComboBox spDestinoCB;
-    private JTextField spHoraDespegueSpn;
-    private JTextField spHoraLlegadaSpn;
-    private JTextField spHoradeAterrizajeSpn;
-    private JTextField spHoraSalidaSpn;
-    Ticket ticket = new Ticket();
+    public JTextField spOrigenFT;
+    public JTextField spHotelTF;
+    public JTextField spPlazasTF;
+    public JTextField spAerolineaTF;
+    public JTextPane spDireccionTF;
+    public JTextField spPrecioTF;
+    public JTextField spTipodeVueloTF;
+    public JTextField spRegimenTF;
+    public JComboBox spPaqueteCB;
+    public JComboBox spDestinoCB;
+    public JTextField spHoraDespegueSpn;
+    public JTextField spHoraLlegadaSpn;
+    public JTextField spHoradeAterrizajeSpn;
+    public JTextField spHoraSalidaSpn;
+    public JButton spVolverBtn, spMenuBtn, btnSiguiente;
 
-    public void initializeSP(int agentID) {
+    public void runFrame(int agentID){
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    SeleccionarPaquete window = new SeleccionarPaquete();
+                    SelecPaqDAO selecPaqDAO = new SelecPaqDAO();
+                    SelecPaqController spc = new SelecPaqController(window, selecPaqDAO, agentID);
+                    window.spFrame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public SeleccionarPaquete() {
+        initialize();
+    }
+
+    public void initialize() {
 
         SelecPaqDAO spDAO = new SelecPaqDAO();
 
         spFrame = new JFrame();
-        spFrame.setVisible(true);
         spFrame.setBounds(100, 100, 1280, 720);
         spFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         spFrame.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -56,7 +73,7 @@ public class SeleccionarPaquete extends RegistroUsuarios{
         spPaqueteCB = new JComboBox();
         spPaqueteCB.setEnabled(false);
 
-        JButton btnSiguiente = new JButton("Siguiente");
+        btnSiguiente = new JButton("Siguiente");
         btnSiguiente.setEnabled(false);
 
         spDestinoCB = new JComboBox<String>(spDAO.listarDestinos().toArray(new String[0]));
@@ -69,36 +86,8 @@ public class SeleccionarPaquete extends RegistroUsuarios{
         separator_1.setVisible(false);
         spMid.add(separator_1);
 
-        spDestinoCB.addActionListener (e -> {
-            if(spDestinoCB.getSelectedIndex()!=-1){
-                spPaqueteCB.setEnabled(true);
-                btnSiguiente.setEnabled(true);
-            }
-            spPaqueteCB.removeAllItems();
-            spDAO.listarPaquetes(spDestinoCB.getSelectedIndex()+1);
-            for(int i=0;i<spDAO.getListaPaquete().size();i++){
-                spPaqueteCB.addItem(spDAO.getListaPaquete().get(i));
-            }
-        });
-
         spPaqueteCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         spMid.add(spPaqueteCB);
-        spPaqueteCB.addActionListener (e -> {
-            String paqueteCBindex = spPaqueteCB.getSelectedItem().toString();
-            spDescripcionTF.setText(spDAO.getData(paqueteCBindex).get(0));
-            spPrecioTF.setText(spDAO.getData(paqueteCBindex).get(1));
-            spPlazasTF.setText(spDAO.getData(paqueteCBindex).get(2));
-            spHotelTF.setText(spDAO.getData(paqueteCBindex).get(3));
-            spDireccionTF.setText(spDAO.getData(paqueteCBindex).get(4));
-            spRegimenTF.setText(spDAO.getData(paqueteCBindex).get(5));
-            spHoraLlegadaSpn.setText(spDAO.getData(paqueteCBindex).get(6));
-            spHoraSalidaSpn.setText(spDAO.getData(paqueteCBindex).get(7));
-            spOrigenFT.setText(spDAO.getData(paqueteCBindex).get(8));
-            spHoraDespegueSpn.setText(spDAO.getData(paqueteCBindex).get(9));
-            spHoradeAterrizajeSpn.setText(spDAO.getData(paqueteCBindex).get(10));
-            spAerolineaTF.setText(spDAO.getData(paqueteCBindex).get(11));
-            spTipodeVueloTF.setText(spDAO.getData(paqueteCBindex).get(12));
-        });
 
         JSeparator separator_2 = new JSeparator();
         separator_2.setForeground(Color.WHITE);
@@ -278,30 +267,15 @@ public class SeleccionarPaquete extends RegistroUsuarios{
         spFrame.getContentPane().add(spBottom, BorderLayout.SOUTH);
         spBottom.setLayout(new GridLayout(0, 3, 20, 0));
 
-        JButton spVolverBtn = new JButton("Volver");
+        spVolverBtn = new JButton("Volver");
         spVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
         spBottom.add(spVolverBtn);
-        spVolverBtn.addActionListener(e -> {
-            ruFrame.setVisible(true);
-            spFrame.setVisible(false);
-        });
 
-        JButton spMenuBtn = new JButton("Men\u00FA");
+        spMenuBtn = new JButton("Men\u00FA");
         spMenuBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
         spBottom.add(spMenuBtn);
-        spMenuBtn.addActionListener(e -> {
-            Retorno rtn = new Retorno();
-            spFrame.setVisible(rtn.runReturn());
-        });
 
         btnSiguiente.setFont(new Font("Tahoma", Font.PLAIN, 14));
         spBottom.add(btnSiguiente);
-        btnSiguiente.addActionListener(e -> {
-            /* Se genera el ticket */
-            ticket.runFrame();
-            VistaPP pp = new VistaPP();
-            pp.initializePP(spDescripcionTF.getText(),Double.parseDouble(spPrecioTF.getText()),agentID);
-            spFrame.setVisible(false);
-        });
     }
 }

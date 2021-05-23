@@ -20,10 +20,11 @@ public class Credenciales {
 
     public static void main(String[] args) {
         Credenciales credenciales = new Credenciales();
-        credenciales.initializeCred();
+        credenciales.initialize();
     }
 
-    public void initializeCred() {
+    public void initialize() {
+
         VcFrame = new JFrame();
         VcFrame.setBounds(100, 100, 500, 300);
         VcFrame.setResizable(false);
@@ -103,7 +104,7 @@ public class Credenciales {
                 {
                     case 1:
                         MenuPrincipal mpFrame = new MenuPrincipal();
-                        mpFrame.initializeMenu(rs.getInt("agentID"));
+                        mpFrame.runFrame(rs.getInt("agentID"));
                         VcFrame.setVisible(false);
                         break;
 
