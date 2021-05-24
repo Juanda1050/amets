@@ -13,7 +13,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Date;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -290,7 +289,7 @@ public class GestionarHoteles {
                 gHotel_backB.setIcon(new ImageIcon("resources/left.png"));
                 gHotelBottom.add(gHotel_backB, BorderLayout.EAST);
                 gHotel_backB.addActionListener(e -> {
-                        VistaMA maFrame = new VistaMA();
+                        MenuAdministrador maFrame = new MenuAdministrador();
                         maFrame.runFrame();
                         gHotelFrame.setVisible(false);
                 });

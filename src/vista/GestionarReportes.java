@@ -8,6 +8,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
+import controlador.ReportesController;
+import modelo.ReportesDAO;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -18,6 +20,18 @@ public class GestionarReportes {
 
     private JFrame gReportesFrame;
     private JTable gReportesTable;
+    private JButton gReportes_buscarButton;
+
+    public JDateChooser gReportes_inicioDate;
+    public JDateChooser gReportes_finalDate;
+
+    public JButton getgReportes_buscarButton() {
+        return gReportes_buscarButton;
+    }
+
+    public JTable getgReportesTable() {
+        return gReportesTable;
+    }
 
     /**
      * Launch the application.
@@ -27,6 +41,8 @@ public class GestionarReportes {
             public void run() {
                 try {
                     GestionarReportes window = new GestionarReportes();
+                    ReportesDAO reportesDAO = new ReportesDAO();
+                    ReportesController reportesController = new ReportesController(window, reportesDAO);
                     window.gReportesFrame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -87,7 +103,9 @@ public class GestionarReportes {
         gReportes_inicioLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         gReportes_topBottom.add(gReportes_inicioLabel);
 
-        JDateChooser gReportes_inicioDate = new JDateChooser();
+
+        gReportes_inicioDate = new JDateChooser();
+        gReportes_inicioDate.setDateFormatString("yyyy-MM-dd");
         JTextFieldDateEditor inicioEditor = (JTextFieldDateEditor) gReportes_inicioDate.getDateEditor();
         inicioEditor.setEditable(false);
         gReportes_topBottom.add(gReportes_inicioDate);
@@ -97,12 +115,15 @@ public class GestionarReportes {
         gReportes_finalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         gReportes_topBottom.add(gReportes_finalLabel);
 
-        JDateChooser gReportes_finalDate = new JDateChooser();
+
+        gReportes_finalDate = new JDateChooser();
+        gReportes_finalDate.setDateFormatString("yyyy-MM-dd");
         JTextFieldDateEditor finalEditor = (JTextFieldDateEditor) gReportes_finalDate.getDateEditor();
         finalEditor.setEditable(false);
         gReportes_topBottom.add(gReportes_finalDate);
 
-        JButton gReportes_buscarButton = new JButton("BUSCAR");
+
+        gReportes_buscarButton = new JButton("BUSCAR");
         gReportes_buscarButton.setBackground(Color.WHITE);
         gReportes_buscarButton.setFocusable(false);
         gReportes_buscarButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -122,7 +143,7 @@ public class GestionarReportes {
                 new Object[][] {
                 },
                 new String[] {
-                        "ID Venta", "Vendedor", "Cantidad", "Descripcion", "Fecha", "Tipo de Pago", "Subtotal", "IVA", "Total"
+                        "ID Corte", "ID Venta", "ID Vendedor", "Fecha", "Turno", "Total"
                 }
         ));
         gReportesTable.setFont(new Font("Dialog", Font.PLAIN, 14));
@@ -133,6 +154,7 @@ public class GestionarReportes {
         tHeader.setPreferredSize(new Dimension(0, 25));
         tHeader.setBackground(Color.decode("#094293"));
         tHeader.setForeground(Color.white);
+        tHeader.setReorderingAllowed(false);
         tHeader.setFont(new Font("Tahome", Font.BOLD, 16));
         gReportesTable.setFont(new Font("Tahome", Font.PLAIN, 14));
         gReportesSP.setViewportView(gReportesTable);
@@ -149,10 +171,9 @@ public class GestionarReportes {
         gReportes_volverButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gReportesBottom.add(gReportes_volverButton, BorderLayout.EAST);
         gReportes_volverButton.addActionListener(e -> {
-            VistaMA maFrame = new VistaMA();
+            MenuAdministrador maFrame = new MenuAdministrador();
             maFrame.runFrame();
             gReportesFrame.setVisible(false);
         });
     }
-
 }

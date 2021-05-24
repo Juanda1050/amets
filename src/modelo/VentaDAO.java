@@ -3,6 +3,7 @@ package modelo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static modelo.Conexion.conectar;
@@ -37,8 +38,15 @@ public class VentaDAO
             }
         }catch (Exception e){
 
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listaVentas;
     }
 }
-

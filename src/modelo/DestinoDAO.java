@@ -24,6 +24,14 @@ public class DestinoDAO{
         }catch (SQLException e){
             System.out.println("Error en agregar un registro");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return 1;
     }
@@ -45,6 +53,14 @@ public class DestinoDAO{
                 return 0;
             }
         }catch (Exception e){
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return r;
     }
@@ -56,6 +72,14 @@ public class DestinoDAO{
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
         }catch (Exception e){
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -76,7 +100,14 @@ public class DestinoDAO{
                 listaDestino.add(d);
             }
         }catch (Exception e){
-
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listaDestino;
     }

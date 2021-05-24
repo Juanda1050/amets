@@ -280,7 +280,7 @@ public class GestionarEmpleados {
         gEmpleado_backB.setIcon(new ImageIcon("resources/left.png"));
         gPromoBottom.add(gEmpleado_backB, BorderLayout.EAST);
         gEmpleado_backB.addActionListener(e -> {
-            VistaMA maFrame = new VistaMA();
+            MenuAdministrador maFrame = new MenuAdministrador();
             maFrame.runFrame();
             gEmpleadoFrame.setVisible(false);
         });

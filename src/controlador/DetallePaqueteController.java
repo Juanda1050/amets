@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class DetallePaqueteController implements ActionListener
 {
@@ -22,7 +21,7 @@ public class DetallePaqueteController implements ActionListener
         this.vista = vista;
         this.dao = dao;
 
-        listar(vista.dPaqueteTable);
+        listDPaquete(vista.dPaqueteTable);
         areComboBoxEnabled(false);
         this.vista.dPaquete_destinoCB.addActionListener(this);
         this.vista.dPaquete_addB.addActionListener(this);
@@ -90,26 +89,26 @@ public class DetallePaqueteController implements ActionListener
         {
             key = true;
             boolean[] arr = {false, true, false, false};
-            estadosBotones(arr);
+            areButtonsEnabled(arr);
             areComboBoxEnabled(true);
         }
         if (e.getSource() == vista.dPaquete_saveB)
         {
             boolean[] arr = {true, false, true, true};
-            estadosBotones(arr);
-            guardar();
+            areButtonsEnabled(arr);
+            saveDPaquete();
         }
         if (e.getSource() == vista.dPaquete_editB)
         {
             key = false;
-            Editar();
+            editDPaquete();
         }
         if(e.getSource() == vista.dPaquete_deleteB)
         {
-            eliminar();
-            limpiar();
+            deleteDPaquete();
+            cleanDPaquete();
             cleanCB();
-            listar(vista.dPaqueteTable);
+            listDPaquete(vista.dPaqueteTable);
         }
         if(e.getSource() == vista.dPaquete_destinoCB)
         {
@@ -118,29 +117,14 @@ public class DetallePaqueteController implements ActionListener
         }
     }
 
-    public void listar(JTable tabla)
-    {
-        modelo = (DefaultTableModel)tabla.getModel();
-        tabla.setModel(modelo);
-        Object[] object = new Object[4];
-        for (int i =0; i<dao.sizeDP().size(); i++)
-        {
-            object[0] = dao.packName(dao.sizeDP().get(i).getIdpaquete());
-            object[1] = dao.sizeDP().get(i).getIdVuelo();
-            object[2] = dao.hotelName(dao.sizeDP().get(i).getIdhotel());
-            object[3] = dao.destName(dao.sizeDP().get(i).getIddestino());
-            modelo.addRow(object);
-        }
-    }
-
-    public void agregar()
+    public void addDPaquete()
     {
 
         if(vista.dPaquete_paqueteCB.getSelectedIndex() == 0 || vista.dPaquete_destinoCB.getSelectedIndex() == 0 || vista.dPaquete_vueloCB.getSelectedIndex() == 0 || vista.dPaquete_hotelCB.getSelectedIndex() == 0)
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
             boolean[] arr = {false, true, false, false};
-            estadosBotones(arr);
+            areButtonsEnabled(arr);
         }
         else
         {
@@ -162,72 +146,12 @@ public class DetallePaqueteController implements ActionListener
             areComboBoxEnabled(false);
             cleanCB();
             boolean[] arr = {true, false, true, true};
-            estadosBotones(arr);
+            areButtonsEnabled(arr);
         }
     }
 
-    private void areComboBoxEnabled(boolean flag)
+    public void updateDPaquete()
     {
-        vista.dPaquete_paqueteCB.setEnabled(flag);
-        vista.dPaquete_destinoCB.setEnabled(flag);
-        vista.dPaquete_vueloCB.setEnabled(flag);
-        vista.dPaquete_hotelCB.setEnabled(flag);
-    }
-
-    public void guardar()
-    {
-        if(key)
-        {
-            int lista = dao.sizeDP().size();
-            if (lista>0)
-            {
-                agregar();
-                limpiar();
-                listar(vista.dPaqueteTable);
-            }
-            else
-            {
-                agregar();
-                listar(vista.dPaqueteTable);
-            }
-        }
-        else
-        {
-            Actualizar();
-        }
-    }
-
-    private void limpiar(){
-        for (int i = 0; i < vista.dPaqueteTable.getRowCount(); i++){
-            modelo.removeRow(i);
-            i = i - 1;
-        }
-    }
-
-    public void Editar()
-    {
-        int fila = vista.dPaqueteTable.getSelectedRow();
-        if(fila==-1)
-        {
-            JOptionPane.showMessageDialog(null, "Seleccione una fila");
-        }
-        else
-        {
-            areComboBoxEnabled(true);
-            vista.dPaquete_paqueteCB.setEnabled(false);
-            boolean[] arr = {false, true, false, false};
-            estadosBotones(arr);
-            String paqueteEd = (String) vista.dPaqueteTable.getValueAt(fila, 0);
-            int flightIdEd = Integer.parseInt((String) vista.dPaqueteTable.getValueAt(fila, 1).toString());
-            String hotelNameEd = (String) vista.dPaqueteTable.getValueAt(fila, 2);
-            String destNameEd = (String) vista.dPaqueteTable.getValueAt(fila, 3);
-            rellenarCB(paqueteEd, flightIdEd, hotelNameEd, destNameEd);
-        }
-    }
-
-    public void Actualizar()
-    {
-        boolean k=true;
         String p = (String) vista.dPaquete_paqueteCB.getSelectedItem();
         String d = (String) vista.dPaquete_destinoCB.getSelectedItem();
         String v = vista.dPaquete_vueloCB.getSelectedItem().toString();
@@ -236,7 +160,7 @@ public class DetallePaqueteController implements ActionListener
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
             boolean[] arr = {false, true, false, false};
-            estadosBotones(arr);
+            areButtonsEnabled(arr);
         }
         else
         {
@@ -248,20 +172,20 @@ public class DetallePaqueteController implements ActionListener
             dp.setIddestino(destinoID);
             dp.setIdVuelo(vueloID);
             dp.setIdhotel(hotelID);
-            int r = dao.Actualizar(dp);
+            int r = dao.actualizar(dp);
             if (r == 1) {
                 JOptionPane.showMessageDialog(null, "Registro actualizado exitosamente");
             } else {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
             areComboBoxEnabled(false);
-            limpiar();
+            cleanDPaquete();
             cleanCB();
-            listar(vista.dPaqueteTable);
+            listDPaquete(vista.dPaqueteTable);
         }
     }
 
-    public void eliminar(){
+    public void deleteDPaquete(){
         int fila = vista.dPaqueteTable.getSelectedRow();
         if(fila==-1)
         {
@@ -282,7 +206,7 @@ public class DetallePaqueteController implements ActionListener
             else
             {
                 boolean[] arr = {true, false, false, false};
-                estadosBotones(arr);
+                areButtonsEnabled(arr);
                 int packID = dao.paqueteID((String) vista.dPaqueteTable.getValueAt(fila, 0).toString());
                 int flightID = Integer.parseInt((String) vista.dPaqueteTable.getValueAt(fila, 1).toString());
                 int hotelID = dao.hotelID((String) vista.dPaqueteTable.getValueAt(fila, 2).toString());
@@ -294,8 +218,82 @@ public class DetallePaqueteController implements ActionListener
         }
     }
 
+    private void areComboBoxEnabled(boolean flag)
+    {
+        vista.dPaquete_paqueteCB.setEnabled(flag);
+        vista.dPaquete_destinoCB.setEnabled(flag);
+        vista.dPaquete_vueloCB.setEnabled(flag);
+        vista.dPaquete_hotelCB.setEnabled(flag);
+    }
+
+    public void saveDPaquete()
+    {
+        if(key)
+        {
+            int lista = dao.sizeDP().size();
+            if (lista>0)
+            {
+                addDPaquete();
+                cleanDPaquete();
+                listDPaquete(vista.dPaqueteTable);
+            }
+            else
+            {
+                addDPaquete();
+                listDPaquete(vista.dPaqueteTable);
+            }
+        }
+        else
+        {
+            updateDPaquete();
+        }
+    }
+
+    public void listDPaquete(JTable tabla)
+    {
+        modelo = (DefaultTableModel)tabla.getModel();
+        tabla.setModel(modelo);
+        Object[] object = new Object[4];
+        for (int i =0; i<dao.sizeDP().size(); i++)
+        {
+            object[0] = dao.packName(dao.sizeDP().get(i).getIdpaquete());
+            object[1] = dao.sizeDP().get(i).getIdVuelo();
+            object[2] = dao.hotelName(dao.sizeDP().get(i).getIdhotel());
+            object[3] = dao.destName(dao.sizeDP().get(i).getIddestino());
+            modelo.addRow(object);
+        }
+    }
+    
+    private void cleanDPaquete(){
+        for (int i = 0; i < vista.dPaqueteTable.getRowCount(); i++){
+            modelo.removeRow(i);
+            i = i - 1;
+        }
+    }
+
+    public void editDPaquete()
+    {
+        int fila = vista.dPaqueteTable.getSelectedRow();
+        if(fila==-1)
+        {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        }
+        else
+        {
+            areComboBoxEnabled(true);
+            vista.dPaquete_paqueteCB.setEnabled(false);
+            boolean[] arr = {false, true, false, false};
+            areButtonsEnabled(arr);
+            String paqueteEd = (String) vista.dPaqueteTable.getValueAt(fila, 0);
+            int flightIdEd = Integer.parseInt(vista.dPaqueteTable.getValueAt(fila, 1).toString());
+            String hotelNameEd = (String) vista.dPaqueteTable.getValueAt(fila, 2);
+            String destNameEd = (String) vista.dPaqueteTable.getValueAt(fila, 3);
+            rellenarCB(paqueteEd, flightIdEd, hotelNameEd, destNameEd);
+        }
+    }
+
     //Controla el estado de los botones
-    private void estadosBotones(boolean[] a)
+    private void areButtonsEnabled(boolean[] a)
     {
         vista.dPaquete_addB.setEnabled(a[0]);
         vista.dPaquete_saveB.setEnabled(a[1]);

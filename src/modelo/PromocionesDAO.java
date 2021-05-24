@@ -27,6 +27,14 @@ public class PromocionesDAO {
         }catch (SQLException e){
             System.out.println("Error en agregar un registro");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return 1;
     }
@@ -52,6 +60,14 @@ public class PromocionesDAO {
         }catch (SQLException e){
             System.out.println("Error en actualziar un registro");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return r;
     }
@@ -65,6 +81,14 @@ public class PromocionesDAO {
         }catch (SQLException e){
             System.out.println("Error en eliminar un registro");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -96,6 +120,14 @@ public class PromocionesDAO {
         }catch (SQLException e){
             System.out.println("Error al listar los registros");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return promo;
     }
@@ -113,6 +145,14 @@ public class PromocionesDAO {
             }
             return id;
         }catch (Exception e){
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return 0;
     }
@@ -131,6 +171,14 @@ public class PromocionesDAO {
         }catch (SQLException e){
             System.out.println("Error en listar paquetes");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return pack;
     }

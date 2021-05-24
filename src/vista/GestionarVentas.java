@@ -135,7 +135,7 @@ public class GestionarVentas {
         gVentas_volverButton.setBackground(Color.WHITE);
         gVentasBottom.add(gVentas_volverButton, BorderLayout.EAST);
         gVentas_volverButton.addActionListener(e -> {
-            VistaMA maFrame = new VistaMA();
+            MenuAdministrador maFrame = new MenuAdministrador();
             maFrame.runFrame();
             gVentasFrame.setVisible(false);
         });

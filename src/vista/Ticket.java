@@ -1,30 +1,27 @@
 package vista;
 
+import controlador.TicketController;
+
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import javax.swing.border.EmptyBorder;
 
 public class Ticket {
 
-    protected JFrame frame;
-    private JPanel panel;
-    protected JTextArea txtrCompraRealizada,txtrNumDeTarjeta;
-    protected JTextPane txtrAsfdas;
+    public JFrame frame;
+    public JPanel panel;
+    public JTextArea txtrCompraRealizada,txtrNumDeTarjeta;
+    public JTextPane txtrAsfdas;
+    public JButton btnNewButton_1, btnNewButton;
     /**
      * Launch the application.
      */
 
-    public void runFrame(){
+    public void runFrame(Ticket window, int agentID){
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Ticket window = new Ticket();
+                    TicketController tc = new TicketController(window, agentID);
                     window.frame.setVisible(false);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -48,19 +45,6 @@ public class Ticket {
         frame = new JFrame();
         frame.setResizable(false);
         frame.setBounds(100, 100, 400, 500);
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent we) {
-                int result = JOptionPane.showConfirmDialog(frame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION)
-                {
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                }
-                else if (result == JOptionPane.NO_OPTION)
-                {
-                    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                }
-            }
-        });
 
         JPanel bottom = new JPanel();
         bottom.setBorder(new EmptyBorder(0, 20, 20, 20));
@@ -110,53 +94,13 @@ public class Ticket {
         lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
         bottompnt.add(lblNewLabel_2);
 
-        JButton btnNewButton_1 = new JButton("Regresar al Men\u00FA");
+        btnNewButton_1 = new JButton("Regresar al Men\u00FA");
         btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
         bottom.add(btnNewButton_1);
-        btnNewButton_1.addActionListener(e -> {
-            Retorno rtn = new Retorno();
-            frame.setVisible(rtn.runReturn());
-        });
 
-        JButton btnNewButton = new JButton("Imprimir Ticket");
+        btnNewButton = new JButton("Imprimir Ticket");
         btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
         bottom.add(btnNewButton, BorderLayout.SOUTH);
-        btnNewButton.addActionListener(e -> {
-            Print();
-        });
-    }
-
-    public void Print(){
-
-        PrinterJob job = PrinterJob.getPrinterJob();
-        job.setJobName("Print Data");
-
-        job.setPrintable(new Printable() {
-
-            public int print(Graphics pg, PageFormat pf, int pageNum){
-                pf.setOrientation(PageFormat.LANDSCAPE);
-                if(pageNum>0){
-                    return Printable.NO_SUCH_PAGE;
-                }
-
-                Graphics2D g2 = (Graphics2D)pg;
-                g2.translate(pf.getImageableX(), pf.getImageableY());
-                g2.scale(1,1);
-
-                panel.paint(g2);
-                return Printable.PAGE_EXISTS;
-
-
-            }
-        });
-
-        boolean ok = job.printDialog();
-        if(ok){
-            try{
-                job.print();
-            }
-            catch (PrinterException ex){}
-        }
     }
 
 }

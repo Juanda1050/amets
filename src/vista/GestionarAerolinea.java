@@ -55,7 +55,7 @@ public class GestionarAerolinea {
         gAerolineaFrame = new JFrame();
         gAerolineaFrame.setTitle("Gestionar Aerolineas");
         gAerolineaFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        gAerolineaFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\DELL\\OneDrive\\Documentos\\Tercer Semestre\\POO\\agenciaAmets\\resources\\amets.jpg"));
+        gAerolineaFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
         gAerolineaFrame.setBounds(100, 100, 1280, 720);
         gAerolineaFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {

@@ -3,6 +3,7 @@ package modelo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static modelo.Conexion.conectar;
@@ -38,6 +39,14 @@ public class SelecPaqDAO {
             }
         }catch (Exception e){
 
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -60,6 +69,14 @@ public class SelecPaqDAO {
             }
         }catch (Exception e){
 
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return arrayDestinos;
     }
@@ -80,7 +97,7 @@ public class SelecPaqDAO {
             while(rs.next()){
                 packID = rs.getInt("packID");
                 arrayTFData.add(rs.getString("packDescription"));
-                arrayTFData.add(String.valueOf(rs.getFloat("price")));
+                arrayTFData.add(String.valueOf(rs.getInt("price")));
                 arrayTFData.add(String.valueOf(rs.getInt("passengers")));
             }
 
@@ -131,6 +148,14 @@ public class SelecPaqDAO {
             }
         }catch (Exception e){
 
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return arrayTFData;
     }

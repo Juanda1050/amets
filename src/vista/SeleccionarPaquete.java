@@ -1,57 +1,47 @@
 package vista;
 
+import controlador.SelecPaqController;
 import modelo.SelecPaqDAO;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
-public class SeleccionarPaquete extends RegistroUsuarios{
+public class SeleccionarPaquete {
 
-    private JFrame spFrame;
-    public JTextPane spDescripcionTF;
-    private JTextField spOrigenFT;
-    private JTextField spHotelTF;
-    private JTextField spPlazasTF;
-    private JTextField spAerolineaTF;
-    protected JTextPane spDireccionTF;
-    private JTextField spPrecioTF;
-    private JTextField spTipodeVueloTF;
-    private JTextField spRegimenTF;
-    private JComboBox spPaqueteCB;
-    private JComboBox spDestinoCB;
-    private JTextField spHoraDespegueSpn;
-    private JTextField spHoraLlegadaSpn;
-    private JTextField spHoradeAterrizajeSpn;
-    private JTextField spHoraSalidaSpn;
-    Ticket ticket = new Ticket();
+    public JFrame spFrame;
+    public JTextPane spDescripcionTF, spDireccionTF;
+    public JTextField spOrigenFT, spHotelTF, spPlazasTF, spAerolineaTF, spPrecioTF, spTipodeVueloTF, spRegimenTF;
+    public JComboBox spPaqueteCB, spDestinoCB;
+    public JTextField spHoraDespegueSpn, spHoraLlegadaSpn, spHoradeAterrizajeSpn, spHoraSalidaSpn;
+    public JButton spVolverBtn, spMenuBtn, btnSiguiente;
 
-    public void initialize(int agentID, int userID) {
+    public void runFrame(int agentID){
+        EventQueue.invokeLater(() -> {
+            try {
+                SeleccionarPaquete window = new SeleccionarPaquete();
+                SelecPaqDAO selecPaqDAO = new SelecPaqDAO();
+                SelecPaqController spc = new SelecPaqController(window, selecPaqDAO, agentID);
+                window.spFrame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public SeleccionarPaquete() {
+        initialize();
+    }
+
+    public void initialize() {
 
         SelecPaqDAO spDAO = new SelecPaqDAO();
 
-        spFrame = new JFrame();
-        spFrame.setVisible(true);
+        spFrame = new JFrame("Seleccionar Paquete");
         spFrame.setBounds(100, 100, 1280, 720);
         spFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         spFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        spFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
         spFrame.getContentPane().setLayout(new BorderLayout(0, 0));
-        spFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent we) {
-                int result = JOptionPane.showConfirmDialog(spFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION)
-                {
-                    spFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                }
-                else if (result == JOptionPane.NO_OPTION)
-                {
-                    spFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                }
-            }
-        });
 
         JPanel spTop = new JPanel();
         spTop.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -68,13 +58,7 @@ public class SeleccionarPaquete extends RegistroUsuarios{
         spFrame.getContentPane().add(spMid, BorderLayout.CENTER);
         spMid.setLayout(new GridLayout(0, 6, 0, 30));
 
-        spPaqueteCB = new JComboBox();
-        spPaqueteCB.setEnabled(false);
-
-        JButton btnSiguiente = new JButton("Siguiente");
-        btnSiguiente.setEnabled(false);
-
-        spDestinoCB = new JComboBox<String>(spDAO.listarDestinos().toArray(new String[0]));
+        spDestinoCB = new JComboBox<>(spDAO.listarDestinos().toArray(new String[0]));
         spDestinoCB.setSelectedIndex(-1);
         spDestinoCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         spMid.add(spDestinoCB);
@@ -84,36 +68,10 @@ public class SeleccionarPaquete extends RegistroUsuarios{
         separator_1.setVisible(false);
         spMid.add(separator_1);
 
-        spDestinoCB.addActionListener (e -> {
-            if(spDestinoCB.getSelectedIndex()!=-1){
-                spPaqueteCB.setEnabled(true);
-                btnSiguiente.setEnabled(true);
-            }
-            spPaqueteCB.removeAllItems();
-            spDAO.listarPaquetes(spDestinoCB.getSelectedIndex()+1);
-            for(int i=0;i<spDAO.getListaPaquete().size();i++){
-                spPaqueteCB.addItem(spDAO.getListaPaquete().get(i));
-            }
-        });
-
+        spPaqueteCB = new JComboBox();
+        spPaqueteCB.setEnabled(false);
         spPaqueteCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         spMid.add(spPaqueteCB);
-        spPaqueteCB.addActionListener (e -> {
-            String paqueteCBindex = spPaqueteCB.getSelectedItem().toString();
-            spDescripcionTF.setText(spDAO.getData(paqueteCBindex).get(0));
-            spPrecioTF.setText(spDAO.getData(paqueteCBindex).get(1));
-            spPlazasTF.setText(spDAO.getData(paqueteCBindex).get(2));
-            spHotelTF.setText(spDAO.getData(paqueteCBindex).get(3));
-            spDireccionTF.setText(spDAO.getData(paqueteCBindex).get(4));
-            spRegimenTF.setText(spDAO.getData(paqueteCBindex).get(5));
-            spHoraLlegadaSpn.setText(spDAO.getData(paqueteCBindex).get(6));
-            spHoraSalidaSpn.setText(spDAO.getData(paqueteCBindex).get(7));
-            spOrigenFT.setText(spDAO.getData(paqueteCBindex).get(8));
-            spHoraDespegueSpn.setText(spDAO.getData(paqueteCBindex).get(9));
-            spHoradeAterrizajeSpn.setText(spDAO.getData(paqueteCBindex).get(10));
-            spAerolineaTF.setText(spDAO.getData(paqueteCBindex).get(11));
-            spTipodeVueloTF.setText(spDAO.getData(paqueteCBindex).get(12));
-        });
 
         JSeparator separator_2 = new JSeparator();
         separator_2.setForeground(Color.WHITE);
@@ -173,7 +131,7 @@ public class SeleccionarPaquete extends RegistroUsuarios{
         spPlazasTF.setColumns(10);
         spMid.add(spPlazasTF);
 
-        JLabel spAerolineaLbl = new JLabel("Aerol\u00EDnea");
+        JLabel spAerolineaLbl = new JLabel("Aerolinea");
         spAerolineaLbl.setHorizontalAlignment(SwingConstants.CENTER);
         spAerolineaLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
         spMid.add(spAerolineaLbl);
@@ -293,22 +251,17 @@ public class SeleccionarPaquete extends RegistroUsuarios{
         spFrame.getContentPane().add(spBottom, BorderLayout.SOUTH);
         spBottom.setLayout(new GridLayout(0, 3, 20, 0));
 
-        JButton spVolverBtn = new JButton("Volver");
+        spVolverBtn = new JButton("Volver");
         spVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
         spBottom.add(spVolverBtn);
 
-        JButton spMenuBtn = new JButton("Men\u00FA");
+        spMenuBtn = new JButton("Men\u00FA");
         spMenuBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
         spBottom.add(spMenuBtn);
 
+        btnSiguiente = new JButton("Siguiente");
+        btnSiguiente.setEnabled(false);
         btnSiguiente.setFont(new Font("Tahoma", Font.PLAIN, 14));
         spBottom.add(btnSiguiente);
-        btnSiguiente.addActionListener(e -> {
-            /* Se genera el ticket */
-            ticket.runFrame();
-            VistaPP pp = new VistaPP();
-            pp.initialize(spDescripcionTF.getText(),Double.parseDouble(spPrecioTF.getText()),agentID, userID);
-            spFrame.setVisible(false);
-        });
     }
 }

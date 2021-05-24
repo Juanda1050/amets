@@ -240,7 +240,7 @@ public class GestionarDestinos {
         gDestinoBottom.add(gDestinos_backB, BorderLayout.EAST);
         gDestinos_backB.addActionListener(e -> {
 
-            VistaMA maFrame = new VistaMA();
+            MenuAdministrador maFrame = new MenuAdministrador();
             maFrame.runFrame();
             gDestinoFrame.setVisible(false);
         });

@@ -9,8 +9,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.toedter.calendar.JTextFieldDateEditor;
 import controlador.VuelosController;
@@ -270,7 +268,7 @@ public class GestionarVuelos {
         gVuelos_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosBottom.add(gVuelos_backB, BorderLayout.EAST);
         gVuelos_backB.addActionListener(e -> {
-            VistaMA maFrame = new VistaMA();
+            MenuAdministrador maFrame = new MenuAdministrador();
             maFrame.runFrame();
             gVuelosFrame.setVisible(false);
         });

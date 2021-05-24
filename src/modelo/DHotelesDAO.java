@@ -27,6 +27,14 @@ public class DHotelesDAO {
         }catch (SQLException e){
             System.out.println("Error en agregar un registro");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return 1;
     }
@@ -49,6 +57,14 @@ public class DHotelesDAO {
         }catch (SQLException e){
             System.out.println("Error en actualizar un registro");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return r;
     }
@@ -63,6 +79,14 @@ public class DHotelesDAO {
         }catch (SQLException e){
             System.out.println("Error en eliminar un registro");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -84,6 +108,14 @@ public class DHotelesDAO {
         catch (Exception e)
         {
             return 0;
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
     public int roomID(String room)
@@ -104,6 +136,14 @@ public class DHotelesDAO {
         catch (Exception e)
         {
             return 0;
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -129,6 +169,14 @@ public class DHotelesDAO {
                 hoteles.add(h);
             }
         }catch (Exception e){
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return hoteles;
     }
@@ -162,6 +210,14 @@ public class DHotelesDAO {
                 dHoteles.add(dh);
             }
         }catch (Exception e){
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return dHoteles;
     }
@@ -178,6 +234,14 @@ public class DHotelesDAO {
                 hotel.add(hotelid);
             }
         }catch (Exception e){
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return hotel;
     }
@@ -193,6 +257,14 @@ public class DHotelesDAO {
                 room.add(roomid);
             }
         }catch (Exception e){
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return room;
     }

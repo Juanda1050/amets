@@ -10,7 +10,7 @@ public class AerolineaDAO {
     PreparedStatement ps;
     ResultSet rs;
 
-    public int agregar(Aerolinea a){
+    public int agregar(Aerolinea a) {
         if(a.getFlyClass().equals("") || a.getFlyClass().equals("") || a.getPrice() == 0){
             return 2;
         }
@@ -25,6 +25,14 @@ public class AerolineaDAO {
         }catch(SQLException e){
             System.out.println("Error en agregar un registro");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return 1;
     }
@@ -48,6 +56,14 @@ public class AerolineaDAO {
         }catch (SQLException e){
             System.out.println("Error en actualizar un registro");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return r;
     }
@@ -61,6 +77,14 @@ public class AerolineaDAO {
         }catch (SQLException e){
             System.out.println("Error en eliminar un registro");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -82,6 +106,14 @@ public class AerolineaDAO {
         }catch (SQLException e){
             System.out.println("Error en listar Aerolinea");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return aero;
     }

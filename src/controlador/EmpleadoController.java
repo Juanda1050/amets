@@ -33,7 +33,7 @@ public class EmpleadoController implements ActionListener {
             vista.gEmpleado_saveB.addActionListener(this);
             vista.gEmpleado_editB.addActionListener(this);
             vista.gEmpleado_deleteB.addActionListener(this);
-            listar(vista.gEmpleadoTable);
+            listEmployee(vista.gEmpleadoTable);
         }
         else
         {
@@ -45,9 +45,9 @@ public class EmpleadoController implements ActionListener {
             vista.gEmpleado_saveB.addActionListener(this);
             vista.gEmpleado_editB.addActionListener(this);
             vista.gEmpleado_deleteB.addActionListener(this);
-            listar(vista.gEmpleadoTable);
+            listEmployee(vista.gEmpleadoTable);
             boolean[] arr = {true, false, false, false};
-            estadosBotones(arr);
+            areButtonsEnabled(arr);
         }
     }
 
@@ -59,16 +59,16 @@ public class EmpleadoController implements ActionListener {
             key = true;
             areTextFieldEditable(true);
             boolean[] arr = {false, true, true, false};
-            estadosBotones(arr);
+            areButtonsEnabled(arr);
             vista.gEmpleado_turnoCB.setEnabled(true);
             vista.gEmpleado_puestoCB.setEnabled(true);
         }
-        //Boton Guardar
+        //Boton saveEmployee
         if(e.getSource()==vista.gEmpleado_saveB)
         {
             boolean[] arr = {true, false, true, true};
-            estadosBotones(arr);
-            Guardar();
+            areButtonsEnabled(arr);
+            saveEmployee();
 
         }
         //Boton Editar
@@ -77,67 +77,23 @@ public class EmpleadoController implements ActionListener {
             key = false;
             Editar();
         }
-        //Boton eliminar
+        //Boton deleteEmployee
         if(e.getSource()==vista.gEmpleado_deleteB)
         {
-            eliminar();
-            limpiar();
+            deleteEmployee();
+            cleanEmployee();
             cleanForm();
-            listar(vista.gEmpleadoTable);
-        }
-
-    }
-
-    public void eliminar(){
-        int row = vista.gEmpleadoTable.getSelectedRow();
-        if(row==-1)
-        {
-            JOptionPane.showMessageDialog(null, "Debe selecionar un registro");
-        }
-        else
-        {
-            int lista = dao.listar().size();
-            if(lista>1)
-            {
-                int id = Integer.parseInt((String) vista.gEmpleadoTable.getValueAt(row, 0).toString());
-                dao.eliminar(id);
-                JOptionPane.showMessageDialog(null, "Registro eliminado");
-            }
-            else
-            {
-                boolean[] arr = {true, false, false, false};
-                estadosBotones(arr);
-                int id = Integer.parseInt((String) vista.gEmpleadoTable.getValueAt(row, 0).toString());
-                dao.eliminar(id);
-                JOptionPane.showMessageDialog(null, "Registro eliminado");
-            }
-
+            listEmployee(vista.gEmpleadoTable);
         }
     }
 
-    public void listar(JTable tabla)
-    {
-        modelo = (DefaultTableModel)tabla.getModel();
-        List<Empleado> lista = dao.listar();
-        Object[] object = new Object[6];
-        for (Empleado value : lista) {
-            object[0] = value.getIDempleado();
-            object[1] = value.getNombreEmpleado();
-            object[2] = value.getApellidoEmpleado();
-            object[3] = value.getContraseña();
-            object[4] = value.getTurno();
-            object[5] = value.getPuesto();
-            modelo.addRow(object);
-        }
-    }
-
-    public void agregar()
+    public void addEmployee()
     {
         if(vista.gEmpleado_nombreTF.getText().isEmpty() || vista.gEmpleado_apellidoTF.getText().isEmpty() || vista.gEmpleado_contraTF.getText().isEmpty() || vista.gEmpleado_turnoCB.getSelectedIndex() == 0 || vista.gEmpleado_puestoCB.getSelectedIndex() == 0)
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
             boolean[] arr = {false, true, false, false};
-            estadosBotones(arr);
+            areButtonsEnabled(arr);
         }
         else
         {
@@ -161,20 +117,20 @@ public class EmpleadoController implements ActionListener {
             areTextFieldEditable(false);
             cleanForm();
             boolean[] arr = {true, false, true, true};
-            estadosBotones(arr);
+            areButtonsEnabled(arr);
             vista.gEmpleado_turnoCB.setEnabled(false);
             vista.gEmpleado_puestoCB.setEnabled(false);
         }
     }
 
 
-    public void Actualizar()
+    public void updateEmployee()
     {
         if(vista.gEmpleado_nombreTF.getText().isEmpty() || vista.gEmpleado_apellidoTF.getText().isEmpty() || vista.gEmpleado_contraTF.getText().isEmpty() || vista.gEmpleado_turnoCB.getSelectedIndex() == 0 || vista.gEmpleado_puestoCB.getSelectedIndex() == 0)
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
             boolean[] arr = {false, true, false, false};
-            estadosBotones(arr);
+            areButtonsEnabled(arr);
         }
         else
         {
@@ -191,7 +147,7 @@ public class EmpleadoController implements ActionListener {
             empleado.setTurno(turno);
             empleado.setPuesto(puesto);
 
-            int r = dao.Actualizar(empleado);
+            int r = dao.actualizar(empleado);
 
             if (r == 1) {
                 JOptionPane.showMessageDialog(null, "Registro actualizado exitosamente");
@@ -199,14 +155,56 @@ public class EmpleadoController implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
             areTextFieldEditable(false);
-            limpiar();
+            cleanEmployee();
             cleanForm();
-            listar(vista.gEmpleadoTable);
-            vista.gEmpleado_turnoCB.setEnabled(false);
-            vista.gEmpleado_puestoCB.setEnabled(false);
+            listEmployee(vista.gEmpleadoTable);
         }
     }
 
+
+    public void deleteEmployee(){
+        int row = vista.gEmpleadoTable.getSelectedRow();
+        if(row==-1)
+        {
+            JOptionPane.showMessageDialog(null, "Debe selecionar un registro");
+        }
+        else
+        {
+            int lista = dao.listar().size();
+            if(lista>1)
+            {
+                int id = Integer.parseInt((String) vista.gEmpleadoTable.getValueAt(row, 0).toString());
+                dao.eliminar(id);
+                JOptionPane.showMessageDialog(null, "Registro eliminado");
+            }
+            else
+            {
+                boolean[] arr = {true, false, false, false};
+                areButtonsEnabled(arr);
+                int id = Integer.parseInt((String) vista.gEmpleadoTable.getValueAt(row, 0).toString());
+                dao.eliminar(id);
+                JOptionPane.showMessageDialog(null, "Registro eliminado");
+            }
+
+        }
+    }
+
+    public void listEmployee(JTable tabla)
+    {
+        modelo = (DefaultTableModel)tabla.getModel();
+        List<Empleado> lista = dao.listar();
+        Object[] object = new Object[6];
+        for (Empleado value : lista) {
+            object[0] = value.getIDempleado();
+            object[1] = value.getNombreEmpleado();
+            object[2] = value.getApellidoEmpleado();
+            object[3] = value.getContraseña();
+            object[4] = value.getTurno();
+            object[5] = value.getPuesto();
+            modelo.addRow(object);
+        }
+    }
+    
     public void Editar()
     {
         int row = vista.gEmpleadoTable.getSelectedRow();
@@ -218,7 +216,7 @@ public class EmpleadoController implements ActionListener {
         {
             areTextFieldEditable(true);
             boolean[] arr = {false, true, true, false};
-            estadosBotones(arr);
+            areButtonsEnabled(arr);
             int id = Integer.parseInt(vista.gEmpleadoTable.getValueAt(row, 0).toString());
             String nombre = (String) vista.gEmpleadoTable.getValueAt(row, 1);
             String apellido = (String) vista.gEmpleadoTable.getValueAt(row, 2);
@@ -234,33 +232,33 @@ public class EmpleadoController implements ActionListener {
         }
     }
     
-    //Guardar
-    public void Guardar()
+    //saveEmployee
+    public void saveEmployee()
     {
         if(key)
         {
             int lista = dao.listar().size();
             if (lista>0)
             {
-                agregar();
-                limpiar();
-                listar(vista.gEmpleadoTable);
+                addEmployee();
+                cleanEmployee();
+                listEmployee(vista.gEmpleadoTable);
             }
             else
             {
-                agregar();
-                listar(vista.gEmpleadoTable);
+                addEmployee();
+                listEmployee(vista.gEmpleadoTable);
             }
         }
         else
         {
-            Actualizar();
+            updateEmployee();
         }
 
     }
     
-    //Limpiar la Tabla
-    private void limpiar(){
+    //cleanEmployee la Tabla
+    private void cleanEmployee(){
         for (int i = 0; i < vista.gEmpleadoTable.getRowCount(); i++){
             modelo.removeRow(i);
             i = i - 1;
@@ -277,7 +275,7 @@ public class EmpleadoController implements ActionListener {
         vista.gEmpleado_puestoCB.setEnabled(flag);
     }
 
-    //Limpiar los TextField
+    //cleanEmployee los TextField
     private void cleanForm(){
         vista.gEmpleado_idTF.setText("");
         vista.gEmpleado_nombreTF.setText("");
@@ -288,7 +286,7 @@ public class EmpleadoController implements ActionListener {
     }
 
     //Activar o desactivar botones
-    private void estadosBotones(boolean[] a)
+    private void areButtonsEnabled(boolean[] a)
     {
         vista.gEmpleado_addB.setEnabled(a[0]);
         vista.gEmpleado_saveB.setEnabled(a[1]);

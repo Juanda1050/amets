@@ -7,7 +7,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class VistaMA {
+public class MenuAdministrador {
 
     private JFrame frame;
 
@@ -18,7 +18,7 @@ public class VistaMA {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    VistaMA window = new VistaMA();
+                    MenuAdministrador window = new MenuAdministrador();
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -30,7 +30,7 @@ public class VistaMA {
     /**
      * Create the application.
      */
-    public VistaMA() {
+    public MenuAdministrador() {
         initialize();
     }
 

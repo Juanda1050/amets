@@ -11,6 +11,7 @@ public class EmpleadoDAO {
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
+
     //listar los registros de la DB en la tabla
     public List listar(){
         List<Empleado> datos = new ArrayList<>();
@@ -29,8 +30,17 @@ public class EmpleadoDAO {
                 empleado.setPuesto(rs.getInt(6));
                 datos.add(empleado);
             }
-        }catch (Exception e){
-
+        }catch (SQLException e) {
+            System.out.println("Error en listar un registro");
+            e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return datos;
     }
@@ -48,14 +58,22 @@ public class EmpleadoDAO {
             ps.setInt(5, empleado.getPuesto());
             ps.executeUpdate();
         }catch (SQLException e){
-            System.out.println("Error");
+            System.out.println("Error en agregar un registro");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         return 1;
     }
 
-    public int Actualizar(Empleado empleado)
+    public int actualizar(Empleado empleado)
     {
         String sql = "UPDATE empleado SET agentName=?, agentLastName=?, password=?, workShift=?, jobTitle=? WHERE agentID=?";
         int r = 0;
@@ -72,8 +90,17 @@ public class EmpleadoDAO {
             ps.executeUpdate();
             r = ps.executeUpdate();
         }
-        catch (Exception e)
-        {
+        catch (SQLException e){
+            System.out.println("Error en actualizar un registro");
+            e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return r;
     }
@@ -90,6 +117,14 @@ public class EmpleadoDAO {
         catch (Exception e)
         {
 
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

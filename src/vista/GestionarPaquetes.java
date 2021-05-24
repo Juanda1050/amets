@@ -213,7 +213,7 @@ public class GestionarPaquetes{
         gPaquete_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPaqueteBottom.add(gPaquete_backB, BorderLayout.EAST);
         gPaquete_backB.addActionListener(e -> {
-            VistaMA maFrame = new VistaMA();
+            MenuAdministrador maFrame = new MenuAdministrador();
             maFrame.runFrame();
             gPaqueteFrame.setVisible(false);
         });

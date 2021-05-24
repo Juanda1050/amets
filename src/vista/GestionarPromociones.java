@@ -239,7 +239,7 @@ public class GestionarPromociones{
         gPromo_backB.setIcon(new ImageIcon("resources/left.png"));
         gPromoBottom.add(gPromo_backB, BorderLayout.EAST);
         gPromo_backB.addActionListener(e -> {
-            VistaMA maFrame = new VistaMA();
+            MenuAdministrador maFrame = new MenuAdministrador();
             maFrame.runFrame();
             gPromoFrame.setVisible(false);
         });

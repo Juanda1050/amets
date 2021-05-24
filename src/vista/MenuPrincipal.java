@@ -1,37 +1,42 @@
 package vista;
 
+import controlador.MenuController;
+
 import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
-public class MenuPrincipal extends Credenciales{
+public class MenuPrincipal {
 
-    private JFrame mpFrame;
+    public JFrame mpFrame;
+    public JButton mpCajaBtn, mpSalirBtn, mpVentaBtn;
 
-    public void initialize(int agentID) {
+    public void runFrame(int agentID){
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    MenuPrincipal window = new MenuPrincipal();
+                    MenuController cm = new MenuController(window, agentID);
+                    window.mpFrame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public MenuPrincipal() {
+        initialize();
+    }
+
+    public void initialize() {
 
         mpFrame = new JFrame();
-        mpFrame.setVisible(true);
         mpFrame.setTitle("Amets Travels");
         mpFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
         mpFrame.setBounds(100, 100, 1280, 720);
         mpFrame.getContentPane().setLayout(new BorderLayout(0, 0));
-        mpFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent we) {
-                int result = JOptionPane.showConfirmDialog(mpFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION)
-                {
-                    mpFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                }
-                else if (result == JOptionPane.NO_OPTION)
-                {
-                    mpFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                }
-            }
-        });
 
         JPanel mpTop = new JPanel();
         mpTop.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -56,37 +61,22 @@ public class MenuPrincipal extends Credenciales{
         JPanel mpMidWest = new JPanel();
         mpMid.add(mpMidWest, BorderLayout.CENTER);
 
-        JButton mpVentaBtn = new JButton("Nueva Venta");
+        mpVentaBtn = new JButton("Nueva Venta");
         mpMidWest.setLayout(new GridLayout(0, 1, 0, 0));
         mpVentaBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         mpMidWest.add(mpVentaBtn);
-        mpVentaBtn.addActionListener(e -> {
-            RegistroUsuarios ru = new RegistroUsuarios();
-            ru.initialize(agentID);
-            mpFrame.setVisible(false);
-        });
 
-        JButton mpCajaBtn = new JButton("Corte de Caja");
+        mpCajaBtn = new JButton("Corte de Caja");
         mpCajaBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         mpMidWest.add(mpCajaBtn);
-        mpCajaBtn.addActionListener(e -> {
-            VistaCC ccFrame = new VistaCC();
-            ccFrame.runFrame();
-            mpFrame.setVisible(false);
-        });
 
         JPanel mpBottom = new JPanel();
         mpBottom.setBorder(new EmptyBorder(20, 20, 20, 20));
         mpFrame.getContentPane().add(mpBottom, BorderLayout.SOUTH);
         mpBottom.setLayout(new BorderLayout(0, 0));
 
-        JButton mpSalirBtn = new JButton("Salir");
+        mpSalirBtn = new JButton("Salir");
         mpSalirBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         mpBottom.add(mpSalirBtn, BorderLayout.EAST);
-        mpSalirBtn.addActionListener(e -> {
-            Credenciales credentials = new Credenciales();
-            credentials.initialize();
-            mpFrame.setVisible(false);
-        });
     }
 }

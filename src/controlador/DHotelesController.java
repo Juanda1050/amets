@@ -13,32 +13,32 @@ import java.util.List;
 
 public class DHotelesController implements ActionListener {
     DHoteles dh = new DHoteles();
-    DetalleHotel vistaDH;
+    DetalleHotel vista;
     DHotelesDAO dao;
     DefaultTableModel modelo = new DefaultTableModel();
     private boolean AU = true;
 
-    public DHotelesController(DetalleHotel vistaDH, DHotelesDAO dao){
+    public DHotelesController(DetalleHotel vista, DHotelesDAO dao){
 
         int lista = dao.listar().size();
         if (lista > 0){
             this.dao = dao;
-            this.vistaDH = vistaDH;
-            this.vistaDH.dHotel_addB.addActionListener(this);
-            this.vistaDH.dHotel_saveB.addActionListener(this);
-            this.vistaDH.dHotel_editB.addActionListener(this);
-            this.vistaDH.dHotel_deleteB.addActionListener(this);
-            listHotel(vistaDH.dHotelTable);
+            this.vista = vista;
+            this.vista.dHotel_addB.addActionListener(this);
+            this.vista.dHotel_saveB.addActionListener(this);
+            this.vista.dHotel_editB.addActionListener(this);
+            this.vista.dHotel_deleteB.addActionListener(this);
+            listHotel(vista.dHotelTable);
             boolean[] arr = {true, false, true, true};
             areButtonEnable(arr);
         }else{
             this.dao = dao;
-            this.vistaDH = vistaDH;
-            this.vistaDH.dHotel_addB.addActionListener(this);
-            this.vistaDH.dHotel_saveB.addActionListener(this);
-            this.vistaDH.dHotel_editB.addActionListener(this);
-            this.vistaDH.dHotel_deleteB.addActionListener(this);
-            listHotel(vistaDH.dHotelTable);
+            this.vista = vista;
+            this.vista.dHotel_addB.addActionListener(this);
+            this.vista.dHotel_saveB.addActionListener(this);
+            this.vista.dHotel_editB.addActionListener(this);
+            this.vista.dHotel_deleteB.addActionListener(this);
+            listHotel(vista.dHotelTable);
             boolean[] arr = {true, false, false, false};
             areButtonEnable(arr);
         }
@@ -47,35 +47,35 @@ public class DHotelesController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == vistaDH.dHotel_addB){
+        if(e.getSource() == vista.dHotel_addB){
             AU = true;
             areTextFieldEditable(true);
             boolean[] arr = {false, true, false, false};
             areButtonEnable(arr);
         }
-        if(e.getSource() == vistaDH.dHotel_saveB){
+        if(e.getSource() == vista.dHotel_saveB){
             saveHotel();
         }
-        if(e.getSource() == vistaDH.dHotel_editB){
+        if(e.getSource() == vista.dHotel_editB){
             editHotel();
         }
-        if(e.getSource() == vistaDH.dHotel_deleteB){
+        if(e.getSource() == vista.dHotel_deleteB){
             deleteHotel();
             cleanHotel();
-            listHotel(vistaDH.dHotelTable);
+            listHotel(vista.dHotelTable);
         }
     }
 
     public void addFly(){
-        if(vistaDH.dHotel_precioTF.getText().isEmpty() || vistaDH.dHotel_hotelCB.getSelectedIndex() == 0 || vistaDH.dHotel_habitacionCB.getSelectedIndex() == 0) {
+        if(vista.dHotel_precioTF.getText().isEmpty() || vista.dHotel_hotelCB.getSelectedIndex() == 0 || vista.dHotel_habitacionCB.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
             boolean[] arr = {true, false, true, true};
             areButtonEnable(arr);
         }
         else{
-            float price = Float.parseFloat(vistaDH.dHotel_precioTF.getText());
-            int hotel = vistaDH.dHotel_hotelCB.getSelectedIndex();
-            int room = vistaDH.dHotel_habitacionCB.getSelectedIndex();
+            float price = Float.parseFloat(vista.dHotel_precioTF.getText());
+            int hotel = vista.dHotel_hotelCB.getSelectedIndex();
+            int room = vista.dHotel_habitacionCB.getSelectedIndex();
             dh.setHotelID(hotel);
             dh.setRoomID(room);
             dh.setPrice(price);
@@ -92,17 +92,17 @@ public class DHotelesController implements ActionListener {
     }
 
     public void updateHotel(){
-        String h = (String) vistaDH.dHotel_hotelCB.getSelectedItem();
-        String rn = (String) vistaDH.dHotel_habitacionCB.getSelectedItem();
-        if(vistaDH.dHotel_precioTF.getText().isEmpty() || rn.compareTo("Seleccione una habitacion")==0 || h.compareTo("Seleccione un hotel")==0){
+        String h = (String) vista.dHotel_hotelCB.getSelectedItem();
+        String rn = (String) vista.dHotel_habitacionCB.getSelectedItem();
+        if(vista.dHotel_precioTF.getText().isEmpty() || rn.compareTo("Seleccione una habitacion")==0 || h.compareTo("Seleccione un hotel")==0){
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
             boolean[] arr = {true, false, true, true, true};
             areButtonEnable(arr);
         }
         else{
-            int hotel = dao.hotelID((String) vistaDH.dHotel_hotelCB.getSelectedItem());
-            int room = dao.roomID((String)vistaDH.dHotel_habitacionCB.getSelectedItem());
-            float price = Float.parseFloat(vistaDH.dHotel_precioTF.getText());
+            int hotel = dao.hotelID((String) vista.dHotel_hotelCB.getSelectedItem());
+            int room = dao.roomID((String)vista.dHotel_habitacionCB.getSelectedItem());
+            float price = Float.parseFloat(vista.dHotel_precioTF.getText());
             dh.setHotelID(hotel);
             dh.setRoomID(room);
             dh.setPrice(price);
@@ -117,11 +117,11 @@ public class DHotelesController implements ActionListener {
     }
 
     public void deleteHotel(){
-        int row = vistaDH.dHotelTable.getSelectedRow();
+        int row = vista.dHotelTable.getSelectedRow();
         if (row == 1){
             JOptionPane.showMessageDialog(null, "Seleccione un hotel");
         }else{
-            int id = dao.hotelID((String) vistaDH.dHotelTable.getValueAt(row, 0).toString());
+            int id = dao.hotelID((String) vista.dHotelTable.getValueAt(row, 0).toString());
             dao.eliminar(id);
             JOptionPane.showMessageDialog(null, "Vuelo eliminado exitosamente");
         }
@@ -132,7 +132,7 @@ public class DHotelesController implements ActionListener {
             JOptionPane.showMessageDialog(null, "ADDING");
             addFly();
             cleanHotel();
-            listHotel(vistaDH.dHotelTable);
+            listHotel(vista.dHotelTable);
             areTextFieldEditable(false);
             cleanForm();
 
@@ -140,7 +140,7 @@ public class DHotelesController implements ActionListener {
             updateHotel();
             JOptionPane.showMessageDialog(null, "UPDATING");
             cleanHotel();
-            listHotel(vistaDH.dHotelTable);
+            listHotel(vista.dHotelTable);
             areTextFieldEditable(false);
             cleanForm();
         }
@@ -148,18 +148,18 @@ public class DHotelesController implements ActionListener {
 
     private void editHotel(){
         AU = false;
-        int row = vistaDH.dHotelTable.getSelectedRow();
+        int row = vista.dHotelTable.getSelectedRow();
         if (row == -1){
             JOptionPane.showMessageDialog(null, "Seleccione un Hotel");
         }else{
             areTextFieldEditable(true);
-            vistaDH.dHotel_hotelCB.setEnabled(false);
+            vista.dHotel_hotelCB.setEnabled(false);
             boolean[] arr = {false, true, false, false};
             areButtonEnable(arr);
-            String Hotel = (String) vistaDH.dHotelTable.getValueAt(row, 0);
-            String Room = (String) vistaDH.dHotelTable.getValueAt(row, 1);
-            float price = Float.parseFloat(vistaDH.dHotelTable.getValueAt(row, 2).toString());
-            vistaDH.dHotel_precioTF.setText("" + price);
+            String Hotel = (String) vista.dHotelTable.getValueAt(row, 0);
+            String Room = (String) vista.dHotelTable.getValueAt(row, 1);
+            float price = Float.parseFloat(vista.dHotelTable.getValueAt(row, 2).toString());
+            vista.dHotel_precioTF.setText("" + price);
             rellenarCB(Hotel, Room);
         }
     }
@@ -177,46 +177,46 @@ public class DHotelesController implements ActionListener {
             System.out.println(object);
             modelo.addRow(object);
         }
-        vistaDH.dHotelTable.setModel(modelo);
+        vista.dHotelTable.setModel(modelo);
     }
 
     private void cleanHotel(){
-        for(int i = 0; i < vistaDH.dHotelTable.getRowCount(); i++){
+        for(int i = 0; i < vista.dHotelTable.getRowCount(); i++){
             modelo.removeRow(i);
             i = i - 1;
         }
     }
 
     private void areTextFieldEditable(boolean flag){
-        vistaDH.dHotel_hotelCB.setEnabled(flag);
-        vistaDH.dHotel_habitacionCB.setEnabled(flag);
-        vistaDH.dHotel_precioTF.setEditable(flag);
+        vista.dHotel_hotelCB.setEnabled(flag);
+        vista.dHotel_habitacionCB.setEnabled(flag);
+        vista.dHotel_precioTF.setEditable(flag);
     }
     private void areButtonEnable(boolean[] a){
-        vistaDH.dHotel_addB.setEnabled(a[0]);
-        vistaDH.dHotel_saveB.setEnabled(a[1]);
-        vistaDH.dHotel_editB.setEnabled(a[2]);
-        vistaDH.dHotel_deleteB.setEnabled(a[3]);
+        vista.dHotel_addB.setEnabled(a[0]);
+        vista.dHotel_saveB.setEnabled(a[1]);
+        vista.dHotel_editB.setEnabled(a[2]);
+        vista.dHotel_deleteB.setEnabled(a[3]);
     }
 
     private void cleanForm(){
-        vistaDH.dHotel_habitacionCB.setSelectedIndex(0);
-        vistaDH.dHotel_precioTF.setText("");
+        vista.dHotel_habitacionCB.setSelectedIndex(0);
+        vista.dHotel_precioTF.setText("");
     }
 
     private void rellenarCB(String Hotel, String room){
-        vistaDH.dHotel_hotelCB.removeAllItems();
-        vistaDH.dHotel_hotelCB.addItem(Hotel);
+        vista.dHotel_hotelCB.removeAllItems();
+        vista.dHotel_hotelCB.addItem(Hotel);
         for (int i = 0; i<dao.listarhoteles().size();i++){
             if (dao.listarhoteles().get(i).getHotelName().compareTo(Hotel) != 0){
-                vistaDH.dHotel_hotelCB.addItem(dao.listarhoteles().get(i).getHotelName());
+                vista.dHotel_hotelCB.addItem(dao.listarhoteles().get(i).getHotelName());
             }
         }
-        vistaDH.dHotel_habitacionCB.removeAllItems();
-        vistaDH.dHotel_habitacionCB.addItem(room);
+        vista.dHotel_habitacionCB.removeAllItems();
+        vista.dHotel_habitacionCB.addItem(room);
         for (int i = 0; i<dao.listarRoom().size();i++){
             if (dao.listarRoom().get(i).compareTo(room) != 0){
-                vistaDH.dHotel_habitacionCB.addItem(dao.listarRoom().get(i));
+                vista.dHotel_habitacionCB.addItem(dao.listarRoom().get(i));
             }
         }
     }

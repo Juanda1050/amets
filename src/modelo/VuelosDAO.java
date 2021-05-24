@@ -28,6 +28,14 @@ public class VuelosDAO {
         }catch (SQLException e){
             System.out.println("Error en agregar un registro");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return 1;
     }
@@ -54,6 +62,14 @@ public class VuelosDAO {
         }catch (SQLException e){
             System.out.println("Error en actualizar un registro");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return r;
     }
@@ -67,6 +83,14 @@ public class VuelosDAO {
         }catch (SQLException e){
             System.out.println("Error en eliminar un registro");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -105,6 +129,14 @@ public class VuelosDAO {
                 vuelos.add(v);
             }
         }catch (Exception e){
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return vuelos;
     }
@@ -124,6 +156,14 @@ public class VuelosDAO {
             return id;
         }catch (Exception e){
             return 0;
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -145,6 +185,14 @@ public class VuelosDAO {
         catch (Exception e)
         {
             return 0;
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -160,6 +208,14 @@ public class VuelosDAO {
                 destinos.add(ciudad);
             }
         }catch (Exception e){
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return destinos;
     }
@@ -176,6 +232,14 @@ public class VuelosDAO {
                 aero.add(aerolinea);
             }
         }catch (Exception e){
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return aero;
     }

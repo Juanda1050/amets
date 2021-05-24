@@ -33,7 +33,14 @@ public class DetallePaqueteDAO
                 listaDP.add(dp);
             }
         }catch (Exception e){
-
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listaDP;
     }
@@ -52,8 +59,15 @@ public class DetallePaqueteDAO
         }catch (SQLException e){
             System.out.println("Error");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-
         return 1;
     }
 
@@ -72,11 +86,18 @@ public class DetallePaqueteDAO
         }
         catch (Exception e)
         {
-
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
-    public int Actualizar(DP dp)
+    public int actualizar(DP dp)
     {
         String sql2 = "UPDATE detallepaquete SET flightID=?, hotelID=?, destinationID=? WHERE packID = ?";
         int r=0;
@@ -100,6 +121,14 @@ public class DetallePaqueteDAO
         }
         catch (Exception e)
         {
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return r;
     }
@@ -123,6 +152,14 @@ public class DetallePaqueteDAO
             }
         }catch (Exception e){
 
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listaPaquetes;
     }
@@ -145,6 +182,14 @@ public class DetallePaqueteDAO
             }
         }catch (Exception e){
 
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listaDestinos;
     }
@@ -165,6 +210,14 @@ public class DetallePaqueteDAO
             return id;
         }catch (Exception e){
             return 0;
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -184,6 +237,14 @@ public class DetallePaqueteDAO
             return id;
         }catch (Exception e){
             return 0;
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -206,6 +267,14 @@ public class DetallePaqueteDAO
         catch (Exception e)
         {
             return 0;
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -225,7 +294,14 @@ public class DetallePaqueteDAO
             }
 
         }catch (Exception e){
-
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listaVuelosId;
     }
@@ -246,9 +322,15 @@ public class DetallePaqueteDAO
                 listaHoteles.add(rs.getString("hotelName"));
             }
         }
-        catch (Exception e)
-        {
-
+        catch (Exception e) {
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listaHoteles;
     }
@@ -272,6 +354,14 @@ public class DetallePaqueteDAO
         catch (Exception e)
         {
             return "";
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -294,6 +384,14 @@ public class DetallePaqueteDAO
         catch (Exception e)
         {
             return "";
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -316,6 +414,14 @@ public class DetallePaqueteDAO
         catch (Exception e)
         {
             return "";
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

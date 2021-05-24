@@ -35,6 +35,14 @@ public class PaquetesDAO
             }
         }catch (Exception e){
 
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return listaPaquetes;
     }
@@ -53,12 +61,20 @@ public class PaquetesDAO
         }catch (SQLException e){
             System.out.println("Error");
             e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         return 1;
     }
 
-    public int Actualizar(Paquetes p)
+    public int actualizar(Paquetes p)
     {
         String sql = "UPDATE paquetes SET packName=?, packDescription=?, passengers=?, price=? WHERE packID=?";
         int r=0;
@@ -83,6 +99,14 @@ public class PaquetesDAO
         }
         catch (Exception e)
         {
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return r;
     }
@@ -99,6 +123,14 @@ public class PaquetesDAO
         catch (Exception e)
         {
 
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
