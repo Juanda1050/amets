@@ -1,15 +1,9 @@
-package segunda;
+package vista;
 
-import Controlador.TicketController;
-import primera.Retorno;
+import controlador.TicketController;
+
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import javax.swing.border.EmptyBorder;
 
 public class Ticket {

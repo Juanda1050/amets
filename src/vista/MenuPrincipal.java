@@ -1,14 +1,11 @@
-package segunda;
+package vista;
 
-import Controlador.ControladorMenu;
-import tercera.VistaCC;
+import controlador.ControladorMenu;
 
 import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class MenuPrincipal {
 

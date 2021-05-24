@@ -1,7 +1,7 @@
-package Controlador;
+package controlador;
 
-import primera.Retorno;
-import segunda.Ticket;
+import vista.Retorno;
+import vista.Ticket;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,9 +1,9 @@
-package Controlador;
+package controlador;
 
-import segunda.Credenciales;
-import segunda.MenuPrincipal;
-import segunda.RegistroUsuarios;
-import tercera.VistaCC;
+import vista.Credenciales;
+import vista.MenuPrincipal;
+import vista.RegistroUsuarios;
+import vista.VistaCC;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

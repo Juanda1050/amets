@@ -1,6 +1,5 @@
-package primera;
+package vista;
 
-import segunda.MenuPrincipal;
 import javax.swing.*;
 
 public class Retorno

@@ -1,20 +1,15 @@
-package Controlador;
+package controlador;
 
 import modelo.CorteDAO;
 import modelo.VentaDAO;
-import primera.Retorno;
-import tercera.VistaCC;
+import vista.Retorno;
+import vista.VistaCC;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class CorteController implements ActionListener, WindowListener
 {

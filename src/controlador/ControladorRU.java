@@ -1,10 +1,10 @@
-package Controlador;
+package controlador;
 
 import modelo.Usuario;
 import modelo.UsuarioDAO;
-import segunda.MenuPrincipal;
-import segunda.RegistroUsuarios;
-import segunda.SeleccionarPaquete;
+import vista.MenuPrincipal;
+import vista.RegistroUsuarios;
+import vista.SeleccionarPaquete;
 
 import javax.swing.*;
 import java.awt.event.*;

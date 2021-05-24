@@ -1,4 +1,4 @@
-package quinta;
+package vista;
 
 import java.awt.*;
 
@@ -8,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
-import tercera.VistaMA;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

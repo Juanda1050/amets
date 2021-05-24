@@ -1,13 +1,12 @@
-package Controlador;
+package controlador;
 
-import modelo.Paquetes;
 import modelo.SelecPaqDAO;
 import modelo.UsuarioDAO;
-import primera.Retorno;
-import segunda.RegistroUsuarios;
-import segunda.SeleccionarPaquete;
-import segunda.Ticket;
-import segunda.VistaPP;
+import vista.Retorno;
+import vista.RegistroUsuarios;
+import vista.SeleccionarPaquete;
+import vista.Ticket;
+import vista.VistaPP;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

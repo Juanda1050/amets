@@ -1,10 +1,10 @@
-package Controlador;
+package controlador;
 
 import modelo.PagoDAO;
-import primera.Retorno;
-import segunda.SeleccionarPaquete;
-import segunda.Ticket;
-import segunda.VistaPP;
+import vista.Retorno;
+import vista.SeleccionarPaquete;
+import vista.Ticket;
+import vista.VistaPP;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.Date;

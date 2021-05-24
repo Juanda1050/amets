@@ -1,4 +1,4 @@
-package quinta;
+package vista;
 
 import java.awt.*;
 
@@ -9,7 +9,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import com.toedter.calendar.JDateChooser;
-import tercera.VistaMA;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;

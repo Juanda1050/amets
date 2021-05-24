@@ -1,7 +1,7 @@
-package segunda;
+package vista;
 
 
-import Controlador.ControladorRU;
+import controlador.ControladorRU;
 import com.toedter.calendar.JTextFieldDateEditor;
 import modelo.UsuarioDAO;
 

@@ -1,6 +1,6 @@
-package segunda;
+package vista;
 
-import Controlador.SelecPaqController;
+import controlador.SelecPaqController;
 import modelo.SelecPaqDAO;
 
 import javax.swing.*;

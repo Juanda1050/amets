@@ -1,6 +1,4 @@
-package quinta;
-
-import tercera.VistaMA;
+package vista;
 
 import java.awt.*;
 

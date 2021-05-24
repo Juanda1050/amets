@@ -1,6 +1,4 @@
-package cuarta;
-
-import tercera.VistaMA;
+package vista;
 
 import java.awt.*;
 
@@ -9,9 +7,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.SwingConstants;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.SwingConstants;
 import javax.swing.DefaultComboBoxModel;
 
 public class GestionarEmpleados {

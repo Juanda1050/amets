@@ -1,14 +1,4 @@
-package tercera;
-
-import quinta.GestionarHoteles;
-import quinta.GestionarReportes;
-import quinta.GestionarVentas;
-import quinta.GestionarVuelos;
-import cuarta.GestionarDestinos;
-import cuarta.GestionarEmpleados;
-import cuarta.GestionarPaquetes;
-import cuarta.GestionarPromociones;
-import segunda.Credenciales;
+package vista;
 
 import java.awt.*;
 

@@ -1,20 +1,14 @@
-package segunda;
+package vista;
 
-import Controlador.PagoController;
-import Controlador.SelecPaqController;
+import controlador.PagoController;
 import com.toedter.calendar.JTextFieldDateEditor;
 import modelo.PagoDAO;
-import modelo.SelecPaqDAO;
-import primera.Retorno;
 
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.Date;
 
 public class VistaPP{
 

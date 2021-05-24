@@ -1,4 +1,4 @@
-package primera;
+package vista;
 
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 
 public class Control {
 
