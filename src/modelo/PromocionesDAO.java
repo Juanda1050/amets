@@ -100,6 +100,23 @@ public class PromocionesDAO {
         return promo;
     }
 
+    public int packID(String pack) {
+        int id = 0;
+        String sql = "SELECT packID FROM paquetes WHERE packName = ?";
+        try{
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, pack);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                id = rs.getInt("packID");
+            }
+            return id;
+        }catch (Exception e){
+        }
+        return 0;
+    }
+
     public ArrayList<String> listarPaquete(){
         ArrayList<String> pack = new ArrayList<>();
         String sql = "SELECT * FROM paquetes";
@@ -107,7 +124,6 @@ public class PromocionesDAO {
             con = conectar();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            pack.add("Seleccione un paquete");
             while(rs.next()){
                 String paquete = rs.getString("packName");
                 pack.add(paquete);

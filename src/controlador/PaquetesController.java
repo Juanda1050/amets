@@ -11,9 +11,9 @@ import java.awt.event.ActionListener;
 
 public class PaquetesController implements ActionListener
 {
-    PaquetesDAO dao = new PaquetesDAO();
+    PaquetesDAO dao;
     Paquetes p = new Paquetes();
-    GestionarPaquetes vista = new GestionarPaquetes();
+    GestionarPaquetes vista;
     DefaultTableModel modelo = new DefaultTableModel();
     boolean key;
 
@@ -31,6 +31,8 @@ public class PaquetesController implements ActionListener
             vista.gPaquete_editB.addActionListener(this);
             vista.gPaquete_deleteB.addActionListener(this);
             listar(vista.gPaqueteTable);
+            boolean[] arr = {true, false, true, true};
+            estadosBotones(arr);
         }
         else
         {

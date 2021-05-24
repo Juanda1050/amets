@@ -1,6 +1,8 @@
 package vista;
 
 import com.toedter.calendar.JTextFieldDateEditor;
+import controlador.HotelesController;
+import modelo.HotelesDAO;
 
 import java.awt.*;
 
@@ -17,24 +19,20 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 public class GestionarHoteles {
-
         private JFrame gHotelFrame;
         public JTextField gHotel_idTF, gHotel_nombreTF, gHotel_ubicacionTF, gHotel_clasifTF, gHotel_genteTF;
-        public JButton gHotel_addB, gHotel_saveB, gHotel_editB, gHotel_deleteB;
+        public JButton gHotel_addB, gHotel_saveB, gHotel_editB, gHotel_deleteB, gHotel_hotelB;
         public JTable gHotelTable;
         public JComboBox gHotel_destinoCB, gHotel_dispoCB, gHotel_regimenCB;
         public JTextFieldDateEditor  gHotel_entradaDC, gHotel_salidaDC;
         private int limiteNombre = 50, limiteUbi = 100, limiteClasif = 15, limiteGente = 3;
 
-        /**
-         * Launch the application.
-         */
         public void runFrame(){
                 EventQueue.invokeLater(() -> {
                         try {
                                 GestionarHoteles window = new GestionarHoteles();
-                                //HotelesDAO hotelesDAO = new HotelesDAO();
-                                //HotelesController controller = new HotelesController(window, hotelesDAO);
+                                HotelesDAO hotelesDAO = new HotelesDAO();
+                                HotelesController controller = new HotelesController(window, hotelesDAO);
                                 window.gHotelFrame.setVisible(true);
                         } catch (Exception e) {
                                 e.printStackTrace();
@@ -42,21 +40,15 @@ public class GestionarHoteles {
                 });
         }
 
-        /**
-         * Create the application.
-         */
         public GestionarHoteles() {
                 initialize();
         }
 
-        /**
-         * Initialize the contents of the frame.
-         */
         private void initialize() {
-                //HotelesDAO hotelesDAO = new HotelesDAO();
-                gHotelFrame = new JFrame("Gestionar Hoteles");
+                gHotelFrame = new JFrame();
                 gHotelFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
                 gHotelFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
+                gHotelFrame.setTitle("Gestionar Hoteles");
                 gHotelFrame.setBounds(100, 100, 1280, 720);
                 gHotelFrame.addWindowListener(new WindowAdapter() {
                         public void windowClosing(WindowEvent we) {
@@ -90,13 +82,14 @@ public class GestionarHoteles {
                 JPanel gHotelLeft = new JPanel();
                 gHotelLeft.setBorder(new EmptyBorder(20, 20, 20, 20));
                 gHotelFrame.getContentPane().add(gHotelLeft, BorderLayout.WEST);
+                gHotelLeft.setLayout(new GridLayout(0, 2, 15, 10));
 
                 JLabel gHotel_idL = new JLabel("ID Hotel");
                 gHotel_idL.setFont(new Font("Tahoma", Font.PLAIN, 16));
                 gHotelLeft.add(gHotel_idL);
 
                 gHotel_idTF = new JTextField();
-                gHotel_idTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                gHotel_idTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
                 gHotel_idTF.setColumns(10);
                 gHotel_idTF.setEditable(false);
                 gHotelLeft.add(gHotel_idTF);
@@ -108,8 +101,8 @@ public class GestionarHoteles {
 
                 gHotel_destinoCB = new JComboBox();
                 gHotel_destinoCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+                gHotel_destinoCB.setModel(new DefaultComboBoxModel(new String[] {"Seleccione destino"}));
                 gHotel_destinoCB.setToolTipText("");
-                gHotelLeft.add(gHotel_destinoCB);
                 gHotelLeft.add(gHotel_destinoCB);
 
                 JLabel gHotel_nombreL = new JLabel("Nombre");
@@ -117,7 +110,7 @@ public class GestionarHoteles {
                 gHotelLeft.add(gHotel_nombreL);
 
                 gHotel_nombreTF = new JTextField();
-                gHotel_nombreTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                gHotel_nombreTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
                 gHotel_nombreTF.setColumns(10);
                 gHotelLeft.add(gHotel_nombreTF);
                 gHotel_nombreTF.addKeyListener(new KeyAdapter() {
@@ -141,7 +134,7 @@ public class GestionarHoteles {
                 gHotelLeft.add(gHotel_ubicacionL);
 
                 gHotel_ubicacionTF = new JTextField();
-                gHotel_ubicacionTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                gHotel_ubicacionTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
                 gHotel_ubicacionTF.setColumns(10);
                 gHotelLeft.add(gHotel_ubicacionTF);
                 gHotel_ubicacionTF.addKeyListener(new KeyAdapter() {
@@ -160,48 +153,18 @@ public class GestionarHoteles {
                 gHotelLeft.add(gHotel_clasifL);
 
                 gHotel_clasifTF = new JTextField();
-                gHotel_clasifTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                gHotel_clasifTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
                 gHotel_clasifTF.setColumns(10);
                 gHotelLeft.add(gHotel_clasifTF);
-                gHotel_clasifTF.addKeyListener(new KeyAdapter() {
-                        @Override
-                        public void keyTyped(KeyEvent e) {
-                                char ch = e.getKeyChar();
-                                if(Character.isLetter(ch) || Character.isISOControl(ch)){
-                                }else{
-                                        e.consume();
-                                        JOptionPane.showMessageDialog(null, "Solo admite letras");
-                                }
-                                if (gHotel_clasifTF.getText().length() >= limiteClasif){
-                                        e.consume();
-                                        Toolkit.getDefaultToolkit().beep();
-                                }
-                        }
-                });
 
                 JLabel gHotel_genteL = new JLabel("Huespedes");
                 gHotel_genteL.setFont(new Font("Tahoma", Font.PLAIN, 16));
                 gHotelLeft.add(gHotel_genteL);
 
                 gHotel_genteTF = new JTextField();
-                gHotel_genteTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                gHotel_genteTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
                 gHotel_genteTF.setColumns(10);
                 gHotelLeft.add(gHotel_genteTF);
-                gHotel_genteTF.addKeyListener(new KeyAdapter() {
-                        @Override
-                        public void keyTyped(KeyEvent e) {
-                                char ch = e.getKeyChar();
-                                if(Character.isLetter(ch) || Character.isISOControl(ch)){
-                                }else{
-                                        e.consume();
-                                        JOptionPane.showMessageDialog(null, "Solo admite letras");
-                                }
-                                if (gHotel_genteTF.getText().length() >= limiteGente){
-                                        e.consume();
-                                        Toolkit.getDefaultToolkit().beep();
-                                }
-                        }
-                });
 
                 JLabel gHotel_regimenL = new JLabel("Regimen");
                 gHotel_regimenL.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -227,7 +190,6 @@ public class GestionarHoteles {
                 gHotelLeft.add(gHotel_llegadaL);
 
                 gHotel_entradaDC = new JTextFieldDateEditor("yyyy-MM-dd HH:mm", "####-##-## ##:##", '_');
-                gHotel_entradaDC.setDate(new Date());
                 gHotelLeft.add(gHotel_entradaDC);
 
                 JLabel gHotel_salidaL = new JLabel("Fecha de llegada");
@@ -235,17 +197,16 @@ public class GestionarHoteles {
                 gHotelLeft.add(gHotel_salidaL);
 
                 gHotel_salidaDC = new JTextFieldDateEditor("yyyy-MM-dd HH:mm", "####-##-## ##:##", '_');
-                gHotel_salidaDC.setDate(new Date());
                 gHotelLeft.add(gHotel_salidaDC);
-
-                gHotelLeft.setLayout(new GridLayout(0, 2, 15, 10));
 
                 gHotel_addB = new JButton("Nuevo");
                 gHotel_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+                gHotel_addB.setIcon(new ImageIcon("resources/add.png"));
                 gHotelLeft.add(gHotel_addB);
 
                 gHotel_saveB = new JButton("Guardar");
                 gHotel_saveB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+                gHotel_saveB.setIcon(new ImageIcon("resources/save.png"));
                 gHotelLeft.add(gHotel_saveB);
 
                 JPanel gHotelMid = new JPanel();
@@ -300,14 +261,16 @@ public class GestionarHoteles {
                 gHotel_editB = new JButton("Editar");
                 gHotel_editB.setVerticalAlignment(SwingConstants.TOP);
                 gHotel_editB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+                gHotel_editB.setIcon(new ImageIcon("resources/edit.png"));
                 gHotelMid_B.add(gHotel_editB);
 
                 gHotel_deleteB = new JButton("Eliminar");
                 gHotel_deleteB.setVerticalAlignment(SwingConstants.TOP);
                 gHotel_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+                gHotel_deleteB.setIcon(new ImageIcon("resources/delete.png"));
                 gHotelMid_B.add(gHotel_deleteB);
 
-                JButton gHotel_hotelB = new JButton("Detalles");
+                gHotel_hotelB = new JButton("Detalles");
                 gHotel_hotelB.setVerticalAlignment(SwingConstants.TOP);
                 gHotel_hotelB.setFont(new Font("Tahoma", Font.PLAIN, 16));
                 gHotelMid_B.add(gHotel_hotelB);

@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.List;
 
 public class VuelosController implements ActionListener {
@@ -17,6 +18,7 @@ public class VuelosController implements ActionListener {
     VuelosDAO dao;
     DefaultTableModel modelo = new DefaultTableModel();
     private boolean AU = true;
+    Date currentDate = new Date();
 
     public VuelosController(GestionarVuelos vistaV, VuelosDAO dao){
         int lista = dao.listar().size();
@@ -69,8 +71,8 @@ public class VuelosController implements ActionListener {
         if(e.getSource() == vistaV.gVuelos_addB){
             AU = true;
             areTextFieldEditable(true);
-            vistaV.gVuelos_salidaDC.setText(vistaV.systemDate);
-            vistaV.gVuelos_llegadaDC.setText(vistaV.systemDate);
+            vistaV.gVuelos_llegadaDC.setDate(currentDate);
+            vistaV.gVuelos_salidaDC.setDate(currentDate);
             boolean[] arr = {false, true, false, false, false};
             areButtonEnable(arr);
         }
@@ -93,7 +95,7 @@ public class VuelosController implements ActionListener {
             boolean[] arr = {true, false, true, true, true};
             areButtonEnable(arr);
         }
-        else if (vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate) || vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate)){
+        else if (currentDate.after(vistaV.gVuelos_llegadaDC.getDate()) || currentDate.after(vistaV.gVuelos_salidaDC.getDate())){
             JOptionPane.showMessageDialog(null, "Ingrese una fecha mayor a la actual");
             boolean[] arr = {true, false, true, true, true};
             areButtonEnable(arr);
@@ -124,13 +126,11 @@ public class VuelosController implements ActionListener {
     }
 
     public void updateFly(){
-        String d = (String) vistaV.gVuelos_destinoCB.getSelectedItem();
-        String a = (String) vistaV.gVuelos_aerolineaCB.getSelectedItem();
-        if(vistaV.gVuelos_origenTF.getText().isEmpty() || d.compareTo("Seleccione destino")==0 || a.compareTo("Seleccione aerolinea")==0 || vistaV.gVuelos_genteTF.getText().isEmpty() || vistaV.gVuelos_salidaDC.getText().isEmpty() || vistaV.gVuelos_llegadaDC.getText().isEmpty()){
+        if(vistaV.gVuelos_origenTF.getText().isEmpty() || vistaV.gVuelos_genteTF.getText().isEmpty() || vistaV.gVuelos_salidaDC.getText().isEmpty() || vistaV.gVuelos_llegadaDC.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
             boolean[] arr = {true, false, true, true, true};
             areButtonEnable(arr);
-        }else if (vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate) || vistaV.gVuelos_salidaDC.getText().equals(vistaV.systemDate)){
+        }else if (currentDate.after(vistaV.gVuelos_llegadaDC.getDate()) || currentDate.after(vistaV.gVuelos_salidaDC.getDate())){
             JOptionPane.showMessageDialog(null, "Ingrese una fecha mayor a la actual");
             boolean[] arr = {true, false, true, true, true};
             areButtonEnable(arr);
@@ -205,7 +205,6 @@ public class VuelosController implements ActionListener {
             areTextFieldEditable(false);
             cleanForm();
             cleanCB();
-
         }
         boolean[] arr = {true, false, true, true, true};
         areButtonEnable(arr);
@@ -292,8 +291,10 @@ public class VuelosController implements ActionListener {
     private void cleanCB(){
         vistaV.gVuelos_destinoCB.removeAllItems();
         vistaV.gVuelos_destinoCB.addItem("Seleccione destino");
+        mostrarDestinos();
         vistaV.gVuelos_aerolineaCB.removeAllItems();
         vistaV.gVuelos_aerolineaCB.addItem("Seleccione aerolinea");
+        mostrarAero();
     }
 
     private void rellenarCB(String destino, String aero){

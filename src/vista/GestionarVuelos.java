@@ -28,9 +28,6 @@ public class GestionarVuelos {
     public JComboBox gVuelos_destinoCB, gVuelos_aerolineaCB;
     public JButton gVuelos_addB, gVuelos_saveB, gVuelos_editB, gVuelos_deleteB, gVuelos_airlineB;
     public JTable gVuelosTable;
-    Date fechaActual = new Date();
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    public String systemDate = format.format(fechaActual);
     private int limiteGente = 1;
     private int limiteOrigen = 45;
 
@@ -52,7 +49,6 @@ public class GestionarVuelos {
     }
 
     private void initialize() {
-        VuelosDAO gvDAO = new VuelosDAO();
         gVuelosFrame = new JFrame();
         gVuelosFrame.setTitle("Gestionar Vuelos");
         gVuelosFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -187,10 +183,12 @@ public class GestionarVuelos {
 
         gVuelos_addB = new JButton("Nuevo");
         gVuelos_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gVuelos_addB.setIcon(new ImageIcon("resources/add.png"));
         gVuelosLeft.add(gVuelos_addB);
 
         gVuelos_saveB = new JButton("Guardar");
         gVuelos_saveB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gVuelos_saveB.setIcon(new ImageIcon("resources/save.png"));
         gVuelosLeft.add(gVuelos_saveB);
 
         JPanel gVuelosMid = new JPanel();
@@ -243,11 +241,13 @@ public class GestionarVuelos {
         gVuelos_editB = new JButton("Editar");
         gVuelos_editB.setVerticalAlignment(SwingConstants.TOP);
         gVuelos_editB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gVuelos_editB.setIcon(new ImageIcon("resources/edit.png"));
         gVuelosMid_B.add(gVuelos_editB);
 
         gVuelos_deleteB = new JButton("Eliminar");
         gVuelos_deleteB.setVerticalAlignment(SwingConstants.TOP);
         gVuelos_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gVuelos_deleteB.setIcon(new ImageIcon("resources/delete.png"));
         gVuelosMid_B.add(gVuelos_deleteB);
 
         gVuelos_airlineB = new JButton("Aerolinea");

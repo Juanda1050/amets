@@ -30,6 +30,7 @@ public class PromocionesController implements ActionListener {
             listPromo(vistaP.gPromoTable);
             boolean[] arr = {true, false, true, true};
             areButtonEnable(arr);
+            mostrarPaquetes();
         }else{
             this.dao = dao;
             this.vistaP = vistaP;
@@ -40,8 +41,15 @@ public class PromocionesController implements ActionListener {
             listPromo(vistaP.gPromoTable);
             boolean[] arr = {true, false, false, false};
             areButtonEnable(arr);
+            mostrarPaquetes();
         }
         areTextFieldEditable(false);
+    }
+
+    public void mostrarPaquetes(){
+        for(int i = 0; i < dao.listarPaquete().size(); i++){
+            vistaP.gPromo_paqueteCB.addItem(dao.listarPaquete().get(i));
+        }
     }
 
     @Override
@@ -72,7 +80,7 @@ public class PromocionesController implements ActionListener {
             areButtonEnable(arr);
         }else{
             String nombre = vistaP.gPromo_nombreTF.getText();
-            int paquete = vistaP.gPromo_paqueteCB.getSelectedIndex();
+            int paquete = dao.packID((String) vistaP.gPromo_paqueteCB.getSelectedItem());
             float descuento = Float.parseFloat(vistaP.gPromo_descuentoTF.getText());
             String desc = vistaP.gPromo_descripcionTF.getText();
             p.setPromotionName(nombre);
@@ -92,14 +100,16 @@ public class PromocionesController implements ActionListener {
     }
 
     public void updatePromo(){
-        if(vistaP.gPromo_nombreTF.getText().isEmpty() || vistaP.gPromo_paqueteCB.getSelectedIndex() == 0 || vistaP.gPromo_descuentoTF.getText().isEmpty() || vistaP.gPromo_descripcionTF.getText().isEmpty()){
+        if(vistaP.gPromo_nombreTF.getText().isEmpty()|| vistaP.gPromo_descuentoTF.getText().isEmpty() || vistaP.gPromo_descripcionTF.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
             boolean[] arr = {true, false, true, true};
             areButtonEnable(arr);
-        }else{
+        }
+        else
+        {
             int id = Integer.parseInt(vistaP.gPromo_idTF.getText());
             String nombre = vistaP.gPromo_nombreTF.getText();
-            int paquete = vistaP.gPromo_paqueteCB.getSelectedIndex();
+            int paquete = dao.packID((String) vistaP.gPromo_paqueteCB.getSelectedItem());
             float descuento = Float.parseFloat(vistaP.gPromo_descuentoTF.getText());
             String desc = vistaP.gPromo_descripcionTF.getText();
             p.setPromotionID(id);
@@ -141,17 +151,28 @@ public class PromocionesController implements ActionListener {
 
     private void savePromo(){
         if(AU){
-            addPromo();
-            cleanPromo();
-            listPromo(vistaP.gPromoTable);
-            areTextFieldEditable(false);
-            cleanForm();
+            if(dao.listar().size() > 0){
+                addPromo();
+                cleanPromo();
+                listPromo(vistaP.gPromoTable);
+                areTextFieldEditable(false);
+                cleanForm();
+                cleanCB();
+            }
+            else{
+                addPromo();
+                listPromo(vistaP.gPromoTable);
+                areTextFieldEditable(false);
+                cleanForm();
+                cleanCB();
+            }
         }else{
             updatePromo();
             cleanPromo();
             listPromo(vistaP.gPromoTable);
             areTextFieldEditable(false);
             cleanForm();
+            cleanCB();
         }
     }
 
@@ -166,6 +187,7 @@ public class PromocionesController implements ActionListener {
             areButtonEnable(arr);
             int id = Integer.parseInt(vistaP.gPromoTable.getValueAt(row, 0).toString());
             String nombre = (String) vistaP.gPromoTable.getValueAt(row, 1);
+            String paquete = (String) vistaP.gPromoTable.getValueAt(row, 2);
             float descuento = Float.parseFloat(vistaP.gPromoTable.getValueAt(row, 3).toString());
             String desc = (String) vistaP.gPromoTable.getValueAt(row, 4);
             vistaP.gPromo_idTF.setText("" + id);
@@ -173,6 +195,7 @@ public class PromocionesController implements ActionListener {
             vistaP.gPromo_paqueteCB.setSelectedIndex(0);
             vistaP.gPromo_descuentoTF.setText("" + descuento);
             vistaP.gPromo_descripcionTF.setText("" + desc);
+            rellenarCB(paquete);
         }
     }
 
@@ -220,5 +243,21 @@ public class PromocionesController implements ActionListener {
         vistaP.gPromo_saveB.setEnabled(a[1]);
         vistaP.gPromo_editB.setEnabled(a[2]);
         vistaP.gPromo_deleteB.setEnabled(a[3]);
+    }
+
+    private void cleanCB(){
+        vistaP.gPromo_paqueteCB.removeAllItems();
+        vistaP.gPromo_paqueteCB.addItem("Seleccione paquete");
+        mostrarPaquetes();
+    }
+
+    private void rellenarCB(String pack){
+        vistaP.gPromo_paqueteCB.removeAllItems();
+        vistaP.gPromo_paqueteCB.addItem(pack);
+        for(int i = 0; i < dao.listarPaquete().size(); i++){
+            if(dao.listarPaquete().get(i).compareTo(pack) != 0){
+                vistaP.gPromo_paqueteCB.addItem(dao.listarPaquete().get(i));
+            }
+        }
     }
 }

@@ -1,5 +1,8 @@
 package vista;
 
+import controlador.DHotelesController;
+import modelo.DHotelesDAO;
+
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -16,16 +19,18 @@ public class DetalleHotel {
     public JTextField dHotel_precioTF;
     public JButton dHotel_addB, dHotel_saveB, dHotel_editB, dHotel_deleteB;
     public JTable dHotelTable;
+    public JComboBox dHotel_hotelCB;
+    public JComboBox dHotel_habitacionCB;
 
     public void runFrame() {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    DetalleHotel window = new DetalleHotel();
-                    window.dHotelFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                DetalleHotel window = new DetalleHotel();
+                DHotelesDAO dao = new DHotelesDAO();
+                DHotelesController controller = new DHotelesController(window, dao);
+                window.dHotelFrame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -35,6 +40,7 @@ public class DetalleHotel {
     }
 
     private void initialize() {
+        DHotelesDAO hotelDAO = new DHotelesDAO();
         dHotelFrame = new JFrame("Detalle de Hotel");
         dHotelFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
         dHotelFrame.setBounds(100, 100, 1280, 720);
@@ -75,8 +81,7 @@ public class DetalleHotel {
         dHotel_hotelL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         dHotelLeft.add(dHotel_hotelL);
 
-        JComboBox dHotel_hotelCB = new JComboBox();
-        dHotel_hotelCB.setModel(new DefaultComboBoxModel(new String[] {"Seleccione un hotel"}));
+        dHotel_hotelCB = new JComboBox<>(hotelDAO.listarhotel().toArray());
         dHotel_hotelCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         dHotelLeft.add(dHotel_hotelCB);
 
@@ -84,8 +89,7 @@ public class DetalleHotel {
         dHotel_habitacionL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         dHotelLeft.add(dHotel_habitacionL);
 
-        JComboBox dHotel_habitacionCB = new JComboBox();
-        dHotel_habitacionCB.setModel(new DefaultComboBoxModel(new String[] {"Seleccione el tipo de habitaci\u00F3n"}));
+        dHotel_habitacionCB = new JComboBox<>(hotelDAO.listarRoom().toArray());
         dHotel_habitacionCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         dHotelLeft.add(dHotel_habitacionCB);
 

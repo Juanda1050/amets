@@ -5,22 +5,12 @@ import modelo.PromocionesDAO;
 
 import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -31,7 +21,7 @@ public class GestionarPromociones{
     private JFrame gPromoFrame;
     public JTextField gPromo_idTF, gPromo_nombreTF, gPromo_descuentoTF, gPromo_descripcionTF;
     public JButton gPromo_addB, gPromo_saveB, gPromo_editB, gPromo_deleteB;
-    public JComboBox<String> gPromo_paqueteCB;
+    public JComboBox gPromo_paqueteCB;
     public JTable gPromoTable;
     private int limiteNombre = 20, limiteDescuento = 6, limiteDesc = 144;
 
@@ -128,7 +118,8 @@ public class GestionarPromociones{
         gPromo_paqueteL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPromoLeft.add(gPromo_paqueteL);
 
-        gPromo_paqueteCB = new JComboBox<>(gpDAO.listarPaquete().toArray(new String[0]));
+        gPromo_paqueteCB = new JComboBox();
+        gPromo_paqueteCB.setModel(new DefaultComboBoxModel(new String[] {"Seleccione paquete"}));
         gPromo_paqueteCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPromoLeft.add(gPromo_paqueteCB);
 
@@ -176,10 +167,12 @@ public class GestionarPromociones{
 
         gPromo_addB = new JButton("Nuevo");
         gPromo_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPromo_addB.setIcon(new ImageIcon("resources/add.png"));
         gPromoLeft.add(gPromo_addB);
 
         gPromo_saveB = new JButton("Guardar");
         gPromo_saveB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPromo_saveB.setIcon(new ImageIcon("resources/save.png"));
         gPromoLeft.add(gPromo_saveB);
 
         JPanel gPromoMid = new JPanel();
@@ -228,10 +221,12 @@ public class GestionarPromociones{
 
         gPromo_editB = new JButton("Editar");
         gPromo_editB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPromo_editB.setIcon(new ImageIcon("resources/edit.png"));
         gPromoMid_B.add(gPromo_editB);
 
         gPromo_deleteB = new JButton("Eliminar");
         gPromo_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPromo_deleteB.setIcon(new ImageIcon("resources/add.png"));
         gPromoMid_B.add(gPromo_deleteB);
 
         JPanel gPromoBottom = new JPanel();
@@ -241,6 +236,7 @@ public class GestionarPromociones{
 
         JButton gPromo_backB = new JButton("VOLVER");
         gPromo_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPromo_backB.setIcon(new ImageIcon("resources/left.png"));
         gPromoBottom.add(gPromo_backB, BorderLayout.EAST);
         gPromo_backB.addActionListener(e -> {
             VistaMA maFrame = new VistaMA();
