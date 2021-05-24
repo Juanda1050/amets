@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -18,6 +20,7 @@ public class GestionarAerolinea {
     public JTextField gAerolinea_idTF, gAerolinea_nombreTF, gAerolinea_precioTF, gAerolinea_claseTF;
     public JButton gAerolinea_addB, gAerolinea_saveB, gAerolinea_editB, gAerolinea_deleteB;
     public JTable gAerolineaTable;
+    private int limiteAero = 45, limiteClase = 20, limitePrecio = 10;
 
     /**
      * Launch the application.
@@ -88,7 +91,7 @@ public class GestionarAerolinea {
         gAerolineaFrame.getContentPane().add(gAerolineaLeft, BorderLayout.WEST);
         gAerolineaLeft.setLayout(new GridLayout(0, 2, 15, 30));
 
-        JLabel gAerolinea_idL = new JLabel("Nombre");
+        JLabel gAerolinea_idL = new JLabel("Id");
         gAerolinea_idL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gAerolineaLeft.add(gAerolinea_idL);
 
@@ -106,6 +109,21 @@ public class GestionarAerolinea {
         gAerolinea_nombreTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
         gAerolinea_nombreTF.setColumns(10);
         gAerolineaLeft.add(gAerolinea_nombreTF);
+        gAerolinea_nombreTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if(Character.isLetter(ch) || Character.isISOControl(ch) ||  Character.isSpaceChar(ch)){
+                }else{
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Solo admite letras");
+                }
+                if (gAerolinea_nombreTF.getText().length() >= limiteAero){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
 
         JLabel gAerolinea_claseL= new JLabel("Clase");
         gAerolinea_claseL.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -114,6 +132,21 @@ public class GestionarAerolinea {
         gAerolinea_claseTF = new JTextField();
         gAerolinea_claseTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gAerolineaLeft.add(gAerolinea_claseTF);
+        gAerolinea_claseTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if(Character.isLetter(ch) || Character.isISOControl(ch) ||  Character.isSpaceChar(ch)){
+                }else{
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Solo admite letras");
+                }
+                if (gAerolinea_claseTF.getText().length() >= limiteClase){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
 
         JLabel gAerolinea_precioL = new JLabel("Precio");
         gAerolinea_precioL.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -123,6 +156,22 @@ public class GestionarAerolinea {
         gAerolinea_precioTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gAerolineaLeft.add(gAerolinea_precioTF);
         gAerolinea_precioTF.setColumns(10);
+        gAerolinea_precioTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if(Character.isDigit(ch) || Character.isISOControl(ch)){
+                }
+                else {
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Solo admite números");
+                }
+                if (gAerolinea_precioTF.getText().length() >= limitePrecio){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
 
         gAerolinea_addB = new JButton("Nuevo");
         gAerolinea_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));

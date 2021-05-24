@@ -27,6 +27,8 @@ public class EmpleadoController implements ActionListener {
             this.dao = dao;
             areTextFieldEditable(false);
             vista.gEmpleado_saveB.setEnabled(false);
+            vista.gEmpleado_puestoCB.setEnabled(false);
+            vista.gEmpleado_turnoCB.setEnabled(false);
             vista.gEmpleado_addB.addActionListener(this);
             vista.gEmpleado_saveB.addActionListener(this);
             vista.gEmpleado_editB.addActionListener(this);
@@ -56,8 +58,10 @@ public class EmpleadoController implements ActionListener {
         {
             key = true;
             areTextFieldEditable(true);
-            boolean[] arr = {false, true, false, false};
+            boolean[] arr = {false, true, true, false};
             estadosBotones(arr);
+            vista.gEmpleado_turnoCB.setEnabled(true);
+            vista.gEmpleado_puestoCB.setEnabled(true);
         }
         //Boton Guardar
         if(e.getSource()==vista.gEmpleado_saveB)
@@ -65,6 +69,7 @@ public class EmpleadoController implements ActionListener {
             boolean[] arr = {true, false, true, true};
             estadosBotones(arr);
             Guardar();
+
         }
         //Boton Editar
         if(e.getSource()==vista.gEmpleado_editB)
@@ -148,6 +153,7 @@ public class EmpleadoController implements ActionListener {
             empleado.setTurno(turno);
             empleado.setPuesto(puesto);
             int r = dao.agregar(empleado);
+
             if (r == 1) {
                 JOptionPane.showMessageDialog(null, "Empleado agregado exitosamente");
             } else {
@@ -157,6 +163,8 @@ public class EmpleadoController implements ActionListener {
             cleanForm();
             boolean[] arr = {true, false, true, true};
             estadosBotones(arr);
+            vista.gEmpleado_turnoCB.setEnabled(false);
+            vista.gEmpleado_puestoCB.setEnabled(false);
         }
     }
 
@@ -185,6 +193,7 @@ public class EmpleadoController implements ActionListener {
             empleado.setPuesto(puesto);
 
             int r = dao.Actualizar(empleado);
+
             if (r == 1) {
                 JOptionPane.showMessageDialog(null, "Registro actualizado exitosamente");
             } else {
@@ -194,11 +203,15 @@ public class EmpleadoController implements ActionListener {
             limpiar();
             cleanForm();
             listar(vista.gEmpleadoTable);
+            vista.gEmpleado_turnoCB.setEnabled(false);
+            vista.gEmpleado_puestoCB.setEnabled(false);
         }
     }
 
     public void Editar()
     {
+
+
         int fila = vista.gEmpleadoTable.getSelectedRow();
         if(fila==-1)
         {
@@ -206,8 +219,9 @@ public class EmpleadoController implements ActionListener {
         }
         else
         {
+
             areTextFieldEditable(true);
-            boolean[] arr = {false, true, false, false};
+            boolean[] arr = {false, true, true, false};
             estadosBotones(arr);
             int id = Integer.parseInt(vista.gEmpleadoTable.getValueAt(fila, 0).toString());
             String nombre = (String) vista.gEmpleadoTable.getValueAt(fila, 1);
@@ -221,6 +235,8 @@ public class EmpleadoController implements ActionListener {
             vista.gEmpleado_contraTF.setText(contraseña);
             vista.gEmpleado_turnoCB.setSelectedIndex(turno);
             vista.gEmpleado_puestoCB.setSelectedIndex(puesto);
+            vista.gEmpleado_turnoCB.setEnabled(true);
+            vista.gEmpleado_puestoCB.setEnabled(true);
         }
     }
     //Guardar
@@ -245,6 +261,7 @@ public class EmpleadoController implements ActionListener {
         {
             Actualizar();
         }
+
     }
 
 

@@ -1,18 +1,15 @@
 package vista;
 
-import java.awt.EventQueue;
+import controlador.PromocionesController;
+import modelo.PromocionesDAO;
+
+import java.awt.*;
 
 import javax.swing.JFrame;
-import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import java.awt.Frame;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -24,16 +21,17 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.GridLayout;
 
 public class GestionarPromociones{
 
     private JFrame gPromoFrame;
-    public JTextField gPromo_nombreTF, gPromo_descuentoTF, gPromo_descripcionTF;
+    public JTextField gPromo_idTF, gPromo_nombreTF, gPromo_descuentoTF, gPromo_descripcionTF;
     public JButton gPromo_addB, gPromo_saveB, gPromo_editB, gPromo_deleteB;
-    public JComboBox gPromo_hotelCB, gPromo_vueloCB, gPromo_paqueteCB;
+    public JComboBox<String> gPromo_paqueteCB;
     public JTable gPromoTable;
 
     public void runFrame(){
@@ -41,6 +39,8 @@ public class GestionarPromociones{
             public void run() {
                 try {
                     GestionarPromociones window = new GestionarPromociones();
+                    PromocionesDAO dao = new PromocionesDAO();
+                    PromocionesController controller = new PromocionesController(window, dao);
                     window.gPromoFrame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -54,10 +54,12 @@ public class GestionarPromociones{
     }
 
     private void initialize() {
+        PromocionesDAO gpDAO = new PromocionesDAO();
         gPromoFrame = new JFrame("Gestionar Promociones");
         gPromoFrame.setBounds(100, 100, 1280, 720);
         gPromoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gPromoFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        gPromoFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
         gPromoFrame.getContentPane().setLayout(new BorderLayout(0, 0));
         gPromoFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
@@ -89,36 +91,45 @@ public class GestionarPromociones{
         gPromoFrame.getContentPane().add(gPromoLeft, BorderLayout.WEST);
         gPromoLeft.setLayout(new GridLayout(0, 2, 15, 50));
 
+        JLabel gPromo_idL = new JLabel("Nombre");
+        gPromo_idL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPromoLeft.add(gPromo_idL);
+
+        gPromo_idTF = new JTextField();
+        gPromo_idTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPromoLeft.add(gPromo_idTF);
+        gPromo_idTF.setColumns(10);
+        gPromo_idTF.setEditable(false);
+
         JLabel gPromo_nombreL = new JLabel("Nombre");
         gPromo_nombreL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPromoLeft.add(gPromo_nombreL);
 
         gPromo_nombreTF = new JTextField();
         gPromo_nombreTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gPromoLeft.add(gPromo_nombreTF);
         gPromo_nombreTF.setColumns(10);
-
-        JLabel gPromo_hotelL = new JLabel("Hotel");
-        gPromo_hotelL.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gPromoLeft.add(gPromo_hotelL);
-
-        gPromo_hotelCB = new JComboBox();
-        gPromo_hotelCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gPromoLeft.add(gPromo_hotelCB);
-
-        JLabel gPromo_vueloL = new JLabel("Vuelo");
-        gPromo_vueloL.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gPromoLeft.add(gPromo_vueloL);
-
-        gPromo_vueloCB = new JComboBox();
-        gPromo_vueloCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gPromoLeft.add(gPromo_vueloCB);
+        gPromo_nombreTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (Character.isLetter(ch) || Character.isISOControl(ch) || Character.isSpaceChar(ch)){
+                }else{
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Solo admite letras");
+                }
+                if(gPromo_nombreTF.getText().length() >= 20){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
+        gPromoLeft.add(gPromo_nombreTF);
 
         JLabel gPromo_paqueteL = new JLabel("Paquete");
         gPromo_paqueteL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPromoLeft.add(gPromo_paqueteL);
 
-        gPromo_paqueteCB = new JComboBox();
+        gPromo_paqueteCB = new JComboBox<>(gpDAO.listarPaquete().toArray(new String[0]));
         gPromo_paqueteCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPromoLeft.add(gPromo_paqueteCB);
 
@@ -129,6 +140,21 @@ public class GestionarPromociones{
         gPromo_descuentoTF = new JTextField();
         gPromo_descuentoTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPromo_descuentoTF.setColumns(10);
+        gPromo_descuentoTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (Character.isDigit(ch) || Character.isISOControl(ch)){
+                }else{
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Solo admite números");
+                }
+                if(gPromo_descuentoTF.getText().length() >= 6){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
         gPromoLeft.add(gPromo_descuentoTF);
 
         JLabel gPromo_descripcionL = new JLabel("Descripcion");
@@ -138,6 +164,15 @@ public class GestionarPromociones{
         gPromo_descripcionTF = new JTextField();
         gPromo_descripcionTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPromo_descripcionTF.setColumns(10);
+        gPromo_descripcionTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(gPromo_descuentoTF.getText().length() >= 144){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
         gPromoLeft.add(gPromo_descripcionTF);
 
         gPromo_addB = new JButton("Nuevo");
@@ -164,14 +199,16 @@ public class GestionarPromociones{
         };
         DefaultTableModel tModel = new DefaultTableModel();
         gPromoTable.setModel(tModel);
-        tModel.addColumn("ID Paquete");
+        tModel.addColumn("ID Promocion");
         tModel.addColumn("Nombre");
-        tModel.addColumn("Personas");
+        tModel.addColumn("Paquete");
+        tModel.addColumn("Descuento");
         tModel.addColumn("Descripcion");
-        tModel.addColumn("Precio");
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-        gPromoTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+        for(int i = 0; i < gPromoTable.getModel().getColumnCount(); i++){
+            gPromoTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+        }
         gPromoTable.setRowHeight(50);
         gPromoTable.setFont(new Font("Tahoma", Font.PLAIN, 16));
 

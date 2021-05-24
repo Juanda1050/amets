@@ -45,7 +45,6 @@ public class VuelosDAO {
             ps.setString(5, v.getDeparture());
             ps.setString(6, v.getLanding());
             ps.setInt(7, v.getFlightID());
-            ps.executeUpdate();
             r = ps.executeUpdate();
             if(r == 1){
                 return 1;

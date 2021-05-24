@@ -3,19 +3,13 @@ package vista;
 import controlador.EmpleadoController;
 import modelo.EmpleadoDAO;
 
-import java.awt.EventQueue;
+import java.awt.*;
 
 import javax.swing.JFrame;
-import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import java.awt.Frame;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -32,7 +26,6 @@ import java.awt.event.*;
 
 import javax.swing.SwingConstants;
 import javax.swing.DefaultComboBoxModel;
-import java.awt.GridLayout;
 
 public class GestionarEmpleados {
 
@@ -41,19 +34,18 @@ public class GestionarEmpleados {
     public JComboBox gEmpleado_turnoCB, gEmpleado_puestoCB;
     public JButton gEmpleado_addB , gEmpleado_saveB, gEmpleado_editB, gEmpleado_deleteB;
     public JTable gEmpleadoTable;
+    private int limiteNombre = 35, limiteApellido = 45, limiteContra = 15;
 
     public void runFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    GestionarEmpleados window = new GestionarEmpleados();
-                    EmpleadoDAO empleadoDAO = new EmpleadoDAO();
-                    EmpleadoController controladorEmpleado = new EmpleadoController(window, empleadoDAO);
+        EventQueue.invokeLater(() -> {
+            try {
+                GestionarEmpleados window = new GestionarEmpleados();
+                EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+                EmpleadoController controladorEmpleado = new EmpleadoController(window, empleadoDAO);
 
-                    window.gEmpleadoFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                window.gEmpleadoFrame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -124,11 +116,15 @@ public class GestionarEmpleados {
             @Override
             public void keyTyped(KeyEvent e) {
                 char ch = e.getKeyChar();
-                if (Character.isLetter(ch) || Character.isISOControl(ch)) {
+                if (Character.isLetter(ch) || Character.isISOControl(ch) ||  Character.isSpaceChar(ch)) {
                 }
                 else {
                     e.consume();
-                    JOptionPane.showMessageDialog(null, "Escriba solo letras");
+                    JOptionPane.showMessageDialog(null, "Solo admite letras");
+                }
+                if(gEmpleado_apellidoTF.getText().length() >= limiteNombre){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
                 }
             }
         });
@@ -145,11 +141,15 @@ public class GestionarEmpleados {
             @Override
             public void keyTyped(KeyEvent e) {
                 char ch = e.getKeyChar();
-                if (Character.isLetter(ch) || Character.isISOControl(ch)) {
+                if (Character.isLetter(ch) || Character.isISOControl(ch) ||  Character.isSpaceChar(ch)) {
                 }
                 else {
                     e.consume();
                     JOptionPane.showMessageDialog(null, "Escriba solo letras");
+                }
+                if(gEmpleado_apellidoTF.getText().length() >= limiteApellido){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
                 }
             }
         });
@@ -163,13 +163,22 @@ public class GestionarEmpleados {
         gEmpleado_contraTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gEmpleadoLeft.add(gEmpleado_contraTF);
         gEmpleado_contraTF.setColumns(10);
+        gEmpleado_contraTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(gEmpleado_contraTF.getText().length() >= limiteContra){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
 
         JLabel gEmpleado_turnoL = new JLabel("Turno");
         gEmpleado_turnoL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gEmpleadoLeft.add(gEmpleado_turnoL);
 
         gEmpleado_turnoCB = new JComboBox();
-        gEmpleado_turnoCB.setModel(new DefaultComboBoxModel(new String[] {"Seleccione turno de trabajo", "1", "2", "3"}));
+        gEmpleado_turnoCB.setModel(new DefaultComboBoxModel(new String[] {"Seleccione turno de trabajo", "1", "2"}));
         gEmpleado_turnoCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gEmpleadoLeft.add(gEmpleado_turnoCB);
 

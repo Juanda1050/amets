@@ -184,7 +184,7 @@ public class PaquetesController implements ActionListener
             boolean f = validacionF(vista.gPaquete_precioTF.getText());
             if(!i || !f)
             {
-                JOptionPane.showMessageDialog(null, "Los campos pasajeros y precio no pueden contener letras, verificalos de nuevo");
+                JOptionPane.showMessageDialog(null, "Los campos Personas y Precio no pueden contener letras, verificalos de nuevo");
                 boolean[] arr = {false, true, false, false};
                 estadosBotones(arr);
             }

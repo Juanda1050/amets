@@ -113,7 +113,7 @@ public class GestionarVuelos {
             @Override
             public void keyTyped(KeyEvent e) {
                 char ch = e.getKeyChar();
-                if(Character.isLetter(ch) || Character.isISOControl(ch)){
+                if(Character.isLetter(ch) || Character.isISOControl(ch) ||  Character.isSpaceChar(ch)){
                 }else{
                     e.consume();
                     JOptionPane.showMessageDialog(null, "Solo admite letras");
