@@ -33,18 +33,17 @@ public class GestionarPromociones{
     public JButton gPromo_addB, gPromo_saveB, gPromo_editB, gPromo_deleteB;
     public JComboBox<String> gPromo_paqueteCB;
     public JTable gPromoTable;
+    private int limiteNombre = 20, limiteDescuento = 6, limiteDesc = 144;
 
     public void runFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    GestionarPromociones window = new GestionarPromociones();
-                    PromocionesDAO dao = new PromocionesDAO();
-                    PromocionesController controller = new PromocionesController(window, dao);
-                    window.gPromoFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                GestionarPromociones window = new GestionarPromociones();
+                PromocionesDAO dao = new PromocionesDAO();
+                PromocionesController controller = new PromocionesController(window, dao);
+                window.gPromoFrame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -117,7 +116,7 @@ public class GestionarPromociones{
                     e.consume();
                     JOptionPane.showMessageDialog(null, "Solo admite letras");
                 }
-                if(gPromo_nombreTF.getText().length() >= 20){
+                if(gPromo_nombreTF.getText().length() >= limiteNombre){
                     e.consume();
                     Toolkit.getDefaultToolkit().beep();
                 }
@@ -149,7 +148,7 @@ public class GestionarPromociones{
                     e.consume();
                     JOptionPane.showMessageDialog(null, "Solo admite números");
                 }
-                if(gPromo_descuentoTF.getText().length() >= 6){
+                if(gPromo_descuentoTF.getText().length() >= limiteDescuento){
                     e.consume();
                     Toolkit.getDefaultToolkit().beep();
                 }
@@ -167,7 +166,7 @@ public class GestionarPromociones{
         gPromo_descripcionTF.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(gPromo_descuentoTF.getText().length() >= 144){
+                if(gPromo_descuentoTF.getText().length() >= limiteDesc){
                     e.consume();
                     Toolkit.getDefaultToolkit().beep();
                 }

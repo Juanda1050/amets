@@ -22,6 +22,9 @@ public class GestionarDestinos {
     public JTextField gDestino_idTF, gDestino_ciudadTF, gDestino_estadoTF, gDestino_paisTF;
     private JScrollPane gDestinoSP;
     public JTable gDestinoTable;
+    private int limitePais = 45;
+    private int limiteEstado = 45;
+    private int limiteCiudad = 45;
 
     public void runFrame(){
         EventQueue.invokeLater(new Runnable() {
@@ -93,7 +96,6 @@ public class GestionarDestinos {
         gDestino_ciudadL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gDestinoLeft.add(gDestino_ciudadL);
 
-
         gDestino_ciudadTF = new JTextField();
         gDestino_ciudadTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gDestinoLeft.add(gDestino_ciudadTF);
@@ -102,13 +104,14 @@ public class GestionarDestinos {
             @Override
             public void keyTyped(KeyEvent e) {
                 char ch = e.getKeyChar();
-                if (Character.isLetter(ch) || Character.isISOControl(ch)) {
-                    String txtCiudad = String.valueOf(ch);
-                    gDestino_ciudadTF.setText(txtCiudad);
-                }
-                else {
+                if(Character.isLetter(ch) || Character.isISOControl(ch) ||  Character.isSpaceChar(ch)){
+                }else{
                     e.consume();
-                    JOptionPane.showMessageDialog(null, "Escriba solo letras");
+                    JOptionPane.showMessageDialog(null, "Solo admite letras");
+                }
+                if (gDestino_ciudadTF.getText().length() >= limiteCiudad){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
                 }
             }
         });
@@ -127,13 +130,14 @@ public class GestionarDestinos {
             @Override
             public void keyTyped(KeyEvent e) {
                 char ch = e.getKeyChar();
-                if (Character.isLetter(ch) || Character.isISOControl(ch)) {
-                    String txtEstado = String.valueOf(ch);
-                    gDestino_estadoTF.setText(txtEstado);
-                }
-                else {
+                if(Character.isLetter(ch) || Character.isISOControl(ch) ||  Character.isSpaceChar(ch)){
+                }else{
                     e.consume();
-                    JOptionPane.showMessageDialog(null, "Escriba solo letras");
+                    JOptionPane.showMessageDialog(null, "Solo admite letras");
+                }
+                if (gDestino_estadoTF.getText().length() >= limiteEstado){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
                 }
             }
         });
@@ -150,13 +154,14 @@ public class GestionarDestinos {
             @Override
             public void keyTyped(KeyEvent e) {
                 char ch = e.getKeyChar();
-                if (Character.isLetter(ch) || Character.isISOControl(ch)) {
-                    String txtPais = String.valueOf(ch);
-                    gDestino_paisTF.setText(txtPais);
-                }
-                else {
+                if(Character.isLetter(ch) || Character.isISOControl(ch) ||  Character.isSpaceChar(ch)){
+                }else{
                     e.consume();
-                    JOptionPane.showMessageDialog(null, "Escriba solo letras");
+                    JOptionPane.showMessageDialog(null, "Solo admite letras");
+                }
+                if (gDestino_paisTF.getText().length() >= limitePais){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
                 }
             }
         });
@@ -194,6 +199,9 @@ public class GestionarDestinos {
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         gDestinoTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
         gDestinoTable.setRowHeight(50);
+        for(int i = 0; i < gDestinoTable.getModel().getColumnCount(); i++){
+            gDestinoTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+        }
 
         //Generando estilo de JTable
         JTableHeader tHeader = gDestinoTable.getTableHeader();
@@ -216,10 +224,6 @@ public class GestionarDestinos {
         gDestino_editB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gDestinoMid_B.add(gDestino_editB);
 
-        gDestino_updateB = new JButton("Actualizar");
-        gDestino_updateB.setVerticalAlignment(SwingConstants.TOP);
-        gDestino_updateB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gDestinoMid_B.add(gDestino_updateB);
 
         gDestino_deleteB = new JButton("Eliminar");
         gDestino_deleteB.setVerticalAlignment(SwingConstants.TOP);

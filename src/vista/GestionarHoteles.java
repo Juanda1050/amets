@@ -54,10 +54,9 @@ public class GestionarHoteles {
          */
         private void initialize() {
                 //HotelesDAO hotelesDAO = new HotelesDAO();
-                gHotelFrame = new JFrame();
+                gHotelFrame = new JFrame("Gestionar Hoteles");
                 gHotelFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
                 gHotelFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
-                gHotelFrame.setTitle("Gestionar Hoteles");
                 gHotelFrame.setBounds(100, 100, 1280, 720);
                 gHotelFrame.addWindowListener(new WindowAdapter() {
                         public void windowClosing(WindowEvent we) {
@@ -288,6 +287,7 @@ public class GestionarHoteles {
                 tHeader.setPreferredSize(new Dimension(0, 25));
                 tHeader.setBackground(Color.decode("#094293"));
                 tHeader.setForeground(Color.white);
+                tHeader.setReorderingAllowed(false);
                 tHeader.setFont(new Font("Tahome", Font.BOLD, 16));
                 gHotelTable.setFont(new Font("Tahome", Font.PLAIN, 14));
                 gHotelSP.setViewportView(gHotelTable);
@@ -322,11 +322,11 @@ public class GestionarHoteles {
                 gHotelFrame.getContentPane().add(gHotelBottom, BorderLayout.SOUTH);
                 gHotelBottom.setLayout(new BorderLayout(0, 0));
 
-                JButton btnNewButton = new JButton("VOLVER");
-                btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-                btnNewButton.setIcon(new ImageIcon("C:\\Users\\DELL\\OneDrive\\Documentos\\Tercer Semestre\\POO\\AmetsTravels\\resources\\left.png"));
-                gHotelBottom.add(btnNewButton, BorderLayout.EAST);
-                btnNewButton.addActionListener(e -> {
+                JButton gHotel_backB = new JButton("VOLVER");
+                gHotel_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+                gHotel_backB.setIcon(new ImageIcon("resources/left.png"));
+                gHotelBottom.add(gHotel_backB, BorderLayout.EAST);
+                gHotel_backB.addActionListener(e -> {
                         VistaMA maFrame = new VistaMA();
                         maFrame.runFrame();
                         gHotelFrame.setVisible(false);

@@ -92,11 +92,11 @@ public class VuelosDAO {
                     v.setDestinationName(ciudad);
                 }
                 //Seleccionar el nombre de la aerolinea de la tabla AEROLINEA
-                ps3 = con.prepareStatement("SELECT airlineName FROM aerolinea WHERE airlineID = ?");
+                ps3 = con.prepareStatement("SELECT * FROM aerolinea WHERE airlineID = ?");
                 ps3.setInt(1, rs.getInt(4));
                 rs3 = ps3.executeQuery();
                 while(rs3.next()){
-                    String aero = rs3.getString("airlineName");
+                    String aero = rs3.getString("airlineName") + (" - ") + rs3.getString("flyClass");
                     v.setAirlineName(aero);
                 }
                 v.setPassengers(rs.getInt(5));
@@ -109,6 +109,45 @@ public class VuelosDAO {
         return vuelos;
     }
 
+    public int destinoID(String city)
+    {
+        int id=0;
+        String sql = "SELECT destinationID FROM destino WHERE city= ?";
+        try{
+            con = conectar.conectar();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, city);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                id = rs.getInt("destinationID");
+            }
+            return id;
+        }catch (Exception e){
+            return 0;
+        }
+    }
+
+    public int aeroID(String aero)
+    {
+        int id=0;
+        String sql = "SELECT airlineID FROM aerolinea WHERE airlineName= ?";
+        try
+        {
+            con = conectar.conectar();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, aero);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                id = rs.getInt("airlineID");
+            }
+            return id;
+        }
+        catch (Exception e)
+        {
+            return 0;
+        }
+    }
+
     public ArrayList<String> listarDestinos(){
         ArrayList<String> destinos = new ArrayList<>();
         String sql = "SELECT * FROM destino";
@@ -116,9 +155,8 @@ public class VuelosDAO {
             con = conectar.conectar();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            destinos.add("Seleccione un destino");
             while(rs.next()){
-                String ciudad = rs.getInt("destinationID") + (" - ") + rs.getString("city");
+                String ciudad = rs.getString("city");
                 destinos.add(ciudad);
             }
         }catch (Exception e){
@@ -133,7 +171,6 @@ public class VuelosDAO {
             con = conectar.conectar();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            aero.add("Seleccione una aerolinea");
             while(rs.next()){
                 String aerolinea = rs.getString("airlineName") + (" - ") + rs.getString("flyClass");
                 aero.add(aerolinea);

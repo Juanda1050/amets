@@ -206,12 +206,16 @@ public class GestionarAerolinea {
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         gAerolineaTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
         gAerolineaTable.setRowHeight(50);
+        for(int i = 0; i < gAerolineaTable.getModel().getColumnCount(); i++){
+            gAerolineaTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+        }
 
         //Generando estilo de JTable
         JTableHeader tHeader = gAerolineaTable.getTableHeader();
         tHeader.setPreferredSize(new Dimension(0, 25));
         tHeader.setBackground(Color.decode("#094293"));
         tHeader.setForeground(Color.white);
+        tHeader.setReorderingAllowed(false);
         tHeader.setFont(new Font("Tahome", Font.BOLD, 16));
         gAerolineaTable.setFont(new Font("Tahome", Font.PLAIN, 14));
         gVuelosSP.setViewportView(gAerolineaTable);

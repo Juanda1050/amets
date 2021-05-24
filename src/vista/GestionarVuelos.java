@@ -25,8 +25,8 @@ public class GestionarVuelos {
     public JTextFieldDateEditor gVuelos_salidaDC, gVuelos_llegadaDC;
     private JFrame gVuelosFrame;
     public JTextField gVuelos_idTF, gVuelos_origenTF, gVuelos_genteTF;
-    public JComboBox<String> gVuelos_destinoCB, gVuelos_aerolineaCB;
-    public JButton gVuelos_addB, gVuelos_saveB, gVuelos_editB, gVuelos_deleteB;
+    public JComboBox gVuelos_destinoCB, gVuelos_aerolineaCB;
+    public JButton gVuelos_addB, gVuelos_saveB, gVuelos_editB, gVuelos_deleteB, gVuelos_airlineB;
     public JTable gVuelosTable;
     Date fechaActual = new Date();
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -130,7 +130,8 @@ public class GestionarVuelos {
         gVuelos_destinoL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosLeft.add(gVuelos_destinoL);
 
-        gVuelos_destinoCB = new JComboBox<>(gvDAO.listarDestinos().toArray(new String[0]));
+        gVuelos_destinoCB = new JComboBox();
+        gVuelos_destinoCB.setModel(new DefaultComboBoxModel(new String[] {"Seleccione destino"}));
         gVuelos_destinoCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelos_destinoCB.setToolTipText("");
         gVuelosLeft.add(gVuelos_destinoCB);
@@ -139,8 +140,9 @@ public class GestionarVuelos {
         gVuelos_aerolineaL.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosLeft.add(gVuelos_aerolineaL);
 
-        gVuelos_aerolineaCB = new JComboBox<>(gvDAO.listarAerolinea().toArray(new String[0]));
+        gVuelos_aerolineaCB = new JComboBox();
         gVuelos_aerolineaCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gVuelos_aerolineaCB.setModel(new DefaultComboBoxModel(new String[] {"Seleccione aerolinea"}));
         gVuelos_aerolineaCB.setToolTipText("");
         gVuelosLeft.add(gVuelos_aerolineaCB);
 
@@ -198,11 +200,9 @@ public class GestionarVuelos {
 
         JScrollPane gVuelosSP = new JScrollPane();
         gVuelosSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        gVuelosSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         gVuelosMid.add(gVuelosSP, BorderLayout.CENTER);
 
         gVuelosTable = new JTable();
-        gVuelosTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         gVuelosTable = new JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex){
                 return false;
@@ -219,6 +219,7 @@ public class GestionarVuelos {
         tModel.addColumn("Llegada");
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        gVuelosTable.setRowHeight(50);
         for(int i = 0; i < gVuelosTable.getModel().getColumnCount(); i++){
             gVuelosTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
         }
@@ -229,8 +230,9 @@ public class GestionarVuelos {
         tHeader.setPreferredSize(new Dimension(0, 25));
         tHeader.setBackground(Color.decode("#094293"));
         tHeader.setForeground(Color.white);
+        tHeader.setReorderingAllowed(false);
         tHeader.setFont(new Font("Tahome", Font.BOLD, 16));
-        gVuelosTable.setFont(new Font("Tahome", Font.PLAIN, 14));
+        gVuelosTable.setFont(new Font("Tahome", Font.PLAIN, 16));
         gVuelosSP.setViewportView(gVuelosTable);
 
         JPanel gVuelosMid_B = new JPanel();
@@ -248,7 +250,7 @@ public class GestionarVuelos {
         gVuelos_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosMid_B.add(gVuelos_deleteB);
 
-        JButton gVuelos_airlineB = new JButton("Aerolinea");
+        gVuelos_airlineB = new JButton("Aerolinea");
         gVuelos_airlineB.setVerticalAlignment(SwingConstants.TOP);
         gVuelos_airlineB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gVuelosMid_B.add(gVuelos_airlineB);

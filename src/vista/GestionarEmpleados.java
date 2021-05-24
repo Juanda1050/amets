@@ -5,27 +5,15 @@ import modelo.EmpleadoDAO;
 
 import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.JButton;
 
 import java.awt.event.*;
-
-import javax.swing.SwingConstants;
-import javax.swing.DefaultComboBoxModel;
 
 public class GestionarEmpleados {
 
@@ -55,11 +43,8 @@ public class GestionarEmpleados {
     }
 
     private void initialize() {
-
-        gEmpleadoFrame = new JFrame("Amets Travels");
-
         gEmpleadoFrame = new JFrame("Gestionar Empleados");
-
+        gEmpleadoFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
         gEmpleadoFrame.setBounds(100, 100, 1280, 720);
         gEmpleadoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gEmpleadoFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -193,10 +178,12 @@ public class GestionarEmpleados {
 
         gEmpleado_addB = new JButton("Agregar");
         gEmpleado_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gEmpleado_addB.setIcon(new ImageIcon("resources/add.png"));
         gEmpleadoLeft.add(gEmpleado_addB);
 
         gEmpleado_saveB = new JButton("Guardar");
         gEmpleado_saveB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gEmpleado_saveB.setIcon(new ImageIcon("resources/save.png"));
         gEmpleadoLeft.add(gEmpleado_saveB);
 
         JPanel gEmpleadoMid = new JPanel();
@@ -226,6 +213,9 @@ public class GestionarEmpleados {
         gEmpleadoTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
         gEmpleadoTable.setRowHeight(50);
         gEmpleadoTable.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        for(int i = 0; i < gEmpleadoTable.getModel().getColumnCount(); i++){
+            gEmpleadoTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+        }
         gEmpleadoSP.setViewportView(gEmpleadoTable);
 
         //Generando estilo de JTable
@@ -245,10 +235,12 @@ public class GestionarEmpleados {
 
         gEmpleado_editB = new JButton("Editar");
         gEmpleado_editB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gEmpleado_editB.setIcon(new ImageIcon("resources/edit.png"));
         gEmpleadoMid_bottom.add(gEmpleado_editB);
 
         gEmpleado_deleteB = new JButton("Eliminar");
         gEmpleado_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gEmpleado_deleteB.setIcon(new ImageIcon("resources/trash.png"));
         gEmpleadoMid_bottom.add(gEmpleado_deleteB);
 
         JPanel gPromoBottom = new JPanel();
@@ -258,6 +250,7 @@ public class GestionarEmpleados {
 
         JButton gEmpleado_backB = new JButton("VOLVER");
         gEmpleado_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gEmpleado_backB.setIcon(new ImageIcon("resources/left.png"));
         gPromoBottom.add(gEmpleado_backB, BorderLayout.EAST);
         gEmpleado_backB.addActionListener(e -> {
             VistaMA maFrame = new VistaMA();
