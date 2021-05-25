@@ -63,8 +63,6 @@ public class PaquetesController implements ActionListener
         //Boton Guardar
         if(e.getSource()==vista.gPaquete_saveB)
         {
-            boolean[] arr = {true, false, true, true, true};
-            areButtonsEnabled(arr);
             savePack();
         }
         //Boton Editar
@@ -73,7 +71,7 @@ public class PaquetesController implements ActionListener
             AU = false;
             editPack();
         }
-        //Boton Eliminar
+        //Boton deletePack
         if(e.getSource()==vista.gPaquete_deleteB)
         {
             deletePack();
@@ -120,7 +118,7 @@ public class PaquetesController implements ActionListener
                 }
                 areTextFieldEditable(false);
                 cleanForm();
-                boolean[] arr = {true, false, true, true};
+                boolean[] arr = {true, false, true, true, true};
                 areButtonsEnabled(arr);
             }
         }
@@ -167,6 +165,8 @@ public class PaquetesController implements ActionListener
                 cleanPack();
                 cleanForm();
                 listPack(vista.gPaqueteTable);
+                boolean[] arr = {true, false, true, true, true};
+                areButtonsEnabled(arr);
             }
         }
     }
@@ -176,24 +176,72 @@ public class PaquetesController implements ActionListener
         int fila = vista.gPaqueteTable.getSelectedRow();
         if(fila==-1)
         {
-            JOptionPane.showMessageDialog(null, "Debe selecionar un paquete");
+            JOptionPane.showMessageDialog(null, "Debe selecionar un usuario");
         }
         else
         {
+            boolean k=true;
             int lista = dao.listar().size();
             if(lista>1)
             {
-                int id = Integer.parseInt((String) vista.gPaqueteTable.getValueAt(fila, 0).toString());
-                dao.eliminar(id);
-                JOptionPane.showMessageDialog(null, "Registro eliminado");
+                int id = Integer.parseInt(vista.gPaqueteTable.getValueAt(fila, 0).toString());
+                for (int i=0; i<dao.sizeDP().size(); i++)
+                {
+                    if(dao.sizeDP().get(i).getIdpaquete() == id)
+                    {
+                        k=false;
+                        break;
+                    }
+                }
+                for (int i=0; i<dao.listarP().size(); i++)
+                {
+                    if (dao.listarP().get(i) == id)
+                    {
+                        k=false;
+                        System.out.println("Falso");
+                        break;
+                    }
+                }
+                if (k)
+                {
+                    dao.eliminar(id);
+                    JOptionPane.showMessageDialog(null, "Paquete eliminado");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "El paquete esta en uso");
+                }
             }
             else
             {
-                boolean[] arr = {true, false, false, false, true};
-                areButtonsEnabled(arr);
                 int id = Integer.parseInt((String) vista.gPaqueteTable.getValueAt(fila, 0).toString());
-                dao.eliminar(id);
-                JOptionPane.showMessageDialog(null, "Registro eliminado");
+                for (int i=0; i<dao.sizeDP().size(); i++)
+                {
+                    if(dao.sizeDP().get(i).getIdpaquete() == id)
+                    {
+                        k=false;
+                        break;
+                    }
+                }
+                for (int i=0; i<dao.listarP().size(); i++)
+                {
+                    if (dao.listarP().get(i) == id)
+                    {
+                        k=false;
+                        break;
+                    }
+                }
+                if (k)
+                {
+                    boolean[] arr = {true, false, false, false, true};
+                    areButtonsEnabled(arr);
+                    dao.eliminar(id);
+                    JOptionPane.showMessageDialog(null, "Paquete eliminado");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "El paquete esta en uso");
+                }
             }
 
         }

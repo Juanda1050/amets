@@ -133,4 +133,59 @@ public class PaquetesDAO
             }
         }
     }
+
+    public ArrayList<DP> sizeDP()
+    {
+        ArrayList<DP> listaDP = new ArrayList();
+        String sql = "SELECT * FROM detallepaquete";
+        try{
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                DP dp = new DP();
+                dp.setIdpaquete(rs.getInt(1));
+                dp.setIdVuelo(rs.getInt(2));
+                dp.setIdhotel(rs.getInt(3));
+                dp.setIddestino(rs.getInt(4));
+                listaDP.add(dp);
+            }
+        }catch (Exception e){
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return listaDP;
+    }
+
+    public ArrayList<Integer> listarP(){
+        ArrayList<Integer> promo = new ArrayList<>();
+        String sql = "SELECT packID FROM promociones";
+        try{
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                promo.add(rs.getInt("packID"));
+            }
+        }catch (SQLException e){
+            System.out.println("Error al listar los registros");
+            e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return promo;
+    }
 }

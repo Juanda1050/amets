@@ -43,7 +43,6 @@ public class PromocionesController implements ActionListener {
             areButtonEnable(arr);
             mostrarPaquetes();
         }
-        areTextFieldEditable(false);
     }
 
     public void mostrarPaquetes(){
@@ -94,6 +93,9 @@ public class PromocionesController implements ActionListener {
             else{
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            areTextFieldEditable(false);
+            cleanCB();
+            cleanForm();
             boolean[] arr = {true, false, true, true};
             areButtonEnable(arr);
         }
@@ -124,6 +126,11 @@ public class PromocionesController implements ActionListener {
             else{
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            areTextFieldEditable(false);
+            cleanCB();
+            cleanForm();
+            cleanPromo();
+            listPromo(vista.gPromoTable);
             boolean[] arr = {true, false, true, true};
             areButtonEnable(arr);
         }
@@ -155,24 +162,13 @@ public class PromocionesController implements ActionListener {
                 addPromo();
                 cleanPromo();
                 listPromo(vista.gPromoTable);
-                areTextFieldEditable(false);
-                cleanForm();
-                cleanCB();
             }
             else{
                 addPromo();
                 listPromo(vista.gPromoTable);
-                areTextFieldEditable(false);
-                cleanForm();
-                cleanCB();
             }
         }else{
             updatePromo();
-            cleanPromo();
-            listPromo(vista.gPromoTable);
-            areTextFieldEditable(false);
-            cleanForm();
-            cleanCB();
         }
     }
 

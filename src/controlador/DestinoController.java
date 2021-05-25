@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DestinoController implements ActionListener {
     Destinos d = new Destinos();
-    GestionarDestinos vistaD;
+    GestionarDestinos vista;
     DestinoDAO dao;
     DefaultTableModel modelo = new DefaultTableModel();
     boolean AU;
@@ -23,40 +23,39 @@ public class DestinoController implements ActionListener {
         int lista = dao.listar().size();
         if(lista>0)
         {
-            this.vistaD = v;
+            this.vista = v;
             this.dao = dao;
             areTextFieldEditable(false);
-            vistaD.gDestino_saveB.setEnabled(false);
-            vistaD.gDestino_addB.addActionListener(this);
-            vistaD.gDestino_saveB.addActionListener(this);
-            vistaD.gDestino_editB.addActionListener(this);
-            vistaD.gDestino_deleteB.addActionListener(this);
-            listDestination(vistaD.gDestinoTable);
+            vista.gDestino_saveB.setEnabled(false);
+            vista.gDestino_addB.addActionListener(this);
+            vista.gDestino_saveB.addActionListener(this);
+            vista.gDestino_editB.addActionListener(this);
+            vista.gDestino_deleteB.addActionListener(this);
+            listDestination(vista.gDestinoTable);
             boolean[] arr = {true, false, true, true};
             areButtonsEnabled(arr);
         }
         else
         {
-            this.vistaD = v;
+            this.vista = v;
             this.dao = dao;
             areTextFieldEditable(false);
-            vistaD.gDestino_saveB.setEnabled(false);
-            vistaD.gDestino_addB.addActionListener(this);
-            vistaD.gDestino_saveB.addActionListener(this);
-            vistaD.gDestino_editB.addActionListener(this);
-            vistaD.gDestino_deleteB.addActionListener(this);
-            listDestination(vistaD.gDestinoTable);
+            vista.gDestino_saveB.setEnabled(false);
+            vista.gDestino_addB.addActionListener(this);
+            vista.gDestino_saveB.addActionListener(this);
+            vista.gDestino_editB.addActionListener(this);
+            vista.gDestino_deleteB.addActionListener(this);
+            listDestination(vista.gDestinoTable);
             boolean[] arr = {true, false, false, false};
             areButtonsEnabled(arr);
         }
-        areTextFieldEditable(false);
     }
 
     //ActionListener de cada boton de la vista
     public void actionPerformed(ActionEvent e)
     {
         //Boton Nuevo
-        if(e.getSource()== vistaD.gDestino_addB)
+        if(e.getSource()== vista.gDestino_addB)
         {
             AU = true;
             areTextFieldEditable(true);
@@ -64,22 +63,22 @@ public class DestinoController implements ActionListener {
             areButtonsEnabled(arr);
         }
         //Boton Guardar
-        if(e.getSource()== vistaD.gDestino_saveB)
+        if(e.getSource()== vista.gDestino_saveB)
         {
             saveDestination();
         }
         //Boton Editar
-        if(e.getSource()== vistaD.gDestino_editB)
+        if(e.getSource()== vista.gDestino_editB)
         {
             editDestination();
         }
         //Boton Eliminar
-        if(e.getSource()== vistaD.gDestino_deleteB)
+        if(e.getSource()== vista.gDestino_deleteB)
         {
             deleteDestination();
             cleanDestination();
             cleanForm();
-            listDestination(vistaD.gDestinoTable);
+            listDestination(vista.gDestinoTable);
         }
 
     }
@@ -87,7 +86,7 @@ public class DestinoController implements ActionListener {
     //Metodo agregar
     public void addDestination()
     {
-        if(vistaD.gDestino_ciudadTF.getText().isEmpty() || vistaD.gDestino_estadoTF.getText().isEmpty() || vistaD.gDestino_paisTF.getText().isEmpty())
+        if(vista.gDestino_ciudadTF.getText().isEmpty() || vista.gDestino_estadoTF.getText().isEmpty() || vista.gDestino_paisTF.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
             boolean[] arr = {false, true, false, false};
@@ -95,9 +94,9 @@ public class DestinoController implements ActionListener {
         }
         else
         {
-            String ciudad = vistaD.gDestino_ciudadTF.getText();
-            String estado = vistaD.gDestino_estadoTF.getText();
-            String pais = vistaD.gDestino_paisTF.getText();
+            String ciudad = vista.gDestino_ciudadTF.getText();
+            String estado = vista.gDestino_estadoTF.getText();
+            String pais = vista.gDestino_paisTF.getText();
             d.setCity(ciudad);
             d.setState(estado);
             d.setCountry(pais);
@@ -107,6 +106,8 @@ public class DestinoController implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            areTextFieldEditable(false);
+            cleanForm();
             boolean[] arr = {true, false, true, true};
             areButtonsEnabled(arr);
         }
@@ -115,7 +116,7 @@ public class DestinoController implements ActionListener {
     //Metodo actualizar
     public void updateDestination()
     {
-        if(vistaD.gDestino_ciudadTF.getText().isEmpty() || vistaD.gDestino_estadoTF.getText().isEmpty() || vistaD.gDestino_paisTF.getText().isEmpty())
+        if(vista.gDestino_ciudadTF.getText().isEmpty() || vista.gDestino_estadoTF.getText().isEmpty() || vista.gDestino_paisTF.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
             boolean[] arr = {false, true, false, false};
@@ -123,10 +124,10 @@ public class DestinoController implements ActionListener {
         }
         else
         {
-            int id = Integer.parseInt(vistaD.gDestino_idTF.getText());
-            String ciudad = vistaD.gDestino_ciudadTF.getText();
-            String estado = vistaD.gDestino_estadoTF.getText();
-            String pais = vistaD.gDestino_paisTF.getText();
+            int id = Integer.parseInt(vista.gDestino_idTF.getText());
+            String ciudad = vista.gDestino_ciudadTF.getText();
+            String estado = vista.gDestino_estadoTF.getText();
+            String pais = vista.gDestino_paisTF.getText();
 
             d.setDestinationID(id);
             d.setCity(ciudad);
@@ -139,6 +140,10 @@ public class DestinoController implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            areTextFieldEditable(false);
+            cleanForm();
+            cleanDestination();
+            listDestination(vista.gDestinoTable);
             boolean[] arr = {true, false, true, true};
             areButtonsEnabled(arr);
         }
@@ -146,27 +151,90 @@ public class DestinoController implements ActionListener {
 
     //Metodo eliminar
     public void deleteDestination(){
-        int row = vistaD.gDestinoTable.getSelectedRow();
-        if(row==-1)
+        int fila = vista.gDestinoTable.getSelectedRow();
+        if(fila==-1)
         {
             JOptionPane.showMessageDialog(null, "Debe selecionar un destino");
         }
         else
         {
+            boolean k=true;
             int lista = dao.listar().size();
             if(lista>1)
             {
-                int id = Integer.parseInt(vistaD.gDestinoTable.getValueAt(row, 0).toString());
-                dao.delete(id);
-                JOptionPane.showMessageDialog(null, "Registro eliminado");
+                int id = Integer.parseInt(vista.gDestinoTable.getValueAt(fila, 0).toString());
+                for (int i=0; i<dao.DP().size(); i++)
+                {
+                    if(dao.DP().get(i) == id)
+                    {
+                        k=false;
+                        break;
+                    }
+                }
+                for (int i=0; i<dao.H().size(); i++)
+                {
+                    if (dao.H().get(i) == id)
+                    {
+                        k=false;
+                        break;
+                    }
+                }
+                for (int i=0; i<dao.V().size(); i++)
+                {
+                    if (dao.V().get(i) == id)
+                    {
+                        k=false;
+                        break;
+                    }
+                }
+                if (k)
+                {
+                    dao.delete(id);
+                    JOptionPane.showMessageDialog(null, "Registro eliminado");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "El destino esta en uso");
+                }
             }
             else
             {
-                boolean[] arr = {true, false, false, false};
-                areButtonsEnabled(arr);
-                int id = Integer.parseInt(vistaD.gDestinoTable.getValueAt(row, 0).toString());
-                dao.delete(id);
-                JOptionPane.showMessageDialog(null, "Registro eliminado");
+                int id = Integer.parseInt(vista.gDestinoTable.getValueAt(fila, 0).toString());
+                for (int i=0; i<dao.DP().size(); i++)
+                {
+                    if(dao.DP().get(i) == id)
+                    {
+                        k=false;
+                        break;
+                    }
+                }
+                for (int i=0; i<dao.H().size(); i++)
+                {
+                    if (dao.H().get(i) == id)
+                    {
+                        k=false;
+                        break;
+                    }
+                }
+                for (int i=0; i<dao.V().size(); i++)
+                {
+                    if (dao.V().get(i) == id)
+                    {
+                        k=false;
+                        break;
+                    }
+                }
+                if (k)
+                {
+                    boolean[] arr = {true, false, false, false};
+                    areButtonsEnabled(arr);
+                    dao.delete(id);
+                    JOptionPane.showMessageDialog(null, "Paquete eliminado");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "El paquete esta en uso");
+                }
             }
 
         }
@@ -182,25 +250,17 @@ public class DestinoController implements ActionListener {
             {
                 addDestination();
                 cleanDestination();
-                listDestination(vistaD.gDestinoTable);
-                areTextFieldEditable(false);
-                cleanForm();
+                listDestination(vista.gDestinoTable);
             }
             else
             {
                 addDestination();
-                listDestination(vistaD.gDestinoTable);
-                areTextFieldEditable(false);
-                cleanForm();
+                listDestination(vista.gDestinoTable);
             }
         }
         else
         {
             updateDestination();
-            cleanDestination();
-            listDestination(vistaD.gDestinoTable);
-            areTextFieldEditable(false);
-            cleanForm();
         }
     }
 
@@ -208,7 +268,7 @@ public class DestinoController implements ActionListener {
     public void editDestination()
     {
         AU = false;
-        int row = vistaD.gDestinoTable.getSelectedRow();
+        int row = vista.gDestinoTable.getSelectedRow();
         if(row==-1)
         {
             JOptionPane.showMessageDialog(null, "Seleccione una fila");
@@ -218,14 +278,14 @@ public class DestinoController implements ActionListener {
             areTextFieldEditable(true);
             boolean[] arr = {false, true, false, false};
             areButtonsEnabled(arr);
-            int id = Integer.parseInt(vistaD.gDestinoTable.getValueAt(row, 0).toString());
-            String ciudad = (String) vistaD.gDestinoTable.getValueAt(row, 1);
-            String estado = (String) vistaD.gDestinoTable.getValueAt(row, 2);
-            String pais = (String) vistaD.gDestinoTable.getValueAt(row, 3);
-            vistaD.gDestino_idTF.setText(""+id);
-            vistaD.gDestino_ciudadTF.setText(ciudad);
-            vistaD.gDestino_estadoTF.setText(estado);
-            vistaD.gDestino_paisTF.setText(pais);
+            int id = Integer.parseInt(vista.gDestinoTable.getValueAt(row, 0).toString());
+            String ciudad = (String) vista.gDestinoTable.getValueAt(row, 1);
+            String estado = (String) vista.gDestinoTable.getValueAt(row, 2);
+            String pais = (String) vista.gDestinoTable.getValueAt(row, 3);
+            vista.gDestino_idTF.setText(""+id);
+            vista.gDestino_ciudadTF.setText(ciudad);
+            vista.gDestino_estadoTF.setText(estado);
+            vista.gDestino_paisTF.setText(pais);
         }
     }
 
@@ -246,7 +306,7 @@ public class DestinoController implements ActionListener {
 
     //Actualizar la Tabla cada que se hace un cambio
     private void cleanDestination(){
-        for (int i = 0; i < vistaD.gDestinoTable.getRowCount(); i++){
+        for (int i = 0; i < vista.gDestinoTable.getRowCount(); i++){
             modelo.removeRow(i);
             i = i - 1;
         }
@@ -255,25 +315,25 @@ public class DestinoController implements ActionListener {
     //Hacer editable o no editable los TextField
     private void areTextFieldEditable(boolean flag)
     {
-        vistaD.gDestino_ciudadTF.setEditable(flag);
-        vistaD.gDestino_estadoTF.setEditable(flag);
-        vistaD.gDestino_paisTF.setEditable(flag);
+        vista.gDestino_ciudadTF.setEditable(flag);
+        vista.gDestino_estadoTF.setEditable(flag);
+        vista.gDestino_paisTF.setEditable(flag);
     }
 
     //Limpiar los componentes
     private void cleanForm(){
-        vistaD.gDestino_idTF.setText("");
-        vistaD.gDestino_ciudadTF.setText("");
-        vistaD.gDestino_estadoTF.setText("");
-        vistaD.gDestino_paisTF.setText("");
+        vista.gDestino_idTF.setText("");
+        vista.gDestino_ciudadTF.setText("");
+        vista.gDestino_estadoTF.setText("");
+        vista.gDestino_paisTF.setText("");
     }
 
     //Activar o desactivar botones
     private void areButtonsEnabled(boolean[] a)
     {
-        vistaD.gDestino_addB.setEnabled(a[0]);
-        vistaD.gDestino_saveB.setEnabled(a[1]);
-        vistaD.gDestino_editB.setEnabled(a[2]);
-        vistaD.gDestino_deleteB.setEnabled(a[3]);
+        vista.gDestino_addB.setEnabled(a[0]);
+        vista.gDestino_saveB.setEnabled(a[1]);
+        vista.gDestino_editB.setEnabled(a[2]);
+        vista.gDestino_deleteB.setEnabled(a[3]);
     }
 }

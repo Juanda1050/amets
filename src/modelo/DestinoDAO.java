@@ -111,4 +111,80 @@ public class DestinoDAO{
         }
         return listaDestino;
     }
+
+    public ArrayList<Integer> DP()
+    {
+        ArrayList<Integer> listaDP = new ArrayList();
+        String sql = "SELECT destinationID FROM detallepaquete";
+        try{
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                listaDP.add(rs.getInt("destinationID"));
+            }
+        }catch (SQLException e){
+            System.out.println("Error al listar los registros");
+            e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return listaDP;
+    }
+
+    public ArrayList<Integer> H(){
+        ArrayList<Integer> hotel = new ArrayList<>();
+        String sql = "SELECT destinationID FROM hotel";
+        try{
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                hotel.add(rs.getInt("destinationID"));
+            }
+        }catch (SQLException e){
+            System.out.println("Error al listar los registros");
+            e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return hotel;
+    }
+
+    public ArrayList<Integer> V(){
+        ArrayList<Integer> vuelo = new ArrayList<>();
+        String sql = "SELECT destinationID FROM vuelo";
+        try{
+            con = conectar();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                vuelo.add(rs.getInt("destinationID"));
+            }
+        }catch (SQLException e){
+            System.out.println("Error al listar los registros");
+            e.printStackTrace();
+        }finally {
+            if(con != null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return vuelo;
+    }
 }

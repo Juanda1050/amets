@@ -189,6 +189,12 @@ public class DetallePaqueteController implements ActionListener
             } else {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            areComboBoxEnabled(false);
+            cleanCB();
+            cleanDPaquete();
+            listDPaquete(vista.dPaqueteTable);
+            boolean[] arr = {true, false, true, true};
+            areButtonsEnabled(arr);
         }
     }
 
@@ -237,24 +243,16 @@ public class DetallePaqueteController implements ActionListener
                 addDPaquete();
                 cleanDPaquete();
                 listDPaquete(vista.dPaqueteTable);
-                areComboBoxEnabled(false);
-                cleanCB();
             }
             else
             {
                 addDPaquete();
                 listDPaquete(vista.dPaqueteTable);
-                areComboBoxEnabled(false);
-                cleanCB();
             }
         }
         else
         {
             updateDPaquete();
-            cleanDPaquete();
-            listDPaquete(vista.dPaqueteTable);
-            areComboBoxEnabled(false);
-            cleanCB();
         }
     }
 

@@ -224,7 +224,7 @@ public class GestionarPromociones{
 
         gPromo_deleteB = new JButton("Eliminar");
         gPromo_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gPromo_deleteB.setIcon(new ImageIcon("resources/add.png"));
+        gPromo_deleteB.setIcon(new ImageIcon("resources/delete.png"));
         gPromoMid_B.add(gPromo_deleteB);
 
         JPanel gPromoBottom = new JPanel();

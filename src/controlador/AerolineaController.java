@@ -49,7 +49,6 @@ public class AerolineaController implements ActionListener {
             boolean[] arr = {true, false, false, false};
             areButtonsEnabled(arr);
         }
-        areTextFieldEditable(false);
     }
 
     public void actionPerformed(ActionEvent e)
@@ -59,7 +58,7 @@ public class AerolineaController implements ActionListener {
         {
             AU = true;
             areTextFieldEditable(true);
-            boolean[] arr = {false, true, true, false};
+            boolean[] arr = {false, true, false, false};
             areButtonsEnabled(arr);
         }
         //Boton Guardar
@@ -89,7 +88,7 @@ public class AerolineaController implements ActionListener {
         if(vista.gAerolinea_nombreTF.getText().isEmpty() || vista.gAerolinea_claseTF.getText().isEmpty() || vista.gAerolinea_precioTF.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
-            boolean[] arr = {true, false, true, true};
+            boolean[] arr = {false, true, false, false};
             areButtonsEnabled(arr);
         }
         else
@@ -107,6 +106,8 @@ public class AerolineaController implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            areTextFieldEditable(false);
+            cleanForm();
             boolean[] arr = {true, false, true, true};
             areButtonsEnabled(arr);
         }
@@ -118,7 +119,7 @@ public class AerolineaController implements ActionListener {
         if(vista.gAerolinea_nombreTF.getText().isEmpty() || vista.gAerolinea_claseTF.getText().isEmpty() || vista.gAerolinea_precioTF.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
-            boolean[] arr = {true, false, true, true};
+            boolean[] arr = {false, true, false, false};
             areButtonsEnabled(arr);
         }
         else
@@ -139,6 +140,10 @@ public class AerolineaController implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            areTextFieldEditable(false);
+            cleanAirline();
+            cleanForm();
+            listAirline(vista.gAerolineaTable);
             boolean[] arr = {true, false, true, true};
             areButtonsEnabled(arr);
         }
@@ -164,7 +169,7 @@ public class AerolineaController implements ActionListener {
             {
                 boolean[] arr = {true, false, false, false};
                 areButtonsEnabled(arr);
-                int id = Integer.parseInt((String) vista.gAerolineaTable.getValueAt(row, 0).toString());
+                int id = Integer.parseInt(vista.gAerolineaTable.getValueAt(row, 0).toString());
                 dao.delete(id);
                 JOptionPane.showMessageDialog(null, "Registro eliminado");
             }
@@ -183,27 +188,17 @@ public class AerolineaController implements ActionListener {
                 addAirline();
                 cleanAirline();
                 listAirline(vista.gAerolineaTable);
-                areTextFieldEditable(false);
-                cleanForm();
             }
             else
             {
                 addAirline();
                 listAirline(vista.gAerolineaTable);
-                areTextFieldEditable(false);
-                cleanForm();
             }
         }
         else
         {
             updateAirline();
-            cleanAirline();
-            listAirline(vista.gAerolineaTable);
-            areTextFieldEditable(false);
-            cleanForm();
         }
-        boolean[] arr = {true, false, true, true};
-        areButtonsEnabled(arr);
     }
 
     public void editAirline()

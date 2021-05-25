@@ -156,7 +156,7 @@ public class GestionarHoteles {
                         @Override
                         public void keyTyped(KeyEvent e) {
                                 char ch = e.getKeyChar();
-                                if(Character.isLetter(ch) || Character.isDigit(ch) || Character.isISOControl(ch)){
+                                if(Character.isLetter(ch) || Character.isDigit(ch) || Character.isISOControl(ch) || Character.isSpaceChar(ch)){
                                 }
                                 else{
                                         e.consume();

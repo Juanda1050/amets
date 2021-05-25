@@ -29,6 +29,7 @@ public class HotelesController implements ActionListener {
             this.vista.gHotel_saveB.addActionListener(this);
             this.vista.gHotel_editB.addActionListener(this);
             this.vista.gHotel_deleteB.addActionListener(this);
+            areTextFieldEditable(false);
             listHoteles(vista.gHotelTable);
             boolean[] arr = {true, false, true, true, true};
             areButtonsEnabled(arr);
@@ -41,12 +42,12 @@ public class HotelesController implements ActionListener {
             this.vista.gHotel_saveB.addActionListener(this);
             this.vista.gHotel_editB.addActionListener(this);
             this.vista.gHotel_deleteB.addActionListener(this);
+            areTextFieldEditable(false);
             listHoteles(vista.gHotelTable);
             boolean[] arr = {true, false, false, false, true};
             areButtonsEnabled(arr);
             mostrarDestinos();
         }
-        areTextFieldEditable(false);
     }
 
     //Metodo para mostrar el contenido de la tabla destinos en el CombBox
@@ -123,6 +124,9 @@ public class HotelesController implements ActionListener {
             else{
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            areTextFieldEditable(false);
+            cleanForm();
+            cleanCB();
             boolean[] arr = {true, false, true, true, true};
             areButtonsEnabled(arr);
         }
@@ -167,6 +171,11 @@ public class HotelesController implements ActionListener {
             else{
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            areTextFieldEditable(false);
+            cleanHoteles();
+            cleanForm();
+            cleanCB();
+            listHoteles(vista.gHotelTable);
             boolean[] arr = {true, false, true, true, true};
             areButtonsEnabled(arr);
         }
@@ -200,24 +209,13 @@ public class HotelesController implements ActionListener {
                 addHoteles();
                 cleanHoteles();
                 listHoteles(vista.gHotelTable);
-                areTextFieldEditable(false);
-                cleanForm();
-                cleanCB();
             }
             else{
                 addHoteles();
                 listHoteles(vista.gHotelTable);
-                areTextFieldEditable(false);
-                cleanForm();
-                cleanCB();
             }
         }else{
             updateHoteles();
-            cleanHoteles();
-            listHoteles(vista.gHotelTable);
-            areTextFieldEditable(false);
-            cleanForm();
-            cleanCB();
         }
     }
 
@@ -241,14 +239,12 @@ public class HotelesController implements ActionListener {
             int disponibilidad = Integer.parseInt(vista.gHotelTable.getValueAt(row, 7).toString());
             String salida = (String) vista.gHotelTable.getValueAt(row, 8);
             String llegada = (String) vista.gHotelTable.getValueAt(row, 9);
-
             vista.gHotel_idTF.setText("" + id);
             vista.gHotel_nombreTF.setText("" + nombre);
             vista.gHotel_genteTF.setText("" + gente);
             vista.gHotel_ubicacionTF.setText("" + localizacion);
             vista.gHotel_clasifTF.setText("" + rating);
             vista.gHotel_regimenCB.setSelectedIndex(regimen);
-            System.out.println(disponibilidad);
             vista.gHotel_dispoCB.setSelectedIndex(disponibilidad + 1);
             vista.gHotel_entradaDC.setText(salida);
             vista.gHotel_salidaDC.setText(llegada);

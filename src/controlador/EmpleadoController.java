@@ -52,7 +52,6 @@ public class EmpleadoController implements ActionListener {
             boolean[] arr = {true, false, false, false};
             areButtonsEnabled(arr);
         }
-        areTextFieldEditable(false);
     }
 
     //ActionListener de cada boton de la vista
@@ -114,6 +113,8 @@ public class EmpleadoController implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(null, "Empleado fallido");
             }
+            areTextFieldEditable(false);
+            cleanForm();
             boolean[] arr = {true, false, true, true};
             areButtonsEnabled(arr);
         }
@@ -150,6 +151,10 @@ public class EmpleadoController implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            areTextFieldEditable(false);
+            cleanEmployee();
+            cleanForm();
+            listEmployee(vista.gEmpleadoTable);
             boolean[] arr = {true, false, true, true};
             areButtonsEnabled(arr);
         }
@@ -194,23 +199,17 @@ public class EmpleadoController implements ActionListener {
                 addEmployee();
                 cleanEmployee();
                 listEmployee(vista.gEmpleadoTable);
-                areTextFieldEditable(false);
-                cleanForm();
             }
             else
             {
                 addEmployee();
                 listEmployee(vista.gEmpleadoTable);
-                areTextFieldEditable(false);
-                cleanForm();
+
             }
         }
         else
         {
             updateEmployee();
-            listEmployee(vista.gEmpleadoTable);
-            areTextFieldEditable(false);
-            cleanForm();
         }
 
     }

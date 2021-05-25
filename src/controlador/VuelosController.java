@@ -14,41 +14,42 @@ import java.util.List;
 
 public class VuelosController implements ActionListener {
     Vuelos v = new Vuelos();
-    GestionarVuelos vistaV;
+    GestionarVuelos vista;
     VuelosDAO dao;
     DefaultTableModel modelo = new DefaultTableModel();
     private boolean AU = true;
     Date currentDate = new Date();
 
     //Constructor del controlador
-    public VuelosController(GestionarVuelos vistaV, VuelosDAO dao){
+    public VuelosController(GestionarVuelos vista, VuelosDAO dao){
         int lista = dao.listar().size();
         if (lista > 0){
             this.dao = dao;
-            this.vistaV = vistaV;
-            this.vistaV.gVuelos_addB.addActionListener(this);
-            this.vistaV.gVuelos_saveB.addActionListener(this);
-            this.vistaV.gVuelos_editB.addActionListener(this);
-            this.vistaV.gVuelos_deleteB.addActionListener(this);
-            listFly(vistaV.gVuelosTable);
+            this.vista = vista;
+            this.vista.gVuelos_addB.addActionListener(this);
+            this.vista.gVuelos_saveB.addActionListener(this);
+            this.vista.gVuelos_editB.addActionListener(this);
+            this.vista.gVuelos_deleteB.addActionListener(this);
+            areTextFieldEditable(false);
+            listFly(vista.gVuelosTable);
             boolean[] arr = {true, false, true, true, true};
             areButtonsEnabled(arr);
             mostrarDestinos();
             mostrarAero();
         }else{
             this.dao = dao;
-            this.vistaV = vistaV;
-            this.vistaV.gVuelos_addB.addActionListener(this);
-            this.vistaV.gVuelos_saveB.addActionListener(this);
-            this.vistaV.gVuelos_editB.addActionListener(this);
-            this.vistaV.gVuelos_deleteB.addActionListener(this);
-            listFly(vistaV.gVuelosTable);
+            this.vista = vista;
+            this.vista.gVuelos_addB.addActionListener(this);
+            this.vista.gVuelos_saveB.addActionListener(this);
+            this.vista.gVuelos_editB.addActionListener(this);
+            this.vista.gVuelos_deleteB.addActionListener(this);
+            areTextFieldEditable(false);
+            listFly(vista.gVuelosTable);
             boolean[] arr = {true, false, false, false, true};
             areButtonsEnabled(arr);
             mostrarDestinos();
             mostrarAero();
         }
-        areTextFieldEditable(false);
     }
 
     //Metodo para mostrar el contenido de la tabla destinos en el CombBox
@@ -56,7 +57,7 @@ public class VuelosController implements ActionListener {
     {
         for (int i =0; i<dao.listarDestinos().size(); i++)
         {
-            vistaV.gVuelos_destinoCB.addItem(dao.listarDestinos().get(i));
+            vista.gVuelos_destinoCB.addItem(dao.listarDestinos().get(i));
         }
     }
 
@@ -64,7 +65,7 @@ public class VuelosController implements ActionListener {
     public void mostrarAero(){
         for (int i =0; i<dao.listarAerolinea().size(); i++)
         {
-            vistaV.gVuelos_aerolineaCB.addItem(dao.listarAerolinea().get(i));
+            vista.gVuelos_aerolineaCB.addItem(dao.listarAerolinea().get(i));
         }
     }
 
@@ -72,49 +73,62 @@ public class VuelosController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         //Boton Nuevo
-        if(e.getSource() == vistaV.gVuelos_addB){
+        if(e.getSource() == vista.gVuelos_addB){
             AU = true;
             areTextFieldEditable(true);
-            vistaV.gVuelos_llegadaDC.setDate(currentDate);
-            vistaV.gVuelos_salidaDC.setDate(currentDate);
+            vista.gVuelos_llegadaDC.setDate(currentDate);
+            vista.gVuelos_salidaDC.setDate(currentDate);
             boolean[] arr = {false, true, false, false, false};
             areButtonsEnabled(arr);
         }
         //Boton Guardar
-        if(e.getSource() == vistaV.gVuelos_saveB){
+        if(e.getSource() == vista.gVuelos_saveB){
             saveFly();
         }
         //Boton Editar
-        if(e.getSource() == vistaV.gVuelos_editB){
+        if(e.getSource() == vista.gVuelos_editB){
             editFly();
         }
         //Boton Eliminar
-        if(e.getSource() == vistaV.gVuelos_deleteB){
+        if(e.getSource() == vista.gVuelos_deleteB){
             deleteFly();
             cleanFly();
-            listFly(vistaV.gVuelosTable);
+            listFly(vista.gVuelosTable);
         }
     }
 
     //Metodo agregar
     public void addFly(){
-        if(vistaV.gVuelos_origenTF.getText().isEmpty() || vistaV.gVuelos_destinoCB.getSelectedIndex() == 0 || vistaV.gVuelos_aerolineaCB.getSelectedIndex() == 0 || vistaV.gVuelos_genteTF.getText().isEmpty() || vistaV.gVuelos_salidaDC.getText().isEmpty() || vistaV.gVuelos_llegadaDC.getText().isEmpty()){
+        if(vista.gVuelos_origenTF.getText().isEmpty() || vista.gVuelos_destinoCB.getSelectedIndex() == 0 || vista.gVuelos_aerolineaCB.getSelectedIndex() == 0 || vista.gVuelos_genteTF.getText().isEmpty() || vista.gVuelos_salidaDC.getText().isEmpty() || vista.gVuelos_llegadaDC.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
             boolean[] arr = {false, true, false, false, false};
             areButtonsEnabled(arr);
         }
-        else if (currentDate.after(vistaV.gVuelos_llegadaDC.getDate()) || currentDate.after(vistaV.gVuelos_salidaDC.getDate())){
+        else if (currentDate.after(vista.gVuelos_llegadaDC.getDate()) || currentDate.after(vista.gVuelos_salidaDC.getDate())){
             JOptionPane.showMessageDialog(null, "Ingrese una fecha mayor a la actual");
-            boolean[] arr = {true, false, true, true, true};
+            boolean[] arr = {false, true, false, false, false};
             areButtonsEnabled(arr);
         }
         else{
-            String origen = vistaV.gVuelos_origenTF.getText();
-            int destino = dao.destinoID((String) vistaV.gVuelos_destinoCB.getSelectedItem());
-            int aero = dao.aeroID((String) vistaV.gVuelos_aerolineaCB.getSelectedItem());
-            int gente = Integer.parseInt(vistaV.gVuelos_genteTF.getText());
-            String salida = vistaV.gVuelos_salidaDC.getText();
-            String llegada = vistaV.gVuelos_llegadaDC.getText();
+            String origen = vista.gVuelos_origenTF.getText();
+
+            String a = String.valueOf(vista.gVuelos_aerolineaCB.getSelectedItem());
+            String an = null;
+            if(a.contains(" - Turista")){
+                an = a.replaceAll(" - Turista", "");
+            }
+            else if(a.contains(" - Primera Clase")){
+                an = a.replaceAll(" - Primera Clase", "");
+            }
+            else if(a.contains(" - VIP")){
+                an = a.replaceAll(" - VIP", "");
+            }
+
+            int destino = dao.destinoID((String) vista.gVuelos_destinoCB.getSelectedItem());
+            int aero = dao.aeroID(an);
+            int gente = Integer.parseInt(vista.gVuelos_genteTF.getText());
+            String salida = vista.gVuelos_salidaDC.getText();
+            String llegada = vista.gVuelos_llegadaDC.getText();
             v.setOrigin(origen);
             v.setDestinationID(destino);
             v.setAirlineID(aero);
@@ -128,6 +142,9 @@ public class VuelosController implements ActionListener {
             else{
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            areTextFieldEditable(false);
+            cleanForm();
+            cleanCB();
             boolean[] arr = {true, false, true, true, true};
             areButtonsEnabled(arr);
         }
@@ -135,23 +152,37 @@ public class VuelosController implements ActionListener {
 
     //Metodo actualizar
     public void updateFly(){
-        if(vistaV.gVuelos_origenTF.getText().isEmpty() || vistaV.gVuelos_genteTF.getText().isEmpty() || vistaV.gVuelos_salidaDC.getText().isEmpty() || vistaV.gVuelos_llegadaDC.getText().isEmpty()){
+        String d = (String) vista.gVuelos_destinoCB.getSelectedItem();
+        if(vista.gVuelos_origenTF.getText().isEmpty() || d.compareTo("Seleccione destino")==0 || vista.gVuelos_genteTF.getText().isEmpty() || vista.gVuelos_salidaDC.getText().isEmpty() || vista.gVuelos_llegadaDC.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
             boolean[] arr = {false, true, false, false, false};
             areButtonsEnabled(arr);
-        }else if (currentDate.after(vistaV.gVuelos_llegadaDC.getDate()) || currentDate.after(vistaV.gVuelos_salidaDC.getDate())){
+        }else if (currentDate.after(vista.gVuelos_llegadaDC.getDate()) || currentDate.after(vista.gVuelos_salidaDC.getDate())){
             JOptionPane.showMessageDialog(null, "Ingrese una fecha mayor a la actual");
             boolean[] arr = {false, true, false, false, false};
             areButtonsEnabled(arr);
         }
         else{
-            int id = Integer.parseInt(vistaV.gVuelos_idTF.getText());
-            String origen = vistaV.gVuelos_origenTF.getText();
-            int destino = dao.destinoID((String) vistaV.gVuelos_destinoCB.getSelectedItem());
-            int aero = vistaV.gVuelos_aerolineaCB.getSelectedIndex();
-            int gente = Integer.parseInt(vistaV.gVuelos_genteTF.getText());
-            String salida = vistaV.gVuelos_salidaDC.getText();
-            String llegada = vistaV.gVuelos_llegadaDC.getText();
+            int id = Integer.parseInt(vista.gVuelos_idTF.getText());
+            String origen = vista.gVuelos_origenTF.getText();
+
+            String a = String.valueOf(vista.gVuelos_aerolineaCB.getSelectedItem());
+            String an = null;
+            if(a.contains(" - Turista")){
+                an = a.replaceAll(" - Turista", "");
+            }
+            else if(a.contains(" - Primera Clase")){
+                an = a.replaceAll(" - Primera Clase", "");
+            }
+            else if(a.contains(" - VIP")){
+                an = a.replaceAll(" - VIP", "");
+            }
+
+            int destino = dao.destinoID((String) vista.gVuelos_destinoCB.getSelectedItem());
+            int aero = dao.aeroID(an);
+            int gente = Integer.parseInt(vista.gVuelos_genteTF.getText());
+            String salida = vista.gVuelos_salidaDC.getText();
+            String llegada = vista.gVuelos_llegadaDC.getText();
             v.setFlightID(id);
             v.setOrigin(origen);
             v.setDestinationID(destino);
@@ -166,6 +197,11 @@ public class VuelosController implements ActionListener {
             else{
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            areTextFieldEditable(false);
+            cleanCB();
+            cleanFly();
+            cleanForm();
+            listFly(vista.gVuelosTable);
             boolean[] arr = {true, false, true, true, true};
             areButtonsEnabled(arr);
         }
@@ -173,21 +209,21 @@ public class VuelosController implements ActionListener {
 
     //Metodo eliminar
     public void deleteFly(){
-        int row = vistaV.gVuelosTable.getSelectedRow();
+        int row = vista.gVuelosTable.getSelectedRow();
         if (row == 1){
             JOptionPane.showMessageDialog(null, "Seleccione un vuelo");
         }else{
             int lista = dao.listar().size();
             if (lista > 1){
-                int id = Integer.parseInt(vistaV.gVuelosTable.getValueAt(row, 0).toString());
+                int id = Integer.parseInt(vista.gVuelosTable.getValueAt(row, 0).toString());
                 dao.eliminar(id);
-                JOptionPane.showMessageDialog(null, "Vuelo eliminado exitosamente");
+                JOptionPane.showMessageDialog(null, "Registro eliminado exitosamente");
             }else{
                 boolean[] arr = {true, false, false, false, true};
                 areButtonsEnabled(arr);
-                int id = Integer.parseInt(vistaV.gVuelosTable.getValueAt(row, 0).toString());
+                int id = Integer.parseInt(vista.gVuelosTable.getValueAt(row, 0).toString());
                 dao.eliminar(id);
-                JOptionPane.showMessageDialog(null, "Vuelo eliminado exitosamente");
+                JOptionPane.showMessageDialog(null, "Registro eliminado exitosamente");
             }
 
         }
@@ -199,52 +235,39 @@ public class VuelosController implements ActionListener {
             if(dao.listar().size() > 0){
                 addFly();
                 cleanFly();
-                listFly(vistaV.gVuelosTable);
-                areTextFieldEditable(false);
-                cleanForm();
-                cleanCB();
+                listFly(vista.gVuelosTable);
             }else{
                 addFly();
-                listFly(vistaV.gVuelosTable);
-                areTextFieldEditable(false);
-                cleanForm();
-                cleanCB();
+                listFly(vista.gVuelosTable);
             }
 
         }else{
             updateFly();
-            cleanFly();
-            listFly(vistaV.gVuelosTable);
-            areTextFieldEditable(false);
-            cleanForm();
-            cleanCB();
         }
-        boolean[] arr = {true, false, true, true, true};
-        areButtonsEnabled(arr);
     }
 
     //Metodo para editar
     private void editFly(){
         AU = false;
-        int row = vistaV.gVuelosTable.getSelectedRow();
+        int row = vista.gVuelosTable.getSelectedRow();
         if (row == -1){
             JOptionPane.showMessageDialog(null, "Seleccione un vuelo");
         }else{
             areTextFieldEditable(true);
             boolean[] arr = {false, true, false, false, false};
             areButtonsEnabled(arr);
-            int id = Integer.parseInt(vistaV.gVuelosTable.getValueAt(row, 0).toString());
-            String origen = (String) vistaV.gVuelosTable.getValueAt(row, 1);
-            String destino = (String) vistaV.gVuelosTable.getValueAt(row, 2);
-            String aero = (String) vistaV.gVuelosTable.getValueAt(row, 3);
-            int gente = Integer.parseInt(vistaV.gVuelosTable.getValueAt(row, 4).toString());
-            String salida = (String) vistaV.gVuelosTable.getValueAt(row, 5);
-            String llegada = (String) vistaV.gVuelosTable.getValueAt(row, 6);
-            vistaV.gVuelos_idTF.setText("" + id);
-            vistaV.gVuelos_origenTF.setText("" + origen);
-            vistaV.gVuelos_genteTF.setText("" + gente);
-            vistaV.gVuelos_salidaDC.setText(salida);
-            vistaV.gVuelos_llegadaDC.setText(llegada);
+            int id = Integer.parseInt(vista.gVuelosTable.getValueAt(row, 0).toString());
+            String origen = (String) vista.gVuelosTable.getValueAt(row, 1);
+            String destino = (String) vista.gVuelosTable.getValueAt(row, 2);
+            String aero = (String) vista.gVuelosTable.getValueAt(row, 3);
+            int gente = Integer.parseInt(vista.gVuelosTable.getValueAt(row, 4).toString());
+            String salida = (String) vista.gVuelosTable.getValueAt(row, 5);
+            String llegada = (String) vista.gVuelosTable.getValueAt(row, 6);
+            vista.gVuelos_idTF.setText("" + id);
+            vista.gVuelos_origenTF.setText("" + origen);
+            vista.gVuelos_genteTF.setText("" + gente);
+            vista.gVuelos_salidaDC.setText(salida);
+            vista.gVuelos_llegadaDC.setText(llegada);
             rellenarCB(destino, aero);
         }
     }
@@ -266,12 +289,12 @@ public class VuelosController implements ActionListener {
             object[6] = vuelo.getLanding();
             modelo.addRow(object);
         }
-        vistaV.gVuelosTable.setModel(modelo);
+        vista.gVuelosTable.setModel(modelo);
     }
 
     //Actualizar la Tabla cada que se hace un cambio
     private void cleanFly(){
-        for(int i = 0; i < vistaV.gVuelosTable.getRowCount(); i++){
+        for(int i = 0; i < vista.gVuelosTable.getRowCount(); i++){
             modelo.removeRow(i);
             i = i - 1;
         }
@@ -279,58 +302,58 @@ public class VuelosController implements ActionListener {
 
     //Hacer editable o no editable los TextField
     private void areTextFieldEditable(boolean flag){
-        vistaV.gVuelos_origenTF.setEditable(flag);
-        vistaV.gVuelos_destinoCB.setEnabled(flag);
-        vistaV.gVuelos_aerolineaCB.setEnabled(flag);
-        vistaV.gVuelos_genteTF.setEditable(flag);
-        vistaV.gVuelos_salidaDC.setEnabled(flag);
-        vistaV.gVuelos_llegadaDC.setEnabled(flag);
+        vista.gVuelos_origenTF.setEditable(flag);
+        vista.gVuelos_destinoCB.setEnabled(flag);
+        vista.gVuelos_aerolineaCB.setEnabled(flag);
+        vista.gVuelos_genteTF.setEditable(flag);
+        vista.gVuelos_salidaDC.setEnabled(flag);
+        vista.gVuelos_llegadaDC.setEnabled(flag);
     }
 
     //Limpiar los componentes
     private void cleanForm(){
-        vistaV.gVuelos_idTF.setText("");
-        vistaV.gVuelos_origenTF.setText("");
-        vistaV.gVuelos_destinoCB.setSelectedIndex(0);
-        vistaV.gVuelos_aerolineaCB.setSelectedIndex(0);
-        vistaV.gVuelos_genteTF.setText("");
-        vistaV.gVuelos_salidaDC.setText("");
-        vistaV.gVuelos_llegadaDC.setText("");
+        vista.gVuelos_idTF.setText("");
+        vista.gVuelos_origenTF.setText("");
+        vista.gVuelos_destinoCB.setSelectedIndex(0);
+        vista.gVuelos_aerolineaCB.setSelectedIndex(0);
+        vista.gVuelos_genteTF.setText("");
+        vista.gVuelos_salidaDC.setText("");
+        vista.gVuelos_llegadaDC.setText("");
     }
 
     //Activar o desactivar botones
     private void areButtonsEnabled(boolean[] a) {
-        vistaV.gVuelos_addB.setEnabled(a[0]);
-        vistaV.gVuelos_saveB.setEnabled(a[1]);
-        vistaV.gVuelos_editB.setEnabled(a[2]);
-        vistaV.gVuelos_deleteB.setEnabled(a[3]);
-        vistaV.gVuelos_airlineB.setEnabled(a[4]);
+        vista.gVuelos_addB.setEnabled(a[0]);
+        vista.gVuelos_saveB.setEnabled(a[1]);
+        vista.gVuelos_editB.setEnabled(a[2]);
+        vista.gVuelos_deleteB.setEnabled(a[3]);
+        vista.gVuelos_airlineB.setEnabled(a[4]);
     }
 
     //Limpiar los ComboBox
     private void cleanCB(){
-        vistaV.gVuelos_destinoCB.removeAllItems();
-        vistaV.gVuelos_destinoCB.addItem("Seleccione destino");
+        vista.gVuelos_destinoCB.removeAllItems();
+        vista.gVuelos_destinoCB.addItem("Seleccione destino");
         mostrarDestinos();
-        vistaV.gVuelos_aerolineaCB.removeAllItems();
-        vistaV.gVuelos_aerolineaCB.addItem("Seleccione aerolinea");
+        vista.gVuelos_aerolineaCB.removeAllItems();
+        vista.gVuelos_aerolineaCB.addItem("Seleccione aerolinea");
         mostrarAero();
     }
 
     //Metodo para llenar los ComboBox con lo que esta dentro de la tabla correspondiente en la BD
     private void rellenarCB(String destino, String aero){
-        vistaV.gVuelos_destinoCB.removeAllItems();
-        vistaV.gVuelos_destinoCB.addItem(destino);
+        vista.gVuelos_destinoCB.removeAllItems();
+        vista.gVuelos_destinoCB.addItem(destino);
         for (int i = 0; i < dao.listarDestinos().size(); i++){
             if(dao.listarDestinos().get(i).compareTo(destino) != 0){
-                vistaV.gVuelos_destinoCB.addItem(dao.listarDestinos().get(i));
+                vista.gVuelos_destinoCB.addItem(dao.listarDestinos().get(i));
             }
         }
-        vistaV.gVuelos_aerolineaCB.removeAllItems();
-        vistaV.gVuelos_aerolineaCB.addItem(aero);
+        vista.gVuelos_aerolineaCB.removeAllItems();
+        vista.gVuelos_aerolineaCB.addItem(aero);
         for (int i = 0; i < dao.listarAerolinea().size(); i++){
             if(dao.listarAerolinea().get(i).compareTo(aero) != 0){
-                vistaV.gVuelos_aerolineaCB.addItem(dao.listarAerolinea().get(i));
+                vista.gVuelos_aerolineaCB.addItem(dao.listarAerolinea().get(i));
             }
         }
     }

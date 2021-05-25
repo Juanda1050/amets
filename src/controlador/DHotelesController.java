@@ -28,6 +28,7 @@ public class DHotelesController implements ActionListener {
             this.vista.dHotel_saveB.addActionListener(this);
             this.vista.dHotel_editB.addActionListener(this);
             this.vista.dHotel_deleteB.addActionListener(this);
+            areTextFieldEditable(false);
             listHotel(vista.dHotelTable);
             boolean[] arr = {true, false, true, true};
             areButtonsEnabled(arr);
@@ -38,11 +39,11 @@ public class DHotelesController implements ActionListener {
             this.vista.dHotel_saveB.addActionListener(this);
             this.vista.dHotel_editB.addActionListener(this);
             this.vista.dHotel_deleteB.addActionListener(this);
+            areTextFieldEditable(false);
             listHotel(vista.dHotelTable);
             boolean[] arr = {true, false, false, false};
             areButtonsEnabled(arr);
         }
-        areTextFieldEditable(false);
     }
 
     //ActionListener de cada boton de la vista
@@ -92,6 +93,8 @@ public class DHotelesController implements ActionListener {
             else{
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            areTextFieldEditable(false);
+            cleanForm();
             boolean[] arr = {true, false, true, true};
             areButtonsEnabled(arr);
         }
@@ -120,36 +123,42 @@ public class DHotelesController implements ActionListener {
             else{
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            areTextFieldEditable(false);
+            cleanHotel();
+            cleanForm();
+            listHotel(vista.dHotelTable);
+            boolean[] arr = {true, false, true, true};
+            areButtonsEnabled(arr);
         }
     }
 
     //Metodo eliminar
     public void deleteHotel(){
         int row = vista.dHotelTable.getSelectedRow();
-        if (row == 1){
+        if (row == -1){
             JOptionPane.showMessageDialog(null, "Seleccione un hotel");
         }else{
             int id = dao.hotelID(vista.dHotelTable.getValueAt(row, 0).toString());
             dao.eliminar(id);
-            JOptionPane.showMessageDialog(null, "Vuelo eliminado exitosamente");
+            JOptionPane.showMessageDialog(null, "Registro eliminado exitosamente");
         }
     }
 
     //Metodo guardar
     private void saveHotel(){
         if (AU){
-            addFly();
-            cleanHotel();
-            listHotel(vista.dHotelTable);
-            areTextFieldEditable(false);
-            cleanForm();
-
+            int lista = dao.listar().size();
+            if(lista > 0){
+                addFly();
+                cleanHotel();
+                listHotel(vista.dHotelTable);
+            }
+            else{
+                addFly();
+                listHotel(vista.dHotelTable);
+            }
         }else{
             updateHotel();
-            cleanHotel();
-            listHotel(vista.dHotelTable);
-            areTextFieldEditable(false);
-            cleanForm();
         }
     }
 
