@@ -19,12 +19,13 @@ public class SelecPaqController implements ActionListener, WindowListener {
     SelecPaqDAO dao;
     SeleccionarPaquete vista;
     Ticket ticket = new Ticket();
-    int agentID;
+    int agentID, userID;
 
-    public SelecPaqController(SeleccionarPaquete v, SelecPaqDAO dao, int agentID){
+    public SelecPaqController(SeleccionarPaquete v, SelecPaqDAO dao, int agentID, int userID){
         this.vista = v;
         this.dao = dao;
         this.agentID = agentID;
+        this.userID = userID;
         vista.sPaquete_backB.addActionListener(this);
         vista.sPaquete_menuB.addActionListener(this);
         vista.sPaquete_nextB.addActionListener(this);
@@ -81,7 +82,7 @@ public class SelecPaqController implements ActionListener, WindowListener {
         if (e.getSource() == vista.sPaquete_nextB) {
             ticket.runFrame(ticket, agentID);
             VistaPP pp = new VistaPP();
-            pp.runFrame(vista.sPaquete_descTP.getText(),Float.parseFloat(vista.sPaquete_precioTF.getText()),agentID, ticket);
+            pp.runFrame(vista.sPaquete_descTP.getText(),Float.parseFloat(vista.sPaquete_precioTF.getText()),agentID, ticket, userID);
             vista.sPaqueteFrame.setVisible(false);
         }
     }
@@ -95,7 +96,7 @@ public class SelecPaqController implements ActionListener, WindowListener {
     public void windowClosing(WindowEvent e) {
 
         if (e.getSource() == vista.sPaqueteFrame){
-            int result = JOptionPane.showConfirmDialog(vista.sPaqueteFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
+            int result = JOptionPane.showConfirmDialog(vista.sPaqueteFrame, "Â¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION)
             {
                 vista.sPaqueteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -46,7 +46,7 @@ public class UsuarioController implements ActionListener, WindowListener
             System.out.println("Exito");
             SeleccionarPaquete spFrame = new SeleccionarPaquete();
             vista.rUsuariosFrame.setVisible(false);
-            spFrame.runFrame(agentID);
+            spFrame.runFrame(agentID, dao.getUserID(u));
 
         }
         else

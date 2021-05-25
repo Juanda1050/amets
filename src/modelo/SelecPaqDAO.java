@@ -130,8 +130,8 @@ public class SelecPaqDAO {
                 }else if(regimen==2){
                     arrayTFData.add("Pensión Completa");
                 }
-                arrayTFData.add(String.valueOf(rs3.getTime("entryDate")));
-                arrayTFData.add(String.valueOf(rs3.getTime("exitDate")));
+                arrayTFData.add(String.valueOf(rs3.getString("entryDate")));
+                arrayTFData.add(String.valueOf(rs3.getString("exitDate")));
             }
 
             //Get vuelo data

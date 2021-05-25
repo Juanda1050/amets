@@ -16,7 +16,7 @@ import java.util.List;
 public class ReportesController implements ActionListener {
 
     ReportesDAO dao = new ReportesDAO();
-    GestionarReportes vista;
+    GestionarReportes vista ;
     DefaultTableModel modelo = new DefaultTableModel();
     Reportes reportes = new Reportes();
 
@@ -56,6 +56,7 @@ public class ReportesController implements ActionListener {
         }
         else
         {
+            System.out.println("Listar");
             int dia, mes, año;
             int dia2, mes2, año2;
             String fecha1, fecha2;
@@ -63,12 +64,22 @@ public class ReportesController implements ActionListener {
             dia = vista.gReportes_inicioDC.getCalendar().get(Calendar.DAY_OF_MONTH);
             mes = vista.gReportes_inicioDC.getCalendar().get(Calendar.MONTH) + 1;
             año = vista.gReportes_inicioDC.getCalendar().get(Calendar.YEAR);
-            fecha1 = dia + "-" + mes + "-" + año;
+            if(mes < 10){
+                fecha1 = año + "-0" + mes + "-" + dia;
+            }
+            else{
+                fecha1 = año + "-" + mes + "-" + dia;
+            }
 
             dia2 = vista.gReportes_finalDC.getCalendar().get(Calendar.DAY_OF_MONTH);
             mes2 = vista.gReportes_finalDC.getCalendar().get(Calendar.MONTH) + 1;
             año2 = vista.gReportes_finalDC.getCalendar().get(Calendar.YEAR);
-            fecha2 = dia2 + "-" + mes2 + "-" + año2;
+            if(mes < 10){
+                fecha2 = año2 + "-0" + mes2 + "-" + dia2;
+            }
+            else{
+                fecha2 = año2 + "-" + mes2 + "-" + dia2;
+            }
 
             ReportesDAO obj = new ReportesDAO();
             List<Reportes> list = obj.fechas(fecha1, fecha2);

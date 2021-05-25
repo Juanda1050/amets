@@ -100,7 +100,7 @@ public class HotelesController implements ActionListener {
         }
         else{
             String nombre = vista.gHotel_nombreTF.getText();
-            int destino = vista.gHotel_destinoCB.getSelectedIndex();
+            int destino = dao.destinoID((String) vista.gHotel_destinoCB.getSelectedItem());
             int regimen = vista.gHotel_regimenCB.getSelectedIndex();
             int availability = vista.gHotel_dispoCB.getSelectedIndex();
             String localizacion = (vista.gHotel_ubicacionTF.getText());
@@ -114,7 +114,7 @@ public class HotelesController implements ActionListener {
             h.setLocation(localizacion);
             h.setRating(rating);
             h.setGuests(guests);
-            h.setAvailability(availability);
+            h.setAvailability(availability - 1);
             h.setEntryDate(llegada);
             h.setExitDate(salida);
             int r = dao.agregar(h);

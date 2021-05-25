@@ -32,6 +32,8 @@ public class DHotelesController implements ActionListener {
             listHotel(vista.dHotelTable);
             boolean[] arr = {true, false, true, true};
             areButtonsEnabled(arr);
+            mostrarRoom();
+            mostrarHoteles();
         }else{
             this.dao = dao;
             this.vista = vista;
@@ -43,6 +45,22 @@ public class DHotelesController implements ActionListener {
             listHotel(vista.dHotelTable);
             boolean[] arr = {true, false, false, false};
             areButtonsEnabled(arr);
+            mostrarHoteles();
+            mostrarRoom();
+        }
+    }
+
+    public void mostrarHoteles()
+    {
+        for (int i =0; i<dao.listarhotel().size(); i++)
+        {
+            vista.dHotel_hotelCB.addItem(dao.listarhotel().get(i));
+        }
+    }
+
+    public void mostrarRoom(){
+        for (int i = 0; i < dao.listarRoom().size(); i++){
+            vista.dHotel_habitacionCB.addItem(dao.listarRoom().get(i));
         }
     }
 
@@ -94,7 +112,7 @@ public class DHotelesController implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
             areTextFieldEditable(false);
-            cleanForm();
+            cleanCB();
             boolean[] arr = {true, false, true, true};
             areButtonsEnabled(arr);
         }
@@ -125,7 +143,7 @@ public class DHotelesController implements ActionListener {
             }
             areTextFieldEditable(false);
             cleanHotel();
-            cleanForm();
+            cleanCB();
             listHotel(vista.dHotelTable);
             boolean[] arr = {true, false, true, true};
             areButtonsEnabled(arr);
@@ -191,7 +209,6 @@ public class DHotelesController implements ActionListener {
             object[0] = dhhotell.getHotelName();
             object[1] = dhhotell.getRoomName();
             object[2] = dhhotell.getPrice();
-            System.out.println(object);
             modelo.addRow(object);
         }
         vista.dHotelTable.setModel(modelo);
@@ -221,8 +238,13 @@ public class DHotelesController implements ActionListener {
     }
 
     //Limpiar los componentes
-    private void cleanForm(){
-        vista.dHotel_habitacionCB.setSelectedIndex(0);
+    private void cleanCB(){
+        vista.dHotel_hotelCB.removeAllItems();
+        vista.dHotel_hotelCB.addItem("Seleccione un hotel");
+        mostrarHoteles();
+        vista.dHotel_habitacionCB.removeAllItems();
+        vista.dHotel_habitacionCB.addItem("Seleccione una habitacion");
+        mostrarRoom();
         vista.dHotel_precioTF.setText("");
     }
 

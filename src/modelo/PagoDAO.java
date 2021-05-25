@@ -13,7 +13,9 @@ public class PagoDAO {
     Connection con;
     PreparedStatement ps;
 
-    public void guardarVenta(int agentID, String description, String tpago, float price){
+    public void guardarVenta(int userID, int agentID, String description, String tpago, float price){
+
+        float iva = 0.16f;
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
@@ -22,15 +24,15 @@ public class PagoDAO {
         try{
             con = conectar();
             ps = con.prepareStatement(sql);
-            ps.setInt(1,1);
+            ps.setInt(1, userID);
             ps.setInt(2, agentID);
             ps.setInt(3,1);
             ps.setString(4, description);
             ps.setString(5, dtf.format(now));
             ps.setString(6, tpago);
-            ps.setDouble(7, price);
-            ps.setDouble(8, (price*0.16));
-            ps.setDouble(9, (price)+(price*0.16));
+            ps.setFloat(7, price);
+            ps.setFloat(8, (price * iva));
+            ps.setFloat(9, (price)+(price * iva));
             ps.executeUpdate();
         }catch (Exception e){
         }finally {

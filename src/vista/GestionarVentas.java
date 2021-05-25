@@ -101,7 +101,7 @@ public class GestionarVentas {
                 new Object[][] {
                 },
                 new String[] {
-                        "ID Venta", "Vendedor", "Cantidad", "Descripcion", "Fecha", "Tipo de Pago", "Subtotal", "IVA", "Total"
+                        "ID Venta", "Usuario","Vendedor", "Cantidad", "Descripcion", "Fecha", "Tipo de Pago", "Subtotal", "IVA", "Total"
                 }
         ));
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();

@@ -228,7 +228,6 @@ public class DHotelesDAO {
             con = conectar();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            hotel.add("Seleccione un hotel");
             while(rs.next()){
                 String hotelid = rs.getString("hotelName");
                 hotel.add(hotelid);

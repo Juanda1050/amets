@@ -27,6 +27,7 @@ public class PromocionesController implements ActionListener {
             this.vista.gPromo_saveB.addActionListener(this);
             this.vista.gPromo_editB.addActionListener(this);
             this.vista.gPromo_deleteB.addActionListener(this);
+            areTextFieldEditable(false);
             listPromo(vista.gPromoTable);
             boolean[] arr = {true, false, true, true};
             areButtonEnable(arr);
@@ -38,6 +39,7 @@ public class PromocionesController implements ActionListener {
             this.vista.gPromo_saveB.addActionListener(this);
             this.vista.gPromo_editB.addActionListener(this);
             this.vista.gPromo_deleteB.addActionListener(this);
+            areTextFieldEditable(false);
             listPromo(vista.gPromoTable);
             boolean[] arr = {true, false, false, false};
             areButtonEnable(arr);

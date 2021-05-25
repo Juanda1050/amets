@@ -12,16 +12,16 @@ public class SeleccionarPaquete {
     public JFrame sPaqueteFrame;
     public JTextPane sPaquete_descTP, sPaquete_direccionTP;
     public JTextField sPaquete_origenTF, sPaquete_hotelTF, sPaquete_genteTF, sPaquete_aerolineaTF, sPaquete_precioTF, sPaquete_claseTF, sPaquete_regimenTF;
-    public JComboBox sPaquete_paqueteCB, sPaquete_destinoCB;
+    public JComboBox<String> sPaquete_paqueteCB, sPaquete_destinoCB;
     public JTextField sPaquete_despegueTF, sPaquete_llegadaTF, sPaquete_aterrizajeTF, sPaquete_salidaTF;
     public JButton sPaquete_backB, sPaquete_menuB, sPaquete_nextB;
 
-    public void runFrame(int agentID){
+    public void runFrame(int agentID, int userID){
         EventQueue.invokeLater(() -> {
             try {
                 SeleccionarPaquete window = new SeleccionarPaquete();
                 SelecPaqDAO selecPaqDAO = new SelecPaqDAO();
-                SelecPaqController spc = new SelecPaqController(window, selecPaqDAO, agentID);
+                SelecPaqController spc = new SelecPaqController(window, selecPaqDAO, agentID, userID);
                 window.sPaqueteFrame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -67,7 +67,7 @@ public class SeleccionarPaquete {
         ssPaquete_S1.setVisible(false);
         sPaqueteMid.add(ssPaquete_S1);
 
-        sPaquete_paqueteCB = new JComboBox();
+        sPaquete_paqueteCB = new JComboBox<>();
         sPaquete_paqueteCB.setEnabled(false);
         sPaquete_paqueteCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         sPaqueteMid.add(sPaquete_paqueteCB);

@@ -13,18 +13,19 @@ public class PagoController implements ActionListener, WindowListener {
 
     PagoDAO dao;
     VistaPP vista;
-    int agentID;
+    int agentID, userID;
     String description;
     float price;
     Ticket ticket;
 
-    public PagoController(VistaPP v, PagoDAO dao, int agentID, String desc, float precio, Ticket ticket){
+    public PagoController(VistaPP v, PagoDAO dao, int agentID, String desc, float precio, Ticket ticket, int userID){
         this.vista = v;
         this.dao = dao;
         this.agentID = agentID;
         this.description = desc;
         this.price = precio;
         this.ticket = ticket;
+        this.userID = userID;
         vista.pPago_backB.addActionListener(this);
         vista.pPago_nextB.addActionListener(this);
         vista.pPago_menuB.addActionListener(this);
@@ -42,7 +43,7 @@ public class PagoController implements ActionListener, WindowListener {
 
         if (e.getSource() == vista.pPago_backB){
             SeleccionarPaquete sp = new SeleccionarPaquete();
-            sp.runFrame(agentID);
+            sp.runFrame(agentID, userID);
             vista.pPagoFrame.setVisible(false);
         }
 
@@ -65,7 +66,6 @@ public class PagoController implements ActionListener, WindowListener {
         if (e.getSource() == vista.pPago_nextB) {
             PagoDAO pagoDAO = new PagoDAO();
             Date currentDate = new Date();
-            SeleccionarPaquete sp = new SeleccionarPaquete();
             if(vista.pPago_tipoCB.getSelectedItem()=="Tarjeta" && vista.pPago_tipoCB.getSelectedIndex()!=-1 && vista.pPago_tarjetaCB.getSelectedIndex()!=-1 && vista.pPago_numTF.getText().length()==16 && vista.pPago_expTF.getText().length()==5 && vista.pPago_titularTF.getText().length()!=0 && vista.pPago_ccvTF.getText().length()==3){
                 if(vista.pPago_expTF.getDate()==null || currentDate.after(vista.pPago_expTF.getDate())){
                     JOptionPane.showMessageDialog(null, "TARJETA EXPIRADA", "MÉTODO DE PAGO NO ACEPTADO", JOptionPane.WARNING_MESSAGE);
@@ -77,7 +77,7 @@ public class PagoController implements ActionListener, WindowListener {
                     char last4digit = vista.pPago_numTF.getText().charAt(15);
                     ticket.ticket_pagoTA.setText("Tipo de Tarjeta: " + vista.pPago_tarjetaCB.getSelectedItem() + "\nNum. de Tarjeta: ****-****-****-" + last1digit+last2digit+last3digit+last4digit + "\nTitular: " + vista.pPago_titularTF.getText());
                     ticket.ticket_descTP.setText("Descripcion: " + description);
-                    pagoDAO.guardarVenta(agentID, description, String.valueOf(vista.pPago_tipoCB.getSelectedItem()), price);
+                    pagoDAO.guardarVenta(userID ,agentID, description, String.valueOf(vista.pPago_tipoCB.getSelectedItem()), price);
                     vista.pPagoFrame.setVisible(false);
                     ticket.ticketFrame.setVisible(true);
                 }
@@ -85,7 +85,7 @@ public class PagoController implements ActionListener, WindowListener {
             }else if(vista.pPago_tipoCB.getSelectedItem()=="Efectivo"){
                 ticket.ticket_compraTA.setText("Compra Realizada\nTipo de pago: Efectivo");
                 ticket.ticket_descTP.setText("Descripcion: " + description);
-                pagoDAO.guardarVenta(agentID, description, String.valueOf(vista.pPago_tipoCB.getSelectedItem()), price);
+                pagoDAO.guardarVenta(userID ,agentID, description, String.valueOf(vista.pPago_tipoCB.getSelectedItem()), price);
                 vista.pPagoFrame.setVisible(false);
                 ticket.ticketFrame.setVisible(true);
             }else{

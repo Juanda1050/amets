@@ -221,7 +221,7 @@ public class GestionarHoteles {
                 gHotel_entradaDC = new JTextFieldDateEditor("yyyy-MM-dd HH:mm", "####-##-## ##:##", '_');
                 gHotelLeft.add(gHotel_entradaDC);
 
-                JLabel gHotel_salidaL = new JLabel("Fecha de llegada");
+                JLabel gHotel_salidaL = new JLabel("Fecha de salida");
                 gHotel_salidaL.setFont(new Font("Tahoma", Font.PLAIN, 16));
                 gHotelLeft.add(gHotel_salidaL);
 

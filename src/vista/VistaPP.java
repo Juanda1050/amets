@@ -20,12 +20,12 @@ public class VistaPP{
     public JComboBox pPago_tipoCB, pPago_tarjetaCB;
     public JButton pPago_backB, pPago_menuB, pPago_nextB;
 
-    public void runFrame(String desc, float precio, int agentID, Ticket ticket){
+    public void runFrame(String desc, float precio, int agentID, Ticket ticket, int userID){
         EventQueue.invokeLater(() -> {
             try {
                 VistaPP window = new VistaPP();
                 PagoDAO pagoDAO = new PagoDAO();
-                PagoController pc = new PagoController(window, pagoDAO, agentID, desc, precio, ticket);
+                PagoController pc = new PagoController(window, pagoDAO, agentID, desc, precio, ticket, userID);
                 window.pPagoFrame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
