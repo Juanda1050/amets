@@ -65,20 +65,20 @@ public class ReportesController implements ActionListener {
             mes = vista.gReportes_inicioDC.getCalendar().get(Calendar.MONTH) + 1;
             año = vista.gReportes_inicioDC.getCalendar().get(Calendar.YEAR);
             if(mes < 10){
-                fecha1 = año + "-0" + mes + "-" + dia;
+                fecha1 = año + "-0" + mes + "-" + dia + "00:00:00";
             }
             else{
-                fecha1 = año + "-" + mes + "-" + dia;
+                fecha1 = año + "-" + mes + "-" + dia + "00:00:00";
             }
 
             dia2 = vista.gReportes_finalDC.getCalendar().get(Calendar.DAY_OF_MONTH);
             mes2 = vista.gReportes_finalDC.getCalendar().get(Calendar.MONTH) + 1;
             año2 = vista.gReportes_finalDC.getCalendar().get(Calendar.YEAR);
             if(mes < 10){
-                fecha2 = año2 + "-0" + mes2 + "-" + dia2;
+                fecha2 = año2 + "-0" + mes2 + "-" + dia2 + "00:00:00";
             }
             else{
-                fecha2 = año2 + "-" + mes2 + "-" + dia2;
+                fecha2 = año2 + "-" + mes2 + "-" + dia2 + "00:00:00";
             }
 
             ReportesDAO obj = new ReportesDAO();
