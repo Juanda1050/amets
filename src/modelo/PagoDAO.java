@@ -13,7 +13,7 @@ public class PagoDAO {
     Connection con;
     PreparedStatement ps;
 
-    public void guardarVenta(int agentID, String description, String tpago, double price){
+    public void guardarVenta(int agentID, String description, String tpago, float price){
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();

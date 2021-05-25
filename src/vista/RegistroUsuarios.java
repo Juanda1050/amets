@@ -15,202 +15,186 @@ import javax.swing.border.EmptyBorder;
 
 public class RegistroUsuarios {
 
-    public JFrame ruFrame;
-    public JTextField ruDireccionTF;
-    public JTextField ruTelefonoTF;
-    public JTextField ruEmailTF;
-    public JTextField ruNombreTF;
-    public JTextField ruApellidoTF;
-    public JTextFieldDateEditor ruNacimientoTF;
-    public JButton ruSiguienteBtn;
-    public JButton ruVolverBtn;
+    public JFrame rUsuariosFrame;
+    public JTextField rUsuarios_direccionTF, rUsuarios_telefonoTF, rUsuarios_emailTF, rUsuarios_nombreTF, rUsuarios_apellidoTF;
+    public JTextFieldDateEditor rUsuarios_cumpleTF;
+    public JButton rUsuarios_nextB, rUsuarios_backB;
 
-    /**
-     * Launch the application.
-     */
     public void runFrame(int agentID){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    RegistroUsuarios window = new RegistroUsuarios();
-                    UsuarioDAO dao = new UsuarioDAO();
-                    UsuarioController c = new UsuarioController(window, dao, agentID);
-                    window.ruFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                RegistroUsuarios window = new RegistroUsuarios();
+                UsuarioDAO dao = new UsuarioDAO();
+                UsuarioController c = new UsuarioController(window, dao, agentID);
+                window.rUsuariosFrame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
 
-    /**
-     * Create the application.
-     */
     public RegistroUsuarios() {
         initialize();
     }
 
-
-    /**
-     * Initialize the contents of the frame.
-     */
     public void initialize() {
+        rUsuariosFrame = new JFrame("Registrar Usuario");
+        rUsuariosFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        rUsuariosFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
+        rUsuariosFrame.setBounds(100, 100, 1280, 720);
 
-        ruFrame = new JFrame();
-        ruFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        ruFrame.setTitle("Amets Travel");
-        ruFrame.setBounds(100, 100, 1280, 720);
+        JPanel rUsuariosTop = new JPanel();
+        rUsuariosTop.setBorder(new EmptyBorder(20, 20, 20, 20));
+        rUsuariosFrame.getContentPane().add(rUsuariosTop, BorderLayout.NORTH);
+        rUsuariosTop.setLayout(new BorderLayout(0, 0));
 
-        JPanel ruTop = new JPanel();
-        ruTop.setBorder(new EmptyBorder(20, 20, 20, 20));
-        ruFrame.getContentPane().add(ruTop, BorderLayout.NORTH);
-        ruTop.setLayout(new BorderLayout(0, 0));
+        JLabel rUsuariosL = new JLabel("Registro de Usuarios");
+        rUsuariosL.setHorizontalAlignment(SwingConstants.CENTER);
+        rUsuariosL.setFont(new Font("Tahoma", Font.BOLD, 18));
+        rUsuariosTop.add(rUsuariosL, BorderLayout.NORTH);
 
-        JLabel ruLabel = new JLabel("Registro de Usuarios");
-        ruLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ruLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-        ruTop.add(ruLabel, BorderLayout.NORTH);
+        JPanel rUsuariosMid = new JPanel();
+        rUsuariosFrame.getContentPane().add(rUsuariosMid, BorderLayout.CENTER);
+        rUsuariosMid.setBorder(new EmptyBorder(20, 20, 20, 20));
+        rUsuariosMid.setLayout(new BorderLayout(0, 0));
 
-        JPanel ruMid = new JPanel();
-        ruFrame.getContentPane().add(ruMid, BorderLayout.CENTER);
-        ruMid.setBorder(new EmptyBorder(20, 20, 20, 20));
-        ruMid.setLayout(new BorderLayout(0, 0));
+        Panel rUsuariosMid_R = new Panel();
+        rUsuariosMid.add(rUsuariosMid_R, BorderLayout.CENTER);
+        rUsuariosMid_R.setLayout(new GridLayout(0, 2, 0, 30));
 
-        Panel ruMidEast = new Panel();
-        ruMid.add(ruMidEast, BorderLayout.CENTER);
-        ruMidEast.setLayout(new GridLayout(0, 2, 0, 30));
+        Label rUsuarios_nombreL = new Label("Nombre(s)");
+        rUsuariosMid_R.add(rUsuarios_nombreL);
+        rUsuarios_nombreL.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
-        Label ruNombreLbl = new Label("Nombre(s)");
-        ruMidEast.add(ruNombreLbl);
-        ruNombreLbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
-
-        ruNombreTF = new JTextField();
-        ruNombreTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        ruNombreTF.setHorizontalAlignment(SwingConstants.LEFT);
-        ruNombreTF.setColumns(10);
-        ruNombreTF.setAlignmentX(1.0f);
-        ruMidEast.add(ruNombreTF);
-        ruNombreTF.addKeyListener(new KeyAdapter()
+        rUsuarios_nombreTF = new JTextField();
+        rUsuarios_nombreTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        rUsuarios_nombreTF.setHorizontalAlignment(SwingConstants.LEFT);
+        rUsuarios_nombreTF.setColumns(10);
+        rUsuarios_nombreTF.setAlignmentX(1.0f);
+        rUsuariosMid_R.add(rUsuarios_nombreTF);
+        rUsuarios_nombreTF.addKeyListener(new KeyAdapter()
         {
             public void keyTyped(KeyEvent e)
             {
                 char caracter = e.getKeyChar();
-                if(!(Character.isLetter(caracter)||Character.isWhitespace(caracter)||Character.isISOControl(caracter))||ruNombreTF.getText().length()==35)
+                if(!(Character.isLetter(caracter)||Character.isWhitespace(caracter)||Character.isISOControl(caracter))||rUsuarios_nombreTF.getText().length()==35)
                 {
                     e.consume();
                 }
             }
         });
 
-        Label ruApellidoLbl = new Label("Apellidos");
-        ruMidEast.add(ruApellidoLbl);
-        ruApellidoLbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        Label rUsuarios_apellidoL = new Label("Apellidos");
+        rUsuariosMid_R.add(rUsuarios_apellidoL);
+        rUsuarios_apellidoL.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
-        ruApellidoTF = new JTextField();
-        ruApellidoTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        ruApellidoTF.setHorizontalAlignment(SwingConstants.LEFT);
-        ruApellidoTF.setColumns(10);
-        ruApellidoTF.setAlignmentX(1.0f);
-        ruMidEast.add(ruApellidoTF);
-        ruApellidoTF.addKeyListener(new KeyAdapter()
+        rUsuarios_apellidoTF = new JTextField();
+        rUsuarios_apellidoTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        rUsuarios_apellidoTF.setHorizontalAlignment(SwingConstants.LEFT);
+        rUsuarios_apellidoTF.setColumns(10);
+        rUsuarios_apellidoTF.setAlignmentX(1.0f);
+        rUsuariosMid_R.add(rUsuarios_apellidoTF);
+        rUsuarios_apellidoTF.addKeyListener(new KeyAdapter()
         {
             public void keyTyped(KeyEvent e)
             {
                 char caracter = e.getKeyChar();
-                if(!(Character.isLetter(caracter)||Character.isWhitespace(caracter)||Character.isISOControl(caracter))||ruApellidoTF.getText().length()==45)
+                if(!(Character.isLetter(caracter)||Character.isWhitespace(caracter)||Character.isISOControl(caracter))||rUsuarios_apellidoTF.getText().length()==45)
                 {
                     e.consume();
                 }
             }
         });
 
-        Label ruNacimientoLbl = new Label("Fecha de Nacimiento (yyyy-MM-dd)");
-        ruMidEast.add(ruNacimientoLbl);
-        ruNacimientoLbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        Label rUsuarios_cumpleL = new Label("Fecha de Nacimiento (yyyy-MM-dd)");
+        rUsuariosMid_R.add(rUsuarios_cumpleL);
+        rUsuarios_cumpleL.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
-        ruNacimientoTF = new JTextFieldDateEditor("yyyy-MM-dd","####-##-##",'_');
-        ruNacimientoTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        ruNacimientoTF.setHorizontalAlignment(SwingConstants.LEFT);
-        ruNacimientoTF.setColumns(10);
-        ruNacimientoTF.setAlignmentX(1.0f);
-        ruMidEast.add(ruNacimientoTF);
+        rUsuarios_cumpleTF = new JTextFieldDateEditor("yyyy-MM-dd","####-##-##",'_');
+        rUsuarios_cumpleTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        rUsuarios_cumpleTF.setHorizontalAlignment(SwingConstants.LEFT);
+        rUsuarios_cumpleTF.setColumns(10);
+        rUsuarios_cumpleTF.setAlignmentX(1.0f);
+        rUsuariosMid_R.add(rUsuarios_cumpleTF);
 
-        Label ruDireccionLbl = new Label("Direcci\u00F3n");
-        ruMidEast.add(ruDireccionLbl);
-        ruDireccionLbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        Label rUsuarios_direccionL = new Label("Direccion");
+        rUsuariosMid_R.add(rUsuarios_direccionL);
+        rUsuarios_direccionL.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
-        ruDireccionTF = new JTextField();
-        ruDireccionTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        ruDireccionTF.setHorizontalAlignment(SwingConstants.LEFT);
-        ruDireccionTF.setAlignmentX(1.0f);
-        ruDireccionTF.setColumns(10);
-        ruMidEast.add(ruDireccionTF);
-        ruDireccionTF.addKeyListener(new KeyAdapter()
+        rUsuarios_direccionTF = new JTextField();
+        rUsuarios_direccionTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        rUsuarios_direccionTF.setHorizontalAlignment(SwingConstants.LEFT);
+        rUsuarios_direccionTF.setAlignmentX(1.0f);
+        rUsuarios_direccionTF.setColumns(10);
+        rUsuariosMid_R.add(rUsuarios_direccionTF);
+        rUsuarios_direccionTF.addKeyListener(new KeyAdapter()
         {
             public void keyTyped(KeyEvent e)
             {
-                if(ruDireccionTF.getText().length()==45)
+                if(rUsuarios_direccionTF.getText().length()==45)
                 {
                     e.consume();
                 }
             }
         });
 
-        Label ruEmailLbl = new Label("Email");
-        ruMidEast.add(ruEmailLbl);
-        ruEmailLbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        Label rUsuarios_emailL = new Label("Email");
+        rUsuariosMid_R.add(rUsuarios_emailL);
+        rUsuarios_emailL.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
-        ruEmailTF = new JTextField();
-        ruEmailTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        ruEmailTF.setHorizontalAlignment(SwingConstants.LEFT);
-        ruEmailTF.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        ruEmailTF.setColumns(10);
-        ruMidEast.add(ruEmailTF);
-        ruEmailTF.addKeyListener(new KeyAdapter()
+        rUsuarios_emailTF = new JTextField();
+        rUsuarios_emailTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        rUsuarios_emailTF.setHorizontalAlignment(SwingConstants.LEFT);
+        rUsuarios_emailTF.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        rUsuarios_emailTF.setColumns(10);
+        rUsuariosMid_R.add(rUsuarios_emailTF);
+        rUsuarios_emailTF.addKeyListener(new KeyAdapter()
         {
             public void keyTyped(KeyEvent e)
             {
-                if(ruEmailTF.getText().length()==45)
+                if(rUsuarios_emailTF.getText().length()==45)
                 {
                     e.consume();
                 }
             }
         });
 
-        Label ruTelefonoLbl = new Label("Tel\u00E9fono");
-        ruMidEast.add(ruTelefonoLbl);
-        ruTelefonoLbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        Label rUsuarios_telefonoL = new Label("Tel\u00E9fono");
+        rUsuariosMid_R.add(rUsuarios_telefonoL);
+        rUsuarios_telefonoL.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
-        ruTelefonoTF = new JTextField();
-        ruTelefonoTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        ruTelefonoTF.setHorizontalAlignment(SwingConstants.LEFT);
-        ruTelefonoTF.setAlignmentX(1.0f);
-        ruTelefonoTF.setColumns(10);
-        ruMidEast.add(ruTelefonoTF);
-        ruTelefonoTF.addKeyListener(new KeyAdapter()
+        rUsuarios_telefonoTF = new JTextField();
+        rUsuarios_telefonoTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        rUsuarios_telefonoTF.setHorizontalAlignment(SwingConstants.LEFT);
+        rUsuarios_telefonoTF.setAlignmentX(1.0f);
+        rUsuarios_telefonoTF.setColumns(10);
+        rUsuariosMid_R.add(rUsuarios_telefonoTF);
+        rUsuarios_telefonoTF.addKeyListener(new KeyAdapter()
         {
             public void keyTyped(KeyEvent e)
             {
                 char caracter = e.getKeyChar();
-                if(((caracter < '0') || (caracter > '9')) && (caracter != '\b' /*corresponde a BACK_SPACE*/) || ruTelefonoTF.getText().length()== 10)
+                if(((caracter < '0') || (caracter > '9')) && (caracter != '\b' /*corresponde a BACK_SPACE*/) || rUsuarios_telefonoTF.getText().length()== 10)
                 {
                     e.consume();
                 }
             }
         });
 
-        JPanel ruBottom = new JPanel();
-        ruBottom.setBorder(new EmptyBorder(30, 20, 20, 20));
-        ruFrame.getContentPane().add(ruBottom, BorderLayout.SOUTH);
-        ruBottom.setLayout(new BorderLayout(0, 0));
+        JPanel rUsuariosBottom = new JPanel();
+        rUsuariosBottom.setBorder(new EmptyBorder(30, 20, 20, 20));
+        rUsuariosFrame.getContentPane().add(rUsuariosBottom, BorderLayout.SOUTH);
+        rUsuariosBottom.setLayout(new BorderLayout(0, 0));
 
-        ruSiguienteBtn = new JButton("Siguiente");
-        ruSiguienteBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        ruBottom.add(ruSiguienteBtn, BorderLayout.EAST);
+        rUsuarios_nextB = new JButton("Siguiente");
+        rUsuarios_nextB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        rUsuarios_nextB.setIcon(new ImageIcon("resources/siguiente.png"));
+        rUsuariosBottom.add(rUsuarios_nextB, BorderLayout.EAST);
 
-        ruVolverBtn = new JButton("Volver");
-        ruVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        ruBottom.add(ruVolverBtn, BorderLayout.WEST);
+        rUsuarios_backB = new JButton("Volver");
+        rUsuarios_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        rUsuarios_backB.setIcon(new ImageIcon("resources/left.png"));
+        rUsuariosBottom.add(rUsuarios_backB, BorderLayout.WEST);
     }
 
 }

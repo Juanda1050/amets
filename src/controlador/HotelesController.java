@@ -19,6 +19,7 @@ public class HotelesController implements ActionListener {
     private boolean AU = true;
     Date currentDate = new Date();
 
+    //Constructor del controlador
     public HotelesController(GestionarHoteles vista, HotelesDAO dao){
         int lista = dao.listar().size();
         if(lista > 0){
@@ -30,7 +31,7 @@ public class HotelesController implements ActionListener {
             this.vista.gHotel_deleteB.addActionListener(this);
             listHoteles(vista.gHotelTable);
             boolean[] arr = {true, false, true, true, true};
-            areButtonEnable(arr);
+            areButtonsEnabled(arr);
             mostrarDestinos();
         }
         else{
@@ -42,12 +43,13 @@ public class HotelesController implements ActionListener {
             this.vista.gHotel_deleteB.addActionListener(this);
             listHoteles(vista.gHotelTable);
             boolean[] arr = {true, false, false, false, true};
-            areButtonEnable(arr);
+            areButtonsEnabled(arr);
             mostrarDestinos();
         }
         areTextFieldEditable(false);
     }
 
+    //Metodo para mostrar el contenido de la tabla destinos en el CombBox
     public void mostrarDestinos(){
         for (int i =0; i<dao.listarDestinos().size(); i++)
         {
@@ -55,22 +57,27 @@ public class HotelesController implements ActionListener {
         }
     }
 
+    //ActionListener de cada boton de la vista
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Boton Nuevo
         if(e.getSource() == vista.gHotel_addB){
             AU = true;
             areTextFieldEditable(true);
             vista.gHotel_entradaDC.setDate(currentDate);
             vista.gHotel_salidaDC.setDate(currentDate);
             boolean[] arr = {false, true, false, false, false};
-            areButtonEnable(arr);
+            areButtonsEnabled(arr);
         }
+        //Boton Guardar
         if(e.getSource() == vista.gHotel_saveB){
             saveHoteles();
         }
+        //Boton Editar
         if(e.getSource() == vista.gHotel_editB){
             editHoteles();
         }
+        //Boton Eliminar
         if(e.getSource() == vista.gHotel_deleteB){
             deleteHoteles();
             cleanHoteles();
@@ -78,16 +85,17 @@ public class HotelesController implements ActionListener {
         }
     }
 
+    //Metodo agregar
     public void addHoteles(){
         if(vista.gHotel_nombreTF.getText().isEmpty() || vista.gHotel_destinoCB.getSelectedIndex() == 0 || vista.gHotel_regimenCB.getSelectedIndex() == 0 || vista.gHotel_clasifTF.getText().isEmpty() || vista.gHotel_genteTF.getText().isEmpty() || vista.gHotel_entradaDC.getText().isEmpty() || vista.gHotel_salidaDC.getText().isEmpty() || vista.gHotel_dispoCB.getSelectedIndex() == 0){
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
-            boolean[] arr = {true, false, true, true, true};
-            areButtonEnable(arr);
+            boolean[] arr = {false, true, false, false, false};
+            areButtonsEnabled(arr);
         }
         else if (currentDate.after(vista.gHotel_entradaDC.getDate()) || currentDate.after(vista.gHotel_salidaDC.getDate())){
             JOptionPane.showMessageDialog(null, "Ingrese una fecha mayor a la actual");
-            boolean[] arr = {true, false, true, true, true};
-            areButtonEnable(arr);
+            boolean[] arr = {false, true, false, false, false};
+            areButtonsEnabled(arr);
         }
         else{
             String nombre = vista.gHotel_nombreTF.getText();
@@ -116,19 +124,20 @@ public class HotelesController implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
             boolean[] arr = {true, false, true, true, true};
-            areButtonEnable(arr);
+            areButtonsEnabled(arr);
         }
     }
 
+    //Metodo actualizar
     public void updateHoteles(){
         if(vista.gHotel_nombreTF.getText().isEmpty() || vista.gHotel_regimenCB.getSelectedIndex() == 0 || vista.gHotel_clasifTF.getText().isEmpty() || vista.gHotel_genteTF.getText().isEmpty() || vista.gHotel_entradaDC.getText().isEmpty() || vista.gHotel_salidaDC.getText().isEmpty() || vista.gHotel_dispoCB.getSelectedIndex() == 0){
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
-            boolean[] arr = {true, false, true, true, true};
-            areButtonEnable(arr);
+            boolean[] arr = {false, true, false, false, false};
+            areButtonsEnabled(arr);
         }else if (currentDate.after(vista.gHotel_entradaDC.getDate()) || currentDate.after(vista.gHotel_salidaDC.getDate())){
             JOptionPane.showMessageDialog(null, "Ingrese una fecha mayor a la actual");
-            boolean[] arr = {true, false, true, true, true};
-            areButtonEnable(arr);
+            boolean[] arr = {false, true, false, false, false};
+            areButtonsEnabled(arr);
         }
         else{
             int id = Integer.parseInt(vista.gHotel_idTF.getText());
@@ -158,9 +167,12 @@ public class HotelesController implements ActionListener {
             else{
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
+            boolean[] arr = {true, false, true, true, true};
+            areButtonsEnabled(arr);
         }
     }
 
+    //Metodo eliminar
     public void deleteHoteles(){
         int row = vista.gHotelTable.getSelectedRow();
         if (row == 1){
@@ -170,17 +182,18 @@ public class HotelesController implements ActionListener {
             if (lista > 1) {
                 int id = Integer.parseInt(vista.gHotelTable.getValueAt(row, 0).toString());
                 dao.eliminar(id);
-                JOptionPane.showMessageDialog(null, "Hotel eliminado exitosamente");
+                JOptionPane.showMessageDialog(null, "Registro eliminado exitosamente");
             }else{
                 boolean[] arr = {true, false, false, false, true};
-                areButtonEnable(arr);
+                areButtonsEnabled(arr);
                 int id = Integer.parseInt(vista.gHotelTable.getValueAt(row, 0).toString());
                 dao.eliminar(id);
-                JOptionPane.showMessageDialog(null, "Hotel eliminado exitosamente");
+                JOptionPane.showMessageDialog(null, "Registro eliminado exitosamente");
             }
         }
     }
 
+    //Metodo guardar
     private void saveHoteles(){
         if (AU){
             if(dao.listar().size() > 0 ){
@@ -206,10 +219,9 @@ public class HotelesController implements ActionListener {
             cleanForm();
             cleanCB();
         }
-        boolean[] arr = {true, false, true, true, true};
-        areButtonEnable(arr);
     }
 
+    //Metodo editar
     private void editHoteles(){
         AU = false;
         int row = vista.gHotelTable.getSelectedRow();
@@ -218,7 +230,7 @@ public class HotelesController implements ActionListener {
         }else{
             areTextFieldEditable(true);
             boolean[] arr = {false, true, false, false, false};
-            areButtonEnable(arr);
+            areButtonsEnabled(arr);
             int id = Integer.parseInt(vista.gHotelTable.getValueAt(row, 0).toString());
             String Destino = (String) vista.gHotelTable.getValueAt(row, 1);
             String nombre = (String) vista.gHotelTable.getValueAt(row,2);
@@ -244,6 +256,7 @@ public class HotelesController implements ActionListener {
         }
     }
 
+    //Listar la tabla hotel en el JTable
     public void listHoteles(JTable hotelTable){
         modelo = (DefaultTableModel) hotelTable.getModel();
         List<Hoteles> lista = dao.listar();
@@ -266,6 +279,7 @@ public class HotelesController implements ActionListener {
         vista.gHotelTable.setModel(modelo);
     }
 
+    //Actualizar la Tabla cada que se hace un cambio
     private void cleanHoteles(){
         for(int i = 0; i < vista.gHotelTable.getRowCount(); i++){
             modelo.removeRow(i);
@@ -273,6 +287,7 @@ public class HotelesController implements ActionListener {
         }
     }
 
+    //Hacer editable o no editable los TextField
     private void areTextFieldEditable(boolean flag){
         vista.gHotel_destinoCB.setEnabled(flag);
         vista.gHotel_nombreTF.setEditable(flag);
@@ -284,7 +299,9 @@ public class HotelesController implements ActionListener {
         vista.gHotel_entradaDC.setEnabled(flag);
         vista.gHotel_salidaDC.setEnabled(flag);
     }
-    private void areButtonEnable(boolean[] a){
+
+    //Activar o desactivar botones
+    private void areButtonsEnabled(boolean[] a){
         vista.gHotel_addB.setEnabled(a[0]);
         vista.gHotel_saveB.setEnabled(a[1]);
         vista.gHotel_editB.setEnabled(a[2]);
@@ -292,6 +309,7 @@ public class HotelesController implements ActionListener {
         vista.gHotel_hotelB.setEnabled(a[4]);
     }
 
+    //Limpiar los componentes
     private void cleanForm(){
         vista.gHotel_idTF.setText("");
         vista.gHotel_nombreTF.setText("");
@@ -304,6 +322,8 @@ public class HotelesController implements ActionListener {
         vista.gHotel_salidaDC.setText("");
         vista.gHotel_entradaDC.setText("");
     }
+
+    //Metodo para llenar los ComboBox con lo que esta dentro de la tabla correspondiente en la BD
     private void rellenarCB(String Destino){
         vista.gHotel_destinoCB.removeAllItems();
         vista.gHotel_destinoCB.addItem(Destino);
@@ -314,6 +334,7 @@ public class HotelesController implements ActionListener {
         }
     }
 
+    //Reinicia los ComboBox
     private void cleanCB(){
         vista.gHotel_destinoCB.removeAllItems();
         vista.gHotel_destinoCB.addItem("Seleccione un destino");

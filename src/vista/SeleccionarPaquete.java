@@ -9,12 +9,12 @@ import java.awt.*;
 
 public class SeleccionarPaquete {
 
-    public JFrame spFrame;
-    public JTextPane spDescripcionTF, spDireccionTF;
-    public JTextField spOrigenFT, spHotelTF, spPlazasTF, spAerolineaTF, spPrecioTF, spTipodeVueloTF, spRegimenTF;
-    public JComboBox spPaqueteCB, spDestinoCB;
-    public JTextField spHoraDespegueSpn, spHoraLlegadaSpn, spHoradeAterrizajeSpn, spHoraSalidaSpn;
-    public JButton spVolverBtn, spMenuBtn, btnSiguiente;
+    public JFrame sPaqueteFrame;
+    public JTextPane sPaquete_descTP, sPaquete_direccionTP;
+    public JTextField sPaquete_origenTF, sPaquete_hotelTF, sPaquete_genteTF, sPaquete_aerolineaTF, sPaquete_precioTF, sPaquete_claseTF, sPaquete_regimenTF;
+    public JComboBox sPaquete_paqueteCB, sPaquete_destinoCB;
+    public JTextField sPaquete_despegueTF, sPaquete_llegadaTF, sPaquete_aterrizajeTF, sPaquete_salidaTF;
+    public JButton sPaquete_backB, sPaquete_menuB, sPaquete_nextB;
 
     public void runFrame(int agentID){
         EventQueue.invokeLater(() -> {
@@ -22,7 +22,7 @@ public class SeleccionarPaquete {
                 SeleccionarPaquete window = new SeleccionarPaquete();
                 SelecPaqDAO selecPaqDAO = new SelecPaqDAO();
                 SelecPaqController spc = new SelecPaqController(window, selecPaqDAO, agentID);
-                window.spFrame.setVisible(true);
+                window.sPaqueteFrame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -36,232 +36,234 @@ public class SeleccionarPaquete {
     public void initialize() {
 
         SelecPaqDAO spDAO = new SelecPaqDAO();
+        sPaqueteFrame = new JFrame("Seleccionar Paquete");
+        sPaqueteFrame.setBounds(100, 100, 1280, 720);
+        sPaqueteFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        sPaqueteFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
+        sPaqueteFrame.getContentPane().setLayout(new BorderLayout(0, 0));
 
-        spFrame = new JFrame("Seleccionar Paquete");
-        spFrame.setBounds(100, 100, 1280, 720);
-        spFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        spFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        spFrame.getContentPane().setLayout(new BorderLayout(0, 0));
+        JPanel sPaqueteTop = new JPanel();
+        sPaqueteTop.setBorder(new EmptyBorder(20, 20, 20, 20));
+        sPaqueteFrame.getContentPane().add(sPaqueteTop, BorderLayout.NORTH);
+        sPaqueteTop.setLayout(new BorderLayout(0, 0));
 
-        JPanel spTop = new JPanel();
-        spTop.setBorder(new EmptyBorder(20, 20, 20, 20));
-        spFrame.getContentPane().add(spTop, BorderLayout.NORTH);
-        spTop.setLayout(new BorderLayout(0, 0));
+        JLabel sPaqueteL = new JLabel("Seleccionar Paquete");
+        sPaqueteL.setFont(new Font("Tahoma", Font.BOLD, 18));
+        sPaqueteL.setHorizontalAlignment(SwingConstants.CENTER);
+        sPaqueteTop.add(sPaqueteL);
 
-        JLabel spTitulo = new JLabel("Seleccionar Paquete");
-        spTitulo.setFont(new Font("Tahoma", Font.BOLD, 18));
-        spTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        spTop.add(spTitulo);
+        JPanel sPaqueteMid = new JPanel();
+        sPaqueteMid.setBorder(new EmptyBorder(20, 20, 20, 20));
+        sPaqueteFrame.getContentPane().add(sPaqueteMid, BorderLayout.CENTER);
+        sPaqueteMid.setLayout(new GridLayout(0, 6, 0, 30));
 
-        JPanel spMid = new JPanel();
-        spMid.setBorder(new EmptyBorder(20, 20, 20, 20));
-        spFrame.getContentPane().add(spMid, BorderLayout.CENTER);
-        spMid.setLayout(new GridLayout(0, 6, 0, 30));
+        sPaquete_destinoCB = new JComboBox<>(spDAO.listarDestinos().toArray(new String[0]));
+        sPaquete_destinoCB.setSelectedIndex(-1);
+        sPaquete_destinoCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        sPaqueteMid.add(sPaquete_destinoCB);
 
-        spDestinoCB = new JComboBox<>(spDAO.listarDestinos().toArray(new String[0]));
-        spDestinoCB.setSelectedIndex(-1);
-        spDestinoCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        spMid.add(spDestinoCB);
+        JSeparator ssPaquete_S1 = new JSeparator();
+        ssPaquete_S1.setForeground(Color.WHITE);
+        ssPaquete_S1.setVisible(false);
+        sPaqueteMid.add(ssPaquete_S1);
 
-        JSeparator separator_1 = new JSeparator();
-        separator_1.setForeground(Color.WHITE);
-        separator_1.setVisible(false);
-        spMid.add(separator_1);
+        sPaquete_paqueteCB = new JComboBox();
+        sPaquete_paqueteCB.setEnabled(false);
+        sPaquete_paqueteCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        sPaqueteMid.add(sPaquete_paqueteCB);
 
-        spPaqueteCB = new JComboBox();
-        spPaqueteCB.setEnabled(false);
-        spPaqueteCB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        spMid.add(spPaqueteCB);
+        JSeparator sPaquete_S2 = new JSeparator();
+        sPaquete_S2.setForeground(Color.WHITE);
+        sPaquete_S2.setVisible(false);
+        sPaqueteMid.add(sPaquete_S2);
 
-        JSeparator separator_2 = new JSeparator();
-        separator_2.setForeground(Color.WHITE);
-        separator_2.setVisible(false);
-        spMid.add(separator_2);
+        JSeparator sPaquete_S3 = new JSeparator();
+        sPaquete_S3.setForeground(Color.WHITE);
+        sPaquete_S3.setVisible(false);
+        sPaqueteMid.add(sPaquete_S3);
 
-        JSeparator separator_3 = new JSeparator();
-        separator_3.setForeground(Color.WHITE);
-        separator_3.setVisible(false);
-        spMid.add(separator_3);
+        JSeparator sPaquete_S4 = new JSeparator();
+        sPaquete_S4.setForeground(Color.WHITE);
+        sPaquete_S4.setVisible(false);
+        sPaqueteMid.add(sPaquete_S4);
 
-        JSeparator separator_4 = new JSeparator();
-        separator_4.setForeground(Color.WHITE);
-        separator_4.setVisible(false);
-        spMid.add(separator_4);
+        JLabel sPaquete_descL = new JLabel("Descripcion");
+        sPaquete_descL.setHorizontalAlignment(SwingConstants.CENTER);
+        sPaquete_descL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_descL);
 
-        JLabel spDescripcionLbl = new JLabel("Descripci\u00F3n");
-        spDescripcionLbl.setHorizontalAlignment(SwingConstants.CENTER);
-        spDescripcionLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spDescripcionLbl);
+        sPaquete_descTP = new JTextPane();
+        sPaquete_descTP.setEditable(false);
+        sPaquete_descTP.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_descTP);
 
-        spDescripcionTF = new JTextPane();
-        spDescripcionTF.setEditable(false);
-        spDescripcionTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spDescripcionTF);
+        JLabel sPaquete_origenL = new JLabel("Origen");
+        sPaquete_origenL.setHorizontalAlignment(SwingConstants.CENTER);
+        sPaquete_origenL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_origenL);
 
-        JLabel spOrigenLbl = new JLabel("Origen");
-        spOrigenLbl.setHorizontalAlignment(SwingConstants.CENTER);
-        spOrigenLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spOrigenLbl);
+        sPaquete_origenTF = new JTextField();
+        sPaquete_origenTF.setEditable(false);
+        sPaquete_origenTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaquete_origenTF.setColumns(10);
+        sPaqueteMid.add(sPaquete_origenTF);
 
-        spOrigenFT = new JTextField();
-        spOrigenFT.setEditable(false);
-        spOrigenFT.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spOrigenFT.setColumns(10);
-        spMid.add(spOrigenFT);
+        JLabel sPaquete_hotelL = new JLabel("Hotel");
+        sPaquete_hotelL.setHorizontalAlignment(SwingConstants.CENTER);
+        sPaquete_hotelL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_hotelL);
 
-        JLabel spHotelLbl = new JLabel("Hotel");
-        spHotelLbl.setHorizontalAlignment(SwingConstants.CENTER);
-        spHotelLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spHotelLbl);
+        sPaquete_hotelTF = new JTextField();
+        sPaquete_hotelTF.setEditable(false);
+        sPaquete_hotelTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaquete_hotelTF.setColumns(10);
+        sPaqueteMid.add(sPaquete_hotelTF);
 
-        spHotelTF = new JTextField();
-        spHotelTF.setEditable(false);
-        spHotelTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spHotelTF.setColumns(10);
-        spMid.add(spHotelTF);
+        JLabel sPaquete_genteL = new JLabel("Plazas");
+        sPaquete_genteL.setHorizontalAlignment(SwingConstants.CENTER);
+        sPaquete_genteL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_genteL);
 
-        JLabel spPlazasLbl = new JLabel("Plazas");
-        spPlazasLbl.setHorizontalAlignment(SwingConstants.CENTER);
-        spPlazasLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spPlazasLbl);
+        sPaquete_genteTF = new JTextField();
+        sPaquete_genteTF.setEditable(false);
+        sPaquete_genteTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaquete_genteTF.setColumns(10);
+        sPaqueteMid.add(sPaquete_genteTF);
 
-        spPlazasTF = new JTextField();
-        spPlazasTF.setEditable(false);
-        spPlazasTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spPlazasTF.setColumns(10);
-        spMid.add(spPlazasTF);
+        JLabel sPaquete_aerolineaL = new JLabel("Aerolinea");
+        sPaquete_aerolineaL.setHorizontalAlignment(SwingConstants.CENTER);
+        sPaquete_aerolineaL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_aerolineaL);
 
-        JLabel spAerolineaLbl = new JLabel("Aerolinea");
-        spAerolineaLbl.setHorizontalAlignment(SwingConstants.CENTER);
-        spAerolineaLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spAerolineaLbl);
+        sPaquete_aerolineaTF = new JTextField();
+        sPaquete_aerolineaTF.setEditable(false);
+        sPaquete_aerolineaTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaquete_aerolineaTF.setColumns(10);
+        sPaqueteMid.add(sPaquete_aerolineaTF);
 
-        spAerolineaTF = new JTextField();
-        spAerolineaTF.setEditable(false);
-        spAerolineaTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spAerolineaTF.setColumns(10);
-        spMid.add(spAerolineaTF);
+        JLabel sPaquete_direccionL = new JLabel("Direccion");
+        sPaquete_direccionL.setHorizontalAlignment(SwingConstants.CENTER);
+        sPaquete_direccionL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_direccionL);
 
-        JLabel spDireccionLbl = new JLabel("Direcci\u00F3n");
-        spDireccionLbl.setHorizontalAlignment(SwingConstants.CENTER);
-        spDireccionLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spDireccionLbl);
+        sPaquete_direccionTP = new JTextPane();
+        sPaquete_direccionTP.setEditable(false);
+        sPaquete_direccionTP.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_direccionTP);
 
-        spDireccionTF = new JTextPane();
-        spDireccionTF.setEditable(false);
-        spDireccionTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spDireccionTF);
+        JLabel sPaquete_precioL = new JLabel("Precio");
+        sPaquete_precioL.setHorizontalAlignment(SwingConstants.CENTER);
+        sPaquete_precioL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_precioL);
 
-        JLabel spPrecioLbl = new JLabel("Precio");
-        spPrecioLbl.setHorizontalAlignment(SwingConstants.CENTER);
-        spPrecioLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spPrecioLbl);
+        sPaquete_precioTF = new JTextField();
+        sPaquete_precioTF.setEditable(false);
+        sPaquete_precioTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaquete_precioTF.setColumns(10);
+        sPaqueteMid.add(sPaquete_precioTF);
 
-        spPrecioTF = new JTextField();
-        spPrecioTF.setEditable(false);
-        spPrecioTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spPrecioTF.setColumns(10);
-        spMid.add(spPrecioTF);
+        JLabel sPaquete_claseL = new JLabel("Tipo de Vuelo");
+        sPaquete_claseL.setHorizontalAlignment(SwingConstants.CENTER);
+        sPaquete_claseL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_claseL);
 
-        JLabel spTipodeVueloLbl = new JLabel("Tipo de Vuelo");
-        spTipodeVueloLbl.setHorizontalAlignment(SwingConstants.CENTER);
-        spTipodeVueloLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spTipodeVueloLbl);
+        sPaquete_claseTF = new JTextField();
+        sPaquete_claseTF.setEditable(false);
+        sPaquete_claseTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaquete_claseTF.setColumns(10);
+        sPaqueteMid.add(sPaquete_claseTF);
 
-        spTipodeVueloTF = new JTextField();
-        spTipodeVueloTF.setEditable(false);
-        spTipodeVueloTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spTipodeVueloTF.setColumns(10);
-        spMid.add(spTipodeVueloTF);
+        JLabel sPaquete_regimenL = new JLabel("Regimen");
+        sPaquete_regimenL.setHorizontalAlignment(SwingConstants.CENTER);
+        sPaquete_regimenL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_regimenL);
 
-        JLabel spRegimenLbl = new JLabel("Regimen");
-        spRegimenLbl.setHorizontalAlignment(SwingConstants.CENTER);
-        spRegimenLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spRegimenLbl);
+        sPaquete_regimenTF = new JTextField();
+        sPaquete_regimenTF.setEditable(false);
+        sPaquete_regimenTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaquete_regimenTF.setColumns(10);
+        sPaqueteMid.add(sPaquete_regimenTF);
 
-        spRegimenTF = new JTextField();
-        spRegimenTF.setEditable(false);
-        spRegimenTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spRegimenTF.setColumns(10);
-        spMid.add(spRegimenTF);
+        JSeparator sPaquete_SP4 = new JSeparator();
+        sPaquete_SP4.setForeground(Color.WHITE);
+        sPaquete_SP4.setVisible(false);
+        sPaqueteMid.add(sPaquete_SP4);
 
-        JSeparator separator = new JSeparator();
-        separator.setForeground(Color.WHITE);
-        separator.setVisible(false);
-        spMid.add(separator);
+        JSeparator sPaquete_SP5 = new JSeparator();
+        sPaquete_SP5.setForeground(Color.WHITE);
+        sPaquete_SP5.setOrientation(SwingConstants.VERTICAL);
+        sPaquete_SP5.setVisible(false);
+        sPaqueteMid.add(sPaquete_SP5);
 
-        JSeparator separator2 = new JSeparator();
-        separator2.setForeground(Color.WHITE);
-        separator2.setOrientation(SwingConstants.VERTICAL);
-        separator2.setVisible(false);
-        spMid.add(separator2);
+        JLabel sPaquete_despegueL = new JLabel("Hora de Despegue");
+        sPaquete_despegueL.setHorizontalAlignment(SwingConstants.CENTER);
+        sPaquete_despegueL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_despegueL);
 
-        JLabel spHoraDespegueLbl = new JLabel("Hora de Despegue");
-        spHoraDespegueLbl.setHorizontalAlignment(SwingConstants.CENTER);
-        spHoraDespegueLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spHoraDespegueLbl);
+        sPaquete_despegueTF = new JTextField();
+        sPaquete_despegueTF.setEditable(false);
+        sPaquete_despegueTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_despegueTF);
 
-        spHoraDespegueSpn = new JTextField();
-        spHoraDespegueSpn.setEditable(false);
-        spHoraDespegueSpn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spHoraDespegueSpn);
+        JLabel sPaquete_llegadaL = new JLabel("Hora de Llegada");
+        sPaquete_llegadaL.setHorizontalAlignment(SwingConstants.CENTER);
+        sPaquete_llegadaL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_llegadaL);
 
-        JLabel spHoraLlegadaLbl = new JLabel("Hora de Llegada");
-        spHoraLlegadaLbl.setHorizontalAlignment(SwingConstants.CENTER);
-        spHoraLlegadaLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spHoraLlegadaLbl);
+        sPaquete_llegadaTF = new JTextField();
+        sPaquete_llegadaTF.setEditable(false);
+        sPaquete_llegadaTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_llegadaTF);
 
-        spHoraLlegadaSpn = new JTextField();
-        spHoraLlegadaSpn.setEditable(false);
-        spHoraLlegadaSpn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spHoraLlegadaSpn);
+        JSeparator sPaquete_SP6 = new JSeparator();
+        sPaquete_SP6.setForeground(Color.WHITE);
+        sPaquete_SP6.setVisible(false);
+        sPaqueteMid.add(sPaquete_SP6);
 
-        JSeparator separator3 = new JSeparator();
-        separator3.setForeground(Color.WHITE);
-        separator3.setVisible(false);
-        spMid.add(separator3);
+        JSeparator sPaquete_SP7 = new JSeparator();
+        sPaquete_SP7.setForeground(Color.WHITE);
+        sPaquete_SP7.setVisible(false);
+        sPaqueteMid.add(sPaquete_SP7);
 
-        JSeparator separator4 = new JSeparator();
-        separator4.setForeground(Color.WHITE);
-        separator4.setVisible(false);
-        spMid.add(separator4);
+        JLabel sPaquete_aterrizajeL = new JLabel("Hora de Aterrizaje");
+        sPaquete_aterrizajeL.setHorizontalAlignment(SwingConstants.CENTER);
+        sPaquete_aterrizajeL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_aterrizajeL);
 
-        JLabel spHoradeAterrizajeLbl = new JLabel("Hora de Aterrizaje");
-        spHoradeAterrizajeLbl.setHorizontalAlignment(SwingConstants.CENTER);
-        spHoradeAterrizajeLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spHoradeAterrizajeLbl);
+        sPaquete_aterrizajeTF = new JTextField();
+        sPaquete_aterrizajeTF.setEditable(false);
+        sPaquete_aterrizajeTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_aterrizajeTF);
 
-        spHoradeAterrizajeSpn = new JTextField();
-        spHoradeAterrizajeSpn.setEditable(false);
-        spHoradeAterrizajeSpn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spHoradeAterrizajeSpn);
+        JLabel sPaquete_salidaL = new JLabel("Hora de Salida");
+        sPaquete_salidaL.setHorizontalAlignment(SwingConstants.CENTER);
+        sPaquete_salidaL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_salidaL);
 
-        JLabel spHoraSalidaLbl = new JLabel("Hora de Salida");
-        spHoraSalidaLbl.setHorizontalAlignment(SwingConstants.CENTER);
-        spHoraSalidaLbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spHoraSalidaLbl);
+        sPaquete_salidaTF = new JTextField();
+        sPaquete_salidaTF.setEditable(false);
+        sPaquete_salidaTF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        sPaqueteMid.add(sPaquete_salidaTF);
 
-        spHoraSalidaSpn = new JTextField();
-        spHoraSalidaSpn.setEditable(false);
-        spHoraSalidaSpn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spMid.add(spHoraSalidaSpn);
+        JPanel sPaqueteBottom = new JPanel();
+        sPaqueteBottom.setBorder(new EmptyBorder(20, 20, 20, 20));
+        sPaqueteFrame.getContentPane().add(sPaqueteBottom, BorderLayout.SOUTH);
+        sPaqueteBottom.setLayout(new GridLayout(0, 3, 20, 0));
 
-        JPanel spBottom = new JPanel();
-        spBottom.setBorder(new EmptyBorder(20, 20, 20, 20));
-        spFrame.getContentPane().add(spBottom, BorderLayout.SOUTH);
-        spBottom.setLayout(new GridLayout(0, 3, 20, 0));
+        sPaquete_backB = new JButton("Volver");
+        sPaquete_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        sPaquete_backB.setIcon(new ImageIcon("resources/left.png"));
+        sPaqueteBottom.add(sPaquete_backB);
 
-        spVolverBtn = new JButton("Volver");
-        spVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spBottom.add(spVolverBtn);
+        sPaquete_menuB = new JButton("Menu");
+        sPaquete_menuB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        sPaquete_menuB.setIcon(new ImageIcon("resources/home.png"));
+        sPaqueteBottom.add(sPaquete_menuB);
 
-        spMenuBtn = new JButton("Men\u00FA");
-        spMenuBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spBottom.add(spMenuBtn);
-
-        btnSiguiente = new JButton("Siguiente");
-        btnSiguiente.setEnabled(false);
-        btnSiguiente.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        spBottom.add(btnSiguiente);
+        sPaquete_nextB = new JButton("Siguiente");
+        sPaquete_nextB.setEnabled(false);
+        sPaquete_nextB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        sPaquete_nextB.setIcon(new ImageIcon("resources/siguiente.png"));
+        sPaqueteBottom.add(sPaquete_nextB);
     }
 }

@@ -16,9 +16,9 @@ import static modelo.Conexion.conectar;
 
 public class Credenciales {
 
-    private JFrame VcFrame;
-    private JTextField VcUsuarioTF;
-    private JPasswordField VcContraTF;
+    private JFrame vCrendecialFrame;
+    private JTextField vCredencial_userTF;
+    private JPasswordField vCredencial_passwordTF;
     PreparedStatement st;
     ResultSet rs;
     Connection con;
@@ -29,67 +29,67 @@ public class Credenciales {
     }
 
     public void initialize() {
-        VcFrame = new JFrame("Amets Travels");
-        VcFrame.setBounds(100, 100, 500, 300);
-        VcFrame.setResizable(false);
-        VcFrame.setLocationRelativeTo(null);
-        VcFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
-        VcFrame.addWindowListener(new WindowAdapter() {
+        vCrendecialFrame = new JFrame("Amets Travels");
+        vCrendecialFrame.setBounds(100, 100, 500, 300);
+        vCrendecialFrame.setResizable(false);
+        vCrendecialFrame.setLocationRelativeTo(null);
+        vCrendecialFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
+        vCrendecialFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
-                int result = JOptionPane.showConfirmDialog(VcFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
+                int result = JOptionPane.showConfirmDialog(vCrendecialFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
                 if (result == JOptionPane.YES_OPTION)
                 {
-                    VcFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    vCrendecialFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 }
                 else if (result == JOptionPane.NO_OPTION)
                 {
-                    VcFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    vCrendecialFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 }
             }
         });
 
-        JPanel panel = new JPanel();
-        VcFrame.getContentPane().add(panel, BorderLayout.WEST);
-        panel.setLayout(new BorderLayout(10, 10));
+        JPanel vCredencialLeft = new JPanel();
+        vCrendecialFrame.getContentPane().add(vCredencialLeft, BorderLayout.WEST);
+        vCredencialLeft.setLayout(new BorderLayout(10, 10));
 
-        JLabel VcLogoL = new JLabel(new ImageIcon("resources/logo.png"));
-        panel.add(VcLogoL, BorderLayout.WEST);
+        JLabel vCredencial_logoL = new JLabel(new ImageIcon("resources/logo.png"));
+        vCredencialLeft.add(vCredencial_logoL, BorderLayout.WEST);
 
-        JPanel panel_1 = new JPanel();
-        VcFrame.getContentPane().add(panel_1);
-        panel_1.setLayout(null);
+        JPanel vCredencialRight = new JPanel();
+        vCrendecialFrame.getContentPane().add(vCredencialRight);
+        vCredencialRight.setLayout(null);
 
-        JLabel VcUsuarioL = new JLabel("Usuario");
-        panel_1.add(VcUsuarioL);
-        VcUsuarioL.setBounds(0, 100, 60, 24);
+        JLabel vCredencial_userL = new JLabel("Usuario");
+        vCredencialRight.add(vCredencial_userL);
+        vCredencial_userL.setBounds(0, 100, 60, 24);
 
-        VcUsuarioTF = new JTextField();
-        panel_1.add(VcUsuarioTF);
-        VcUsuarioTF.setColumns(10);
-        VcUsuarioTF.setBounds(80, 100, 119, 24);
+        vCredencial_userTF = new JTextField();
+        vCredencialRight.add(vCredencial_userTF);
+        vCredencial_userTF.setColumns(10);
+        vCredencial_userTF.setBounds(80, 100, 119, 24);
 
-        JLabel VcContraL = new JLabel("Contraseña");
-        panel_1.add(VcContraL);
-        VcContraL.setBounds(0, 137, 76, 24);
+        JLabel vCredencial_passwordL = new JLabel("Contraseña");
+        vCredencialRight.add(vCredencial_passwordL);
+        vCredencial_passwordL.setBounds(0, 137, 76, 24);
 
-        VcContraTF = new JPasswordField();
-        panel_1.add(VcContraTF);
-        VcContraTF.setColumns(10);
-        VcContraTF.setBounds(80, 137, 119, 24);
+        vCredencial_passwordTF = new JPasswordField();
+        vCredencialRight.add(vCredencial_passwordTF);
+        vCredencial_passwordTF.setColumns(10);
+        vCredencial_passwordTF.setBounds(80, 137, 119, 24);
 
-        JButton VcButton = new JButton("Ingresar");
-        panel_1.add(VcButton);
-        VcButton.setBounds(99, 174, 81, 24);
-        VcButton.addActionListener(e -> {
+        JButton vCredencial_loginB = new JButton("Ingresar");
+        vCredencialRight.add(vCredencial_loginB);
+        vCredencial_loginB.setBounds(99, 174, 81, 24);
+        vCredencial_loginB.addActionListener(e -> {
             Login();
         });
 
-        VcFrame.setVisible(true);
+        vCrendecialFrame.setVisible(true);
     }
 
     public void Login(){
-        String user = VcUsuarioTF.getText();
-        String password = String.valueOf(VcContraTF.getPassword());
+        String user = vCredencial_userTF.getText();
+        String password = String.valueOf(vCredencial_passwordTF.getPassword());
 
         String userSearch = "SELECT * FROM `empleado` WHERE `agentName` = ? AND `password` = ?";
         try {
@@ -105,13 +105,13 @@ public class Credenciales {
                     case 1:
                         MenuPrincipal mpFrame = new MenuPrincipal();
                         mpFrame.runFrame(rs.getInt("agentID"));
-                        VcFrame.setVisible(false);
+                        vCrendecialFrame.setVisible(false);
                         break;
 
                     case 2:
                         MenuAdministrador maFrame = new MenuAdministrador();
                         maFrame.runFrame();
-                        VcFrame.setVisible(false);
+                        vCrendecialFrame.setVisible(false);
                         break;
 
                 }

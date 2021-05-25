@@ -3,51 +3,36 @@ package vista;
 import controlador.PaquetesController;
 import modelo.PaquetesDAO;
 
-import java.awt.EventQueue;
+import java.awt.*;
 
-import javax.swing.JFrame;
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.Dimension;
+import javax.swing.*;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import java.awt.Frame;
-
-import javax.swing.JTextField;
-import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.GridLayout;
 
 public class GestionarPaquetes{
 
     private JFrame gPaqueteFrame;
     public JTextField gPaquete_idTF, gPaquete_nombreTF, gPaquete_genteTF, gPaquete_precioTF, gPaquete_descripcionTF;
-    public JButton gPaquete_addB, gPaquete_saveB, gPaquete_editB, gPaquete_deleteB;
+    public JButton gPaquete_addB, gPaquete_saveB, gPaquete_editB, gPaquete_deleteB, gPaquete_packB;
     public JTable gPaqueteTable;
+    private int limiteNombre = 25, limiteDesc = 144, limiteGente = 1, limitePrecio = 10;
 
     public void runFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    PaquetesDAO dao = new PaquetesDAO();
-                    GestionarPaquetes window = new GestionarPaquetes();
-                    PaquetesController c = new PaquetesController(window, dao);
-                    window.gPaqueteFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                PaquetesDAO dao = new PaquetesDAO();
+                GestionarPaquetes window = new GestionarPaquetes();
+                PaquetesController c = new PaquetesController(window, dao);
+                window.gPaqueteFrame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -59,7 +44,7 @@ public class GestionarPaquetes{
     private void initialize() {
         gPaqueteFrame = new JFrame("Gestionar Paquetes");
         gPaqueteFrame.setBounds(100, 100, 1280, 720);
-        gPaqueteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gPaqueteFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
         gPaqueteFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
         gPaqueteFrame.getContentPane().setLayout(new BorderLayout(0, 0));
         gPaqueteFrame.addWindowListener(new WindowAdapter() {
@@ -90,7 +75,7 @@ public class GestionarPaquetes{
         JPanel gPaqueteLeft = new JPanel();
         gPaqueteLeft.setBorder(new EmptyBorder(20, 20, 2, 20));
         gPaqueteFrame.getContentPane().add(gPaqueteLeft, BorderLayout.WEST);
-        gPaqueteLeft.setLayout(new GridLayout(0, 2, 20, 100));
+        gPaqueteLeft.setLayout(new GridLayout(0, 2, 20, 60));
 
         JLabel gPaquete_idL = new JLabel("ID");
         gPaquete_idL.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -110,6 +95,21 @@ public class GestionarPaquetes{
         gPaquete_nombreTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPaqueteLeft.add(gPaquete_nombreTF);
         gPaquete_nombreTF.setColumns(10);
+        gPaquete_nombreTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (Character.isLetter(ch) || Character.isISOControl(ch) || Character.isSpaceChar(ch)){
+                }else{
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Solo admite letras");
+                }
+                if(gPaquete_nombreTF.getText().length() >= limiteNombre){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
 
         JLabel gPaquete_genteL = new JLabel("Personas");
         gPaquete_genteL.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -119,6 +119,22 @@ public class GestionarPaquetes{
         gPaquete_genteTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPaqueteLeft.add(gPaquete_genteTF);
         gPaquete_genteTF.setColumns(10);
+        gPaquete_genteTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if(Character.isDigit(ch) || Character.isISOControl(ch)){
+                }
+                else {
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Solo admite números");
+                }
+                if (gPaquete_genteTF.getText().length() >= limiteGente){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
 
         JLabel gPaquete_descripcionL = new JLabel("Descripcion");
         gPaquete_descripcionL.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -126,6 +142,15 @@ public class GestionarPaquetes{
 
         gPaquete_descripcionTF = new JTextField();
         gPaquete_descripcionTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPaquete_descripcionTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(gPaquete_descripcionTF.getText().length() >= limiteDesc){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
         gPaqueteLeft.add(gPaquete_descripcionTF);
 
         JLabel gPaquete_precioL = new JLabel("Precio");
@@ -136,13 +161,29 @@ public class GestionarPaquetes{
         gPaquete_precioTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gPaqueteLeft.add(gPaquete_precioTF);
         gPaquete_precioTF.setColumns(10);
+        gPaquete_precioTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if((ch<'0' || ch>'9') && (ch<',' || ch>'.') && (ch != '\b')) {
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Solo admite números");
+                }
+                if (gPaquete_precioTF.getText().length() >= limitePrecio){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
 
         gPaquete_addB = new JButton("Nuevo");
         gPaquete_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPaquete_addB.setIcon(new ImageIcon("resources/add.png"));
         gPaqueteLeft.add(gPaquete_addB);
 
         gPaquete_saveB = new JButton("Guardar");
         gPaquete_saveB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPaquete_saveB.setIcon(new ImageIcon("resources/save.png"));
         gPaqueteLeft.add(gPaquete_saveB);
 
         JPanel gPaqueteMid = new JPanel();
@@ -170,7 +211,9 @@ public class GestionarPaquetes{
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         gPaqueteTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
         gPaqueteTable.setRowHeight(50);
-        gPaqueteTable.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        for(int i = 0; i < gPaqueteTable.getModel().getColumnCount(); i++){
+            gPaqueteTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+        }
 
         //Generando estilo de JTable
         JTableHeader tHeader = gPaqueteTable.getTableHeader();
@@ -189,14 +232,17 @@ public class GestionarPaquetes{
 
         gPaquete_editB = new JButton("Editar");
         gPaquete_editB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPaquete_editB.setIcon(new ImageIcon("resources/edit.png"));
         gPaqueteMid_B.add(gPaquete_editB);
 
         gPaquete_deleteB = new JButton("Eliminar");
         gPaquete_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPaquete_deleteB.setIcon(new ImageIcon("resources/delete.png"));
         gPaqueteMid_B.add(gPaquete_deleteB);
 
-        JButton gPaquete_packB = new JButton("Detalles");
+        gPaquete_packB = new JButton("Detalles");
         gPaquete_packB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPaquete_packB.setIcon(new ImageIcon("resources/details.png"));
         gPaqueteMid_B.add(gPaquete_packB);
         gPaquete_packB.addActionListener(e -> {
             DetallePaquete dpFrame = new DetallePaquete();
@@ -211,6 +257,7 @@ public class GestionarPaquetes{
 
         JButton gPaquete_backB = new JButton("VOLVER");
         gPaquete_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gPaquete_backB.setIcon(new ImageIcon("resources/left.png"));
         gPaqueteBottom.add(gPaquete_backB, BorderLayout.EAST);
         gPaquete_backB.addActionListener(e -> {
             MenuAdministrador maFrame = new MenuAdministrador();

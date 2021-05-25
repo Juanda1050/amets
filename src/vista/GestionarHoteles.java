@@ -24,7 +24,7 @@ public class GestionarHoteles {
         public JTable gHotelTable;
         public JComboBox gHotel_destinoCB, gHotel_dispoCB, gHotel_regimenCB;
         public JTextFieldDateEditor  gHotel_entradaDC, gHotel_salidaDC;
-        private int limiteNombre = 50, limiteUbi = 100, limiteClasif = 15, limiteGente = 3;
+        private int limiteNombre = 50, limiteUbi = 100, limiteClasif = 11, limiteGente = 1;
 
         public void runFrame(){
                 EventQueue.invokeLater(() -> {
@@ -44,10 +44,9 @@ public class GestionarHoteles {
         }
 
         private void initialize() {
-                gHotelFrame = new JFrame();
+                gHotelFrame = new JFrame("Gestionar Hoteles");
                 gHotelFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
                 gHotelFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
-                gHotelFrame.setTitle("Gestionar Hoteles");
                 gHotelFrame.setBounds(100, 100, 1280, 720);
                 gHotelFrame.addWindowListener(new WindowAdapter() {
                         public void windowClosing(WindowEvent we) {
@@ -139,7 +138,6 @@ public class GestionarHoteles {
                 gHotel_ubicacionTF.addKeyListener(new KeyAdapter() {
                         @Override
                         public void keyTyped(KeyEvent e) {
-                                char ch = e.getKeyChar();
                                 if (gHotel_ubicacionTF.getText().length() >= limiteUbi){
                                         e.consume();
                                         Toolkit.getDefaultToolkit().beep();
@@ -154,6 +152,22 @@ public class GestionarHoteles {
                 gHotel_clasifTF = new JTextField();
                 gHotel_clasifTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
                 gHotel_clasifTF.setColumns(10);
+                gHotel_clasifTF.addKeyListener(new KeyAdapter() {
+                        @Override
+                        public void keyTyped(KeyEvent e) {
+                                char ch = e.getKeyChar();
+                                if(Character.isLetter(ch) || Character.isDigit(ch) || Character.isISOControl(ch)){
+                                }
+                                else{
+                                        e.consume();
+                                        JOptionPane.showMessageDialog(null, "Solo admite numeros y letras");
+                                }
+                                if(gHotel_clasifTF.getText().length() >= limiteClasif){
+                                        e.consume();
+                                        Toolkit.getDefaultToolkit().beep();
+                                }
+                        }
+                });
                 gHotelLeft.add(gHotel_clasifTF);
 
                 JLabel gHotel_genteL = new JLabel("Huespedes");
@@ -163,6 +177,22 @@ public class GestionarHoteles {
                 gHotel_genteTF = new JTextField();
                 gHotel_genteTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
                 gHotel_genteTF.setColumns(10);
+                gHotel_genteTF.addKeyListener(new KeyAdapter() {
+                        @Override
+                        public void keyTyped(KeyEvent e) {
+                                char ch = e.getKeyChar();
+                                if(Character.isDigit(ch) || Character.isISOControl(ch)){
+                                }
+                                else {
+                                        e.consume();
+                                        JOptionPane.showMessageDialog(null, "Solo admite números");
+                                }
+                                if (gHotel_genteTF.getText().length() >= limiteGente){
+                                        e.consume();
+                                        Toolkit.getDefaultToolkit().beep();
+                                }
+                        }
+                });
                 gHotelLeft.add(gHotel_genteTF);
 
                 JLabel gHotel_regimenL = new JLabel("Regimen");
@@ -272,6 +302,7 @@ public class GestionarHoteles {
                 gHotel_hotelB = new JButton("Detalles");
                 gHotel_hotelB.setVerticalAlignment(SwingConstants.TOP);
                 gHotel_hotelB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+                gHotel_hotelB.setIcon(new ImageIcon("resources/details.png"));
                 gHotelMid_B.add(gHotel_hotelB);
                 gHotel_hotelB.addActionListener(e -> {
                         DetalleHotel dhFrame = new DetalleHotel();

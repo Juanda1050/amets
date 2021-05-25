@@ -19,31 +19,31 @@ public class MenuController implements ActionListener, WindowListener {
     public MenuController(MenuPrincipal v, int agentID){
         this.vista = v;
         this.agentID = agentID;
-        vista.mpCajaBtn.addActionListener(this);
-        vista.mpVentaBtn.addActionListener(this);
-        vista.mpSalirBtn.addActionListener(this);
-        vista.mpFrame.addWindowListener(this);
+        vista.mPrincipal_corteB.addActionListener(this);
+        vista.mPrincipal_ventaB.addActionListener(this);
+        vista.mPrincipal_exitB.addActionListener(this);
+        vista.mPrincipalFrame.addWindowListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == vista.mpCajaBtn) {
+        if (e.getSource() == vista.mPrincipal_corteB) {
             VistaCC ccFrame = new VistaCC();
             ccFrame.runFrame(agentID);
-            vista.mpFrame.setVisible(false);
+            vista.mPrincipalFrame.setVisible(false);
         }
 
-        if (e.getSource() == vista.mpVentaBtn) {
+        if (e.getSource() == vista.mPrincipal_ventaB) {
             RegistroUsuarios ru = new RegistroUsuarios();
             ru.runFrame(agentID);
-            vista.mpFrame.setVisible(false);
+            vista.mPrincipalFrame.setVisible(false);
         }
 
-        if (e.getSource() == vista.mpSalirBtn) {
+        if (e.getSource() == vista.mPrincipal_exitB) {
             Credenciales credentials = new Credenciales();
             credentials.initialize();
-            vista.mpFrame.setVisible(false);
+            vista.mPrincipalFrame.setVisible(false);
         }
     }
 
@@ -55,15 +55,15 @@ public class MenuController implements ActionListener, WindowListener {
     @Override
     public void windowClosing(WindowEvent e) {
 
-        if (e.getSource() == vista.mpFrame){
-            int result = JOptionPane.showConfirmDialog(vista.mpFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
+        if (e.getSource() == vista.mPrincipalFrame){
+            int result = JOptionPane.showConfirmDialog(vista.mPrincipalFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION)
             {
-                vista.mpFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                vista.mPrincipalFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
             else if (result == JOptionPane.NO_OPTION)
             {
-                vista.mpFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                vista.mPrincipalFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             }
         }
     }

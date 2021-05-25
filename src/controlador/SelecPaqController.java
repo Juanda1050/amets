@@ -17,7 +17,7 @@ import java.awt.event.WindowListener;
 public class SelecPaqController implements ActionListener, WindowListener {
 
     SelecPaqDAO dao;
-    SeleccionarPaquete vista = new SeleccionarPaquete();
+    SeleccionarPaquete vista;
     Ticket ticket = new Ticket();
     int agentID;
 
@@ -25,64 +25,64 @@ public class SelecPaqController implements ActionListener, WindowListener {
         this.vista = v;
         this.dao = dao;
         this.agentID = agentID;
-        vista.spVolverBtn.addActionListener(this);
-        vista.spMenuBtn.addActionListener(this);
-        vista.btnSiguiente.addActionListener(this);
-        vista.spPaqueteCB.addActionListener(this);
-        vista.spDestinoCB.addActionListener(this);
-        vista.spFrame.addWindowListener(this);
+        vista.sPaquete_backB.addActionListener(this);
+        vista.sPaquete_menuB.addActionListener(this);
+        vista.sPaquete_nextB.addActionListener(this);
+        vista.sPaquete_paqueteCB.addActionListener(this);
+        vista.sPaquete_destinoCB.addActionListener(this);
+        vista.sPaqueteFrame.addWindowListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == vista.spPaqueteCB) {
-            String paqueteCBindex = vista.spPaqueteCB.getSelectedItem().toString();
-            vista.spDescripcionTF.setText(dao.getData(paqueteCBindex).get(0));
-            vista.spPrecioTF.setText(dao.getData(paqueteCBindex).get(1));
-            vista.spPlazasTF.setText(dao.getData(paqueteCBindex).get(2));
-            vista.spHotelTF.setText(dao.getData(paqueteCBindex).get(3));
-            vista.spDireccionTF.setText(dao.getData(paqueteCBindex).get(4));
-            vista.spRegimenTF.setText(dao.getData(paqueteCBindex).get(5));
-            vista.spHoraLlegadaSpn.setText(dao.getData(paqueteCBindex).get(6));
-            vista.spHoraSalidaSpn.setText(dao.getData(paqueteCBindex).get(7));
-            vista.spOrigenFT.setText(dao.getData(paqueteCBindex).get(8));
-            vista.spHoraDespegueSpn.setText(dao.getData(paqueteCBindex).get(9));
-            vista.spHoradeAterrizajeSpn.setText(dao.getData(paqueteCBindex).get(10));
-            vista.spAerolineaTF.setText(dao.getData(paqueteCBindex).get(11));
-            vista.spTipodeVueloTF.setText(dao.getData(paqueteCBindex).get(12));
+        if (e.getSource() == vista.sPaquete_paqueteCB) {
+            String paqueteCBindex = vista.sPaquete_paqueteCB.getSelectedItem().toString();
+            vista.sPaquete_descTP.setText(dao.getData(paqueteCBindex).get(0));
+            vista.sPaquete_precioTF.setText(dao.getData(paqueteCBindex).get(1));
+            vista.sPaquete_genteTF.setText(dao.getData(paqueteCBindex).get(2));
+            vista.sPaquete_hotelTF.setText(dao.getData(paqueteCBindex).get(3));
+            vista.sPaquete_direccionTP.setText(dao.getData(paqueteCBindex).get(4));
+            vista.sPaquete_regimenTF.setText(dao.getData(paqueteCBindex).get(5));
+            vista.sPaquete_llegadaTF.setText(dao.getData(paqueteCBindex).get(6));
+            vista.sPaquete_salidaTF.setText(dao.getData(paqueteCBindex).get(7));
+            vista.sPaquete_origenTF.setText(dao.getData(paqueteCBindex).get(8));
+            vista.sPaquete_despegueTF.setText(dao.getData(paqueteCBindex).get(9));
+            vista.sPaquete_aterrizajeTF.setText(dao.getData(paqueteCBindex).get(10));
+            vista.sPaquete_aerolineaTF.setText(dao.getData(paqueteCBindex).get(11));
+            vista.sPaquete_claseTF.setText(dao.getData(paqueteCBindex).get(12));
         }
 
-        if (e.getSource() == vista.spDestinoCB) {
-            if(vista.spDestinoCB.getSelectedIndex()!=-1){
-                vista.spPaqueteCB.setEnabled(true);
-                vista.btnSiguiente.setEnabled(true);
+        if (e.getSource() == vista.sPaquete_destinoCB) {
+            if(vista.sPaquete_destinoCB.getSelectedIndex()!=-1){
+                vista.sPaquete_paqueteCB.setEnabled(true);
+                vista.sPaquete_nextB.setEnabled(true);
             }
-            vista.spPaqueteCB.removeAllItems();
-            dao.listarPaquetes(vista.spDestinoCB.getSelectedIndex()+1);
+            vista.sPaquete_paqueteCB.removeAllItems();
+            dao.listarPaquetes(vista.sPaquete_destinoCB.getSelectedIndex()+1);
             for(int i=0;i<dao.getListaPaquete().size();i++){
-                vista.spPaqueteCB.addItem(dao.getListaPaquete().get(i));
+                vista.sPaquete_paqueteCB.addItem(dao.getListaPaquete().get(i));
             }
         }
 
-        if (e.getSource() == vista.spMenuBtn) {
+        if (e.getSource() == vista.sPaquete_menuB) {
             Retorno rtn = new Retorno();
-            vista.spFrame.setVisible(rtn.runReturn(agentID));
+            vista.sPaqueteFrame.setVisible(rtn.runReturn(agentID));
         }
 
-        if (e.getSource() == vista.spVolverBtn) {
+        if (e.getSource() == vista.sPaquete_backB) {
             UsuarioDAO usuarioDAO = new UsuarioDAO();
             RegistroUsuarios ru = new RegistroUsuarios();
             usuarioDAO.deleteLastUser();
             ru.runFrame(agentID);
-            vista.spFrame.setVisible(false);
+            vista.sPaqueteFrame.setVisible(false);
         }
 
-        if (e.getSource() == vista.btnSiguiente) {
+        if (e.getSource() == vista.sPaquete_nextB) {
             ticket.runFrame(ticket, agentID);
             VistaPP pp = new VistaPP();
-            pp.runFrame(vista.spDescripcionTF.getText(),Double.parseDouble(vista.spPrecioTF.getText()),agentID, ticket);
-            vista.spFrame.setVisible(false);
+            pp.runFrame(vista.sPaquete_descTP.getText(),Float.parseFloat(vista.sPaquete_precioTF.getText()),agentID, ticket);
+            vista.sPaqueteFrame.setVisible(false);
         }
     }
 
@@ -94,15 +94,15 @@ public class SelecPaqController implements ActionListener, WindowListener {
     @Override
     public void windowClosing(WindowEvent e) {
 
-        if (e.getSource() == vista.spFrame){
-            int result = JOptionPane.showConfirmDialog(vista.spFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
+        if (e.getSource() == vista.sPaqueteFrame){
+            int result = JOptionPane.showConfirmDialog(vista.sPaqueteFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION)
             {
-                vista.spFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                vista.sPaqueteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
             else if (result == JOptionPane.NO_OPTION)
             {
-                vista.spFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                vista.sPaqueteFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             }
         }
     }

@@ -27,29 +27,29 @@ public class AerolineaController implements ActionListener {
             this.dao = dao;
             areTextFieldEditable(false);
             vista.gAerolinea_saveB.setEnabled(false);
-
             vista.gAerolinea_addB.addActionListener(this);
             vista.gAerolinea_saveB.addActionListener(this);
             vista.gAerolinea_editB.addActionListener(this);
             vista.gAerolinea_deleteB.addActionListener(this);
-            listar(vista.gAerolineaTable);
+            listAirline(vista.gAerolineaTable);
+            boolean[] arr = {true, false, true, true};
+            areButtonsEnabled(arr);
         }
         else
         {
             this.vista = vista;
             this.dao = dao;
             areTextFieldEditable(false);
-
             vista.gAerolinea_saveB.setEnabled(false);
-
             vista.gAerolinea_addB.addActionListener(this);
             vista.gAerolinea_saveB.addActionListener(this);
             vista.gAerolinea_editB.addActionListener(this);
             vista.gAerolinea_deleteB.addActionListener(this);
-            listar(vista.gAerolineaTable);
+            listAirline(vista.gAerolineaTable);
             boolean[] arr = {true, false, false, false};
-            estadosBotones(arr);
+            areButtonsEnabled(arr);
         }
+        areTextFieldEditable(false);
     }
 
     public void actionPerformed(ActionEvent e)
@@ -60,80 +60,37 @@ public class AerolineaController implements ActionListener {
             AU = true;
             areTextFieldEditable(true);
             boolean[] arr = {false, true, true, false};
-            estadosBotones(arr);
+            areButtonsEnabled(arr);
         }
         //Boton Guardar
         if(e.getSource()== vista.gAerolinea_saveB)
         {
-            boolean[] arr = {true, false, true, true};
-            estadosBotones(arr);
-            Guardar();
+            saveAirline();
         }
         //Boton Editar
         if(e.getSource()== vista.gAerolinea_editB)
         {
-            AU = false;
-            Editar();
+            editAirline();
         }
-        //Boton eliminar
+        //Boton Eliminar
         if(e.getSource()== vista.gAerolinea_deleteB)
         {
-            eliminar();
-            limpiar();
+            deleteAirline();
+            cleanAirline();
             cleanForm();
-            listar(vista.gAerolineaTable);
+            listAirline(vista.gAerolineaTable);
         }
 
     }
 
-    public void eliminar(){
-        int fila = vista.gAerolineaTable.getSelectedRow();
-        if(fila==-1)
-        {
-            JOptionPane.showMessageDialog(null, "Debe selecionar un registro");
-        }
-        else
-        {
-            int lista = dao.listar().size();
-            if(lista>1)
-            {
-                int id = Integer.parseInt((String) vista.gAerolineaTable.getValueAt(fila, 0).toString());
-                dao.delete(id);
-                JOptionPane.showMessageDialog(null, "Registro eliminado");
-            }
-            else
-            {
-                boolean[] arr = {true, false, false, false};
-                estadosBotones(arr);
-                int id = Integer.parseInt((String) vista.gAerolineaTable.getValueAt(fila, 0).toString());
-                dao.delete(id);
-                JOptionPane.showMessageDialog(null, "Registro eliminado");
-            }
-
-        }
-    }
-
-    public void listar(JTable tabla)
-    {
-        modelo = (DefaultTableModel)tabla.getModel();
-        List<Aerolinea> lista = dao.listar();
-        Object[] object = new Object[6];
-        for (Aerolinea value : lista) {
-            object[0] = value.getAirlineID();
-            object[1] = value.getAirlineName();
-            object[2] = value.getFlyClass();
-            object[3] = value.getPrice();
-            modelo.addRow(object);
-        }
-    }
-
-    public void agregar()
+    //Metodo agregar
+    public void addAirline()
     {
         if(vista.gAerolinea_nombreTF.getText().isEmpty() || vista.gAerolinea_claseTF.getText().isEmpty() || vista.gAerolinea_precioTF.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
-            boolean[] arr = {false, true, false, false};
-            estadosBotones(arr);
+            boolean[] arr = {true, false, true, true};
+            areButtonsEnabled(arr);
         }
         else
         {
@@ -150,21 +107,19 @@ public class AerolineaController implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
-            areTextFieldEditable(false);
-            cleanForm();
             boolean[] arr = {true, false, true, true};
-            estadosBotones(arr);
+            areButtonsEnabled(arr);
         }
     }
 
-
-    public void Actualizar()
+    //Metodo actualizar
+    public void updateAirline()
     {
         if(vista.gAerolinea_nombreTF.getText().isEmpty() || vista.gAerolinea_claseTF.getText().isEmpty() || vista.gAerolinea_precioTF.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
-            boolean[] arr = {false, true, false, false};
-            estadosBotones(arr);
+            boolean[] arr = {true, false, true, true};
+            areButtonsEnabled(arr);
         }
         else
         {
@@ -184,30 +139,88 @@ public class AerolineaController implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
-            areTextFieldEditable(false);
-            limpiar();
-            cleanForm();
-            listar(vista.gAerolineaTable);
+            boolean[] arr = {true, false, true, true};
+            areButtonsEnabled(arr);
         }
     }
 
-    public void Editar()
-    {
-        int fila = vista.gAerolineaTable.getSelectedRow();
-        if(fila==-1)
+    //Metodo eliminar
+    public void deleteAirline(){
+        int row = vista.gAerolineaTable.getSelectedRow();
+        if(row == -1)
         {
-            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+            JOptionPane.showMessageDialog(null, "Debe selecionar una aerolinea");
         }
         else
         {
+            int lista = dao.listar().size();
+            if(lista>1)
+            {
+                int id = Integer.parseInt((String) vista.gAerolineaTable.getValueAt(row, 0).toString());
+                dao.delete(id);
+                JOptionPane.showMessageDialog(null, "Registro eliminado");
+            }
+            else
+            {
+                boolean[] arr = {true, false, false, false};
+                areButtonsEnabled(arr);
+                int id = Integer.parseInt((String) vista.gAerolineaTable.getValueAt(row, 0).toString());
+                dao.delete(id);
+                JOptionPane.showMessageDialog(null, "Registro eliminado");
+            }
 
+        }
+    }
+
+    //Metodo guardar
+    public void saveAirline()
+    {
+        if(AU)
+        {
+            int lista = dao.listar().size();
+            if (lista>0)
+            {
+                addAirline();
+                cleanAirline();
+                listAirline(vista.gAerolineaTable);
+                areTextFieldEditable(false);
+                cleanForm();
+            }
+            else
+            {
+                addAirline();
+                listAirline(vista.gAerolineaTable);
+                areTextFieldEditable(false);
+                cleanForm();
+            }
+        }
+        else
+        {
+            updateAirline();
+            cleanAirline();
+            listAirline(vista.gAerolineaTable);
+            areTextFieldEditable(false);
+            cleanForm();
+        }
+        boolean[] arr = {true, false, true, true};
+        areButtonsEnabled(arr);
+    }
+
+    public void editAirline()
+    {
+        AU = false;
+        int row = vista.gAerolineaTable.getSelectedRow();
+        if(row==-1) {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        }
+        else {
             areTextFieldEditable(true);
-            boolean[] arr = {false, true, true, false};
-            estadosBotones(arr);
-            int id = Integer.parseInt(vista.gAerolineaTable.getValueAt(fila, 0).toString());
-            String nombre = (String) vista.gAerolineaTable.getValueAt(fila, 1);
-            String clase = (String) vista.gAerolineaTable.getValueAt(fila, 2);
-            float precio = Float.parseFloat(vista.gAerolineaTable.getValueAt(fila, 3).toString());
+            boolean[] arr = {false, true, false, false};
+            areButtonsEnabled(arr);
+            int id = Integer.parseInt(vista.gAerolineaTable.getValueAt(row, 0).toString());
+            String nombre = (String) vista.gAerolineaTable.getValueAt(row, 1);
+            String clase = (String) vista.gAerolineaTable.getValueAt(row, 2);
+            float precio = Float.parseFloat(vista.gAerolineaTable.getValueAt(row, 3).toString());
             vista.gAerolinea_idTF.setText(""+id);
             vista.gAerolinea_nombreTF.setText(nombre);
             vista.gAerolinea_claseTF.setText(clase);
@@ -215,33 +228,23 @@ public class AerolineaController implements ActionListener {
         }
     }
 
-    //Guardar
-    public void Guardar()
+    //Listar la tabla aerolinea en el JTable
+    public void listAirline(JTable tabla)
     {
-        if(AU)
-        {
-            int lista = dao.listar().size();
-            if (lista>0)
-            {
-                agregar();
-                limpiar();
-                listar(vista.gAerolineaTable);
-            }
-            else
-            {
-                agregar();
-                listar(vista.gAerolineaTable);
-            }
+        modelo = (DefaultTableModel)tabla.getModel();
+        List<Aerolinea> lista = dao.listar();
+        Object[] object = new Object[6];
+        for (Aerolinea value : lista) {
+            object[0] = value.getAirlineID();
+            object[1] = value.getAirlineName();
+            object[2] = value.getFlyClass();
+            object[3] = value.getPrice();
+            modelo.addRow(object);
         }
-        else
-        {
-            Actualizar();
-        }
-
     }
 
     //Actualizar la Tabla cada que se hace un cambio
-    private void limpiar(){
+    private void cleanAirline(){
         for (int i = 0; i < vista.gAerolineaTable.getRowCount(); i++){
             modelo.removeRow(i);
             i = i - 1;
@@ -256,7 +259,7 @@ public class AerolineaController implements ActionListener {
         vista.gAerolinea_precioTF.setEditable(flag);
     }
 
-    //Limpiar los TextField
+    //Limpiar los componentes
     private void cleanForm(){
         vista.gAerolinea_idTF.setText("");
         vista.gAerolinea_nombreTF.setText("");
@@ -265,7 +268,7 @@ public class AerolineaController implements ActionListener {
     }
 
     //Activar o desactivar botones
-    private void estadosBotones(boolean[] a)
+    private void areButtonsEnabled(boolean[] a)
     {
         vista.gAerolinea_addB.setEnabled(a[0]);
         vista.gAerolinea_saveB.setEnabled(a[1]);

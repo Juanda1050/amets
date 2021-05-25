@@ -27,16 +27,14 @@ public class GestionarDestinos {
     private int limiteCiudad = 45;
 
     public void runFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    GestionarDestinos window = new GestionarDestinos();
-                    DestinoDAO destinoDAO = new DestinoDAO();
-                    DestinoController controller = new DestinoController(window, destinoDAO);
-                    window.gDestinoFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                GestionarDestinos window = new GestionarDestinos();
+                DestinoDAO destinoDAO = new DestinoDAO();
+                DestinoController controller = new DestinoController(window, destinoDAO);
+                window.gDestinoFrame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -46,10 +44,10 @@ public class GestionarDestinos {
     }
 
     private void initialize() {
-        gDestinoFrame = new JFrame("Amets Travels");
+        gDestinoFrame = new JFrame("Gestionar Destinos");
         gDestinoFrame.setBounds(100, 100, 1280, 720);
-        gDestinoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gDestinoFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        gDestinoFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
         gDestinoFrame.getContentPane().setLayout(new BorderLayout(0, 0));
         gDestinoFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
@@ -62,13 +60,12 @@ public class GestionarDestinos {
             }
         });
 
-
         JPanel gDestinoTop = new JPanel();
         gDestinoTop.setBorder(new EmptyBorder(20, 20, 20, 20));
         gDestinoFrame.getContentPane().add(gDestinoTop, BorderLayout.NORTH);
         gDestinoTop.setLayout(new BorderLayout(0, 0));
 
-        JLabel gDestino_addL = new JLabel("Añadir Destino");
+        JLabel gDestino_addL = new JLabel("Agregar Destino");
         gDestino_addL.setFont(new Font("Tahoma", Font.BOLD, 18));
         gDestinoTop.add(gDestino_addL, BorderLayout.WEST);
 
@@ -125,7 +122,6 @@ public class GestionarDestinos {
         gDestino_estadoTF.setHorizontalAlignment(SwingConstants.LEFT);
         gDestinoLeft.add(gDestino_estadoTF);
         gDestino_estadoTF.setColumns(20);
-
         gDestino_estadoTF.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -168,10 +164,12 @@ public class GestionarDestinos {
 
         gDestino_addB = new JButton("Nuevo");
         gDestino_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gDestino_addB.setIcon(new ImageIcon("resources/add.png"));
         gDestinoLeft.add(gDestino_addB);
 
         gDestino_saveB = new JButton("Guardar");
         gDestino_saveB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gDestino_saveB.setIcon(new ImageIcon("resources/save.png"));
         gDestinoLeft.add(gDestino_saveB);
 
         JPanel gDestinoMid = new JPanel();
@@ -222,12 +220,14 @@ public class GestionarDestinos {
         gDestino_editB = new JButton("Editar");
         gDestino_editB.setVerticalAlignment(SwingConstants.TOP);
         gDestino_editB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gDestino_editB.setIcon(new ImageIcon("resources/edit.png"));
         gDestinoMid_B.add(gDestino_editB);
 
 
         gDestino_deleteB = new JButton("Eliminar");
         gDestino_deleteB.setVerticalAlignment(SwingConstants.TOP);
         gDestino_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gDestino_deleteB.setIcon(new ImageIcon("resources/delete.png"));
         gDestinoMid_B.add(gDestino_deleteB);
 
         JPanel gDestinoBottom = new JPanel();
@@ -235,11 +235,11 @@ public class GestionarDestinos {
         gDestinoFrame.getContentPane().add(gDestinoBottom, BorderLayout.SOUTH);
         gDestinoBottom.setLayout(new BorderLayout(0, 0));
 
-        JButton gDestinos_backB = new JButton("VOLVER");
-        gDestinos_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gDestinoBottom.add(gDestinos_backB, BorderLayout.EAST);
-        gDestinos_backB.addActionListener(e -> {
-
+        JButton gDestino_backB = new JButton("VOLVER");
+        gDestino_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gDestino_backB.setIcon(new ImageIcon("resources/left.png"));
+        gDestinoBottom.add(gDestino_backB, BorderLayout.EAST);
+        gDestino_backB.addActionListener(e -> {
             MenuAdministrador maFrame = new MenuAdministrador();
             maFrame.runFrame();
             gDestinoFrame.setVisible(false);

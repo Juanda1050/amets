@@ -13,6 +13,7 @@ import modelo.ReportesDAO;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -20,55 +21,42 @@ public class GestionarReportes {
 
     private JFrame gReportesFrame;
     private JTable gReportesTable;
-    private JButton gReportes_buscarButton;
+    private JButton gReportes_searchB;
 
-    public JDateChooser gReportes_inicioDate;
-    public JDateChooser gReportes_finalDate;
+    public JDateChooser gReportes_inicioDC;
+    public JDateChooser gReportes_finalDC;
 
-    public JButton getgReportes_buscarButton() {
-        return gReportes_buscarButton;
+    public JButton getgReportes_searchB() {
+        return gReportes_searchB;
     }
 
     public JTable getgReportesTable() {
         return gReportesTable;
     }
-
-    /**
-     * Launch the application.
-     */
+    
     public void runFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    GestionarReportes window = new GestionarReportes();
-                    ReportesDAO reportesDAO = new ReportesDAO();
-                    ReportesController reportesController = new ReportesController(window, reportesDAO);
-                    window.gReportesFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                GestionarReportes window = new GestionarReportes();
+                ReportesDAO reportesDAO = new ReportesDAO();
+                ReportesController reportesController = new ReportesController(window, reportesDAO);
+                window.gReportesFrame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
-
-    /**
-     * Create the application.
-     */
+    
     public GestionarReportes() {
         initialize();
     }
-
-    /**
-     * Initialize the contents of the frame.
-     */
+    
     private void initialize() {
-        gReportesFrame = new JFrame();
+        gReportesFrame = new JFrame("Gestionar Reportes");
         gReportesFrame.setMinimumSize(new Dimension(1280, 720));
         gReportesFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        gReportesFrame.setTitle("Gestionar Reportes");
-        gReportesFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\DELL\\OneDrive\\Documentos\\Tercer Semestre\\POO\\AmetsTravels\\resources\\amets.jpg"));
+        gReportesFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
         gReportesFrame.setBounds(100, 100, 1280, 720);
-        gReportesFrame.setLocationRelativeTo(null);
         gReportesFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 int result = JOptionPane.showConfirmDialog(gReportesFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
@@ -88,46 +76,42 @@ public class GestionarReportes {
         gReportesFrame.getContentPane().add(gReportesTop, BorderLayout.NORTH);
         gReportesTop.setLayout(new BorderLayout(0, 0));
 
-        JLabel gReportesLabel = new JLabel("GESTION DE REPORTES");
-        gReportesLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-        gReportesLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        gReportesTop.add(gReportesLabel, BorderLayout.NORTH);
+        JLabel gReportesL = new JLabel("GESTION DE REPORTES");
+        gReportesL.setFont(new Font("Tahoma", Font.BOLD, 18));
+        gReportesL.setHorizontalAlignment(SwingConstants.CENTER);
+        gReportesTop.add(gReportesL, BorderLayout.NORTH);
 
-        JPanel gReportes_topBottom = new JPanel();
-        gReportes_topBottom.setBorder(new EmptyBorder(20, 20, 20, 20));
-        gReportesTop.add(gReportes_topBottom, BorderLayout.SOUTH);
-        gReportes_topBottom.setLayout(new GridLayout(0, 9, 15, 15));
+        JPanel gReportesTop_B = new JPanel();
+        gReportesTop_B.setBorder(new EmptyBorder(20, 20, 20, 20));
+        gReportesTop.add(gReportesTop_B, BorderLayout.SOUTH);
+        gReportesTop_B.setLayout(new GridLayout(0, 9, 15, 15));
 
-        JLabel gReportes_inicioLabel = new JLabel("Fecha de inicio");
-        gReportes_inicioLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gReportes_inicioLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        gReportes_topBottom.add(gReportes_inicioLabel);
+        JLabel gReportes_inicioL = new JLabel("Fecha de inicio");
+        gReportes_inicioL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gReportes_inicioL.setHorizontalAlignment(SwingConstants.RIGHT);
+        gReportesTop_B.add(gReportes_inicioL);
 
-
-        gReportes_inicioDate = new JDateChooser();
-        gReportes_inicioDate.setDateFormatString("yyyy-MM-dd");
-        JTextFieldDateEditor inicioEditor = (JTextFieldDateEditor) gReportes_inicioDate.getDateEditor();
+        gReportes_inicioDC = new JDateChooser();
+        gReportes_inicioDC.setDateFormatString("yyyy-MM-dd");
+        JTextFieldDateEditor inicioEditor = (JTextFieldDateEditor) gReportes_inicioDC.getDateEditor();
         inicioEditor.setEditable(false);
-        gReportes_topBottom.add(gReportes_inicioDate);
+        gReportesTop_B.add(gReportes_inicioDC);
 
-        JLabel gReportes_finalLabel = new JLabel("Fecha final");
-        gReportes_finalLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gReportes_finalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        gReportes_topBottom.add(gReportes_finalLabel);
-
-
-        gReportes_finalDate = new JDateChooser();
-        gReportes_finalDate.setDateFormatString("yyyy-MM-dd");
-        JTextFieldDateEditor finalEditor = (JTextFieldDateEditor) gReportes_finalDate.getDateEditor();
+        JLabel gReportes_finalL= new JLabel("Fecha final");
+        gReportes_finalL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gReportes_finalL.setHorizontalAlignment(SwingConstants.RIGHT);
+        gReportesTop_B.add(gReportes_finalL);
+        
+        gReportes_finalDC = new JDateChooser();
+        gReportes_finalDC.setDateFormatString("yyyy-MM-dd");
+        JTextFieldDateEditor finalEditor = (JTextFieldDateEditor) gReportes_finalDC.getDateEditor();
         finalEditor.setEditable(false);
-        gReportes_topBottom.add(gReportes_finalDate);
+        gReportesTop_B.add(gReportes_finalDC);
 
-
-        gReportes_buscarButton = new JButton("BUSCAR");
-        gReportes_buscarButton.setBackground(Color.WHITE);
-        gReportes_buscarButton.setFocusable(false);
-        gReportes_buscarButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gReportes_topBottom.add(gReportes_buscarButton);
+        gReportes_searchB = new JButton("BUSCAR");
+        gReportes_searchB.setIcon(new ImageIcon("resources/search.png"));
+        gReportes_searchB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gReportesTop_B.add(gReportes_searchB);
 
         JPanel gReportesMid = new JPanel();
         gReportesMid.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -139,6 +123,11 @@ public class GestionarReportes {
         gReportesMid.add(gReportesSP, BorderLayout.CENTER);
 
         gReportesTable = new JTable();
+        gReportesTable = new JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
         gReportesTable.setModel(new DefaultTableModel(
                 new Object[][] {
                 },
@@ -146,7 +135,13 @@ public class GestionarReportes {
                         "ID Corte", "ID Venta", "ID Vendedor", "Fecha", "Turno", "Total"
                 }
         ));
-        gReportesTable.setFont(new Font("Dialog", Font.PLAIN, 14));
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        gReportesTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+        gReportesTable.setRowHeight(50);
+        for(int i = 0; i < gReportesTable.getModel().getColumnCount(); i++){
+            gReportesTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+        }
         gReportesSP.setViewportView(gReportesTable);
 
         //Generando estilo de JTable
@@ -165,12 +160,11 @@ public class GestionarReportes {
         gReportesFrame.getContentPane().add(gReportesBottom, BorderLayout.SOUTH);
         gReportesBottom.setLayout(new BorderLayout(0, 0));
 
-        JButton gReportes_volverButton = new JButton("VOLVER");
-        gReportes_volverButton.setBackground(Color.WHITE);
-        //gReportes_volverButton.setIcon(new ImageIcon("C:\\Users\\DELL\\OneDrive\\Documentos\\Tercer Semestre\\POO\\AmetsTravels\\resources\\left.png"));
-        gReportes_volverButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        gReportesBottom.add(gReportes_volverButton, BorderLayout.EAST);
-        gReportes_volverButton.addActionListener(e -> {
+        JButton gReportes_backB = new JButton("VOLVER");
+        gReportes_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gReportes_backB.setIcon(new ImageIcon("resources/left.png"));        
+        gReportesBottom.add(gReportes_backB, BorderLayout.EAST);
+        gReportes_backB.addActionListener(e -> {
             MenuAdministrador maFrame = new MenuAdministrador();
             maFrame.runFrame();
             gReportesFrame.setVisible(false);

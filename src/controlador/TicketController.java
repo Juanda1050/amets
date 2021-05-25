@@ -17,15 +17,15 @@ import java.awt.print.PrinterJob;
 public class TicketController implements ActionListener, WindowListener
 {
 
-    Ticket vista = new Ticket();
+    Ticket vista;
     int agentID;
 
     public TicketController(Ticket v, int agentID){
         this.vista = v;
         this.agentID = agentID;
-        vista.btnNewButton.addActionListener(this);
-        vista.btnNewButton_1.addActionListener(this);
-        vista.frame.addWindowListener(this);
+        vista.ticket_printB.addActionListener(this);
+        vista.ticket_menuB.addActionListener(this);
+        vista.ticketFrame.addWindowListener(this);
     }
 
     public void Print(){
@@ -45,10 +45,8 @@ public class TicketController implements ActionListener, WindowListener
                 g2.translate(pf.getImageableX(), pf.getImageableY());
                 g2.scale(1,1);
 
-                vista.panel.paint(g2);
+                vista.ticketPanel.paint(g2);
                 return Printable.PAGE_EXISTS;
-
-
             }
         });
 
@@ -64,12 +62,12 @@ public class TicketController implements ActionListener, WindowListener
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == vista.btnNewButton_1) {
+        if (e.getSource() == vista.ticket_menuB) {
             Retorno rtn = new Retorno();
-            vista.frame.setVisible(rtn.runReturn(agentID));
+            vista.ticketFrame.setVisible(rtn.runReturn(agentID));
         }
 
-        if (e.getSource() == vista.btnNewButton) {
+        if (e.getSource() == vista.ticket_printB) {
             Print();
         }
     }
@@ -82,15 +80,15 @@ public class TicketController implements ActionListener, WindowListener
     @Override
     public void windowClosing(WindowEvent e) {
 
-        if (e.getSource() == vista.frame) {
-            int result = JOptionPane.showConfirmDialog(vista.frame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
+        if (e.getSource() == vista.ticketFrame) {
+            int result = JOptionPane.showConfirmDialog(vista.ticketFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION)
             {
-                vista.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                vista.ticketFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
             else if (result == JOptionPane.NO_OPTION)
             {
-                vista.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                vista.ticketFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             }
         }
     }

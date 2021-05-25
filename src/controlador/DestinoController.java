@@ -15,8 +15,9 @@ public class DestinoController implements ActionListener {
     GestionarDestinos vistaD;
     DestinoDAO dao;
     DefaultTableModel modelo = new DefaultTableModel();
-    boolean key;
+    boolean AU;
 
+    //Constructor del controlador
     public DestinoController(GestionarDestinos v, DestinoDAO dao)
     {
         int lista = dao.listar().size();
@@ -32,7 +33,7 @@ public class DestinoController implements ActionListener {
             vistaD.gDestino_deleteB.addActionListener(this);
             listDestination(vistaD.gDestinoTable);
             boolean[] arr = {true, false, true, true};
-            areButtonEnabled(arr);
+            areButtonsEnabled(arr);
         }
         else
         {
@@ -46,32 +47,33 @@ public class DestinoController implements ActionListener {
             vistaD.gDestino_deleteB.addActionListener(this);
             listDestination(vistaD.gDestinoTable);
             boolean[] arr = {true, false, false, false};
-            areButtonEnabled(arr);
+            areButtonsEnabled(arr);
         }
         areTextFieldEditable(false);
     }
 
+    //ActionListener de cada boton de la vista
     public void actionPerformed(ActionEvent e)
     {
         //Boton Nuevo
         if(e.getSource()== vistaD.gDestino_addB)
         {
-            key = true;
+            AU = true;
             areTextFieldEditable(true);
             boolean[] arr = {false, true, false, false};
-            areButtonEnabled(arr);
+            areButtonsEnabled(arr);
         }
-        //Boton saveDestination
+        //Boton Guardar
         if(e.getSource()== vistaD.gDestino_saveB)
         {
             saveDestination();
         }
-        //Boton editDestination
+        //Boton Editar
         if(e.getSource()== vistaD.gDestino_editB)
         {
             editDestination();
         }
-        //Boton deleteDestination
+        //Boton Eliminar
         if(e.getSource()== vistaD.gDestino_deleteB)
         {
             deleteDestination();
@@ -82,55 +84,14 @@ public class DestinoController implements ActionListener {
 
     }
 
-    public void deleteDestination(){
-        int row = vistaD.gDestinoTable.getSelectedRow();
-        if(row==-1)
-        {
-            JOptionPane.showMessageDialog(null, "Debe selecionar un registro");
-        }
-        else
-        {
-            int lista = dao.listar().size();
-            if(lista>1)
-            {
-                int id = Integer.parseInt(vistaD.gDestinoTable.getValueAt(row, 0).toString());
-                dao.delete(id);
-                JOptionPane.showMessageDialog(null, "Registro eliminado");
-            }
-            else
-            {
-                boolean[] arr = {true, false, false, false};
-                areButtonEnabled(arr);
-                int id = Integer.parseInt(vistaD.gDestinoTable.getValueAt(row, 0).toString());
-                dao.delete(id);
-                JOptionPane.showMessageDialog(null, "Registro eliminado");
-            }
-
-        }
-    }
-
-    public void listDestination(JTable tabla)
-    {
-        modelo = (DefaultTableModel)tabla.getModel();
-        List<Destinos> lista = dao.listar();
-        Object[] object = new Object[4];
-        for (Destinos value : lista) {
-            object[0] = value.getDestinationID();
-            object[1] = value.getCity();
-            object[2] = value.getState();
-            object[3] = value.getCountry();
-            modelo.addRow(object);
-        }
-    }
-
+    //Metodo agregar
     public void addDestination()
     {
-
         if(vistaD.gDestino_ciudadTF.getText().isEmpty() || vistaD.gDestino_estadoTF.getText().isEmpty() || vistaD.gDestino_paisTF.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
-            boolean[] arr = {true, false, true, true};
-            areButtonEnabled(arr);
+            boolean[] arr = {false, true, false, false};
+            areButtonsEnabled(arr);
         }
         else
         {
@@ -147,17 +108,18 @@ public class DestinoController implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
             boolean[] arr = {true, false, true, true};
-            areButtonEnabled(arr);
+            areButtonsEnabled(arr);
         }
     }
 
+    //Metodo actualizar
     public void updateDestination()
     {
         if(vistaD.gDestino_ciudadTF.getText().isEmpty() || vistaD.gDestino_estadoTF.getText().isEmpty() || vistaD.gDestino_paisTF.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
-            boolean[] arr = {true, false, true, true};
-            areButtonEnabled(arr);
+            boolean[] arr = {false, true, false, false};
+            areButtonsEnabled(arr);
         }
         else
         {
@@ -178,38 +140,42 @@ public class DestinoController implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
             boolean[] arr = {true, false, true, true};
-            areButtonEnabled(arr);
+            areButtonsEnabled(arr);
         }
     }
 
-    public void editDestination()
-    {
-        key = false;
+    //Metodo eliminar
+    public void deleteDestination(){
         int row = vistaD.gDestinoTable.getSelectedRow();
         if(row==-1)
         {
-            JOptionPane.showMessageDialog(null, "Seleccione una row");
+            JOptionPane.showMessageDialog(null, "Debe selecionar un destino");
         }
         else
         {
-            areTextFieldEditable(true);
-            boolean[] arr = {false, true, false, false};
-            areButtonEnabled(arr);
-            int id = Integer.parseInt(vistaD.gDestinoTable.getValueAt(row, 0).toString());
-            String ciudad = (String) vistaD.gDestinoTable.getValueAt(row, 1);
-            String estado = (String) vistaD.gDestinoTable.getValueAt(row, 2);
-            String pais = (String) vistaD.gDestinoTable.getValueAt(row, 3);
-            vistaD.gDestino_idTF.setText(""+id);
-            vistaD.gDestino_ciudadTF.setText(ciudad);
-            vistaD.gDestino_estadoTF.setText(estado);
-            vistaD.gDestino_paisTF.setText(pais);
+            int lista = dao.listar().size();
+            if(lista>1)
+            {
+                int id = Integer.parseInt(vistaD.gDestinoTable.getValueAt(row, 0).toString());
+                dao.delete(id);
+                JOptionPane.showMessageDialog(null, "Registro eliminado");
+            }
+            else
+            {
+                boolean[] arr = {true, false, false, false};
+                areButtonsEnabled(arr);
+                int id = Integer.parseInt(vistaD.gDestinoTable.getValueAt(row, 0).toString());
+                dao.delete(id);
+                JOptionPane.showMessageDialog(null, "Registro eliminado");
+            }
+
         }
     }
 
-    //saveDestination
+    //Metodo guardar
     public void saveDestination()
     {
-        if(key)
+        if(AU)
         {
             int lista = dao.listar().size();
             if (lista>0)
@@ -238,7 +204,47 @@ public class DestinoController implements ActionListener {
         }
     }
 
-    //cleanDestination la Tabla
+    //Metodo editar
+    public void editDestination()
+    {
+        AU = false;
+        int row = vistaD.gDestinoTable.getSelectedRow();
+        if(row==-1)
+        {
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        }
+        else
+        {
+            areTextFieldEditable(true);
+            boolean[] arr = {false, true, false, false};
+            areButtonsEnabled(arr);
+            int id = Integer.parseInt(vistaD.gDestinoTable.getValueAt(row, 0).toString());
+            String ciudad = (String) vistaD.gDestinoTable.getValueAt(row, 1);
+            String estado = (String) vistaD.gDestinoTable.getValueAt(row, 2);
+            String pais = (String) vistaD.gDestinoTable.getValueAt(row, 3);
+            vistaD.gDestino_idTF.setText(""+id);
+            vistaD.gDestino_ciudadTF.setText(ciudad);
+            vistaD.gDestino_estadoTF.setText(estado);
+            vistaD.gDestino_paisTF.setText(pais);
+        }
+    }
+
+    //Listar la tabla destinos en el JTable
+    public void listDestination(JTable tabla)
+    {
+        modelo = (DefaultTableModel)tabla.getModel();
+        List<Destinos> lista = dao.listar();
+        Object[] object = new Object[4];
+        for (Destinos value : lista) {
+            object[0] = value.getDestinationID();
+            object[1] = value.getCity();
+            object[2] = value.getState();
+            object[3] = value.getCountry();
+            modelo.addRow(object);
+        }
+    }
+
+    //Actualizar la Tabla cada que se hace un cambio
     private void cleanDestination(){
         for (int i = 0; i < vistaD.gDestinoTable.getRowCount(); i++){
             modelo.removeRow(i);
@@ -254,7 +260,7 @@ public class DestinoController implements ActionListener {
         vistaD.gDestino_paisTF.setEditable(flag);
     }
 
-    //cleanDestination los TextField
+    //Limpiar los componentes
     private void cleanForm(){
         vistaD.gDestino_idTF.setText("");
         vistaD.gDestino_ciudadTF.setText("");
@@ -263,7 +269,7 @@ public class DestinoController implements ActionListener {
     }
 
     //Activar o desactivar botones
-    private void areButtonEnabled(boolean[] a)
+    private void areButtonsEnabled(boolean[] a)
     {
         vistaD.gDestino_addB.setEnabled(a[0]);
         vistaD.gDestino_saveB.setEnabled(a[1]);

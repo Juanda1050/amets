@@ -22,35 +22,23 @@ public class GestionarAerolinea {
     public JTable gAerolineaTable;
     private int limiteAero = 45, limiteClase = 20, limitePrecio = 10;
 
-    /**
-     * Launch the application.
-     */
-
     public void runFrame(){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    GestionarAerolinea window = new GestionarAerolinea();
-                    AerolineaDAO dao = new AerolineaDAO();
-                    AerolineaController controller = new AerolineaController(window, dao);
-                    window.gAerolineaFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                GestionarAerolinea window = new GestionarAerolinea();
+                AerolineaDAO dao = new AerolineaDAO();
+                AerolineaController controller = new AerolineaController(window, dao);
+                window.gAerolineaFrame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
 
-    /**
-     * Create the application.
-     */
     public GestionarAerolinea() {
         initialize();
     }
 
-    /**
-     * Initialize the contents of the frame.
-     */
     private void initialize() {
         gAerolineaFrame = new JFrame();
         gAerolineaFrame.setTitle("Gestionar Aerolineas");
@@ -160,9 +148,7 @@ public class GestionarAerolinea {
             @Override
             public void keyTyped(KeyEvent e) {
                 char ch = e.getKeyChar();
-                if(Character.isDigit(ch) || Character.isISOControl(ch)){
-                }
-                else {
+                if((ch<'0' || ch>'9') && (ch<',' || ch>'.') && (ch != '\b')) {
                     e.consume();
                     JOptionPane.showMessageDialog(null, "Solo admite números");
                 }
@@ -175,10 +161,12 @@ public class GestionarAerolinea {
 
         gAerolinea_addB = new JButton("Nuevo");
         gAerolinea_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolinea_addB.setIcon(new ImageIcon("resources/add.png"));
         gAerolineaLeft.add(gAerolinea_addB);
 
         gAerolinea_saveB = new JButton("Guardar");
         gAerolinea_saveB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolinea_saveB.setIcon(new ImageIcon("resources/save.png"));
         gAerolineaLeft.add(gAerolinea_saveB);
 
         JPanel gAerolineaMid = new JPanel();
@@ -186,9 +174,9 @@ public class GestionarAerolinea {
         gAerolineaFrame.getContentPane().add(gAerolineaMid, BorderLayout.CENTER);
         gAerolineaMid.setLayout(new BorderLayout(0, 10));
 
-        JScrollPane gVuelosSP = new JScrollPane();
-        gVuelosSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        gAerolineaMid.add(gVuelosSP, BorderLayout.CENTER);
+        JScrollPane gAerolineaSP = new JScrollPane();
+        gAerolineaSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        gAerolineaMid.add(gAerolineaSP, BorderLayout.CENTER);
 
         gAerolineaTable = new JTable();
         gAerolineaTable = new JTable(){
@@ -218,7 +206,7 @@ public class GestionarAerolinea {
         tHeader.setReorderingAllowed(false);
         tHeader.setFont(new Font("Tahome", Font.BOLD, 16));
         gAerolineaTable.setFont(new Font("Tahome", Font.PLAIN, 14));
-        gVuelosSP.setViewportView(gAerolineaTable);
+        gAerolineaSP.setViewportView(gAerolineaTable);
 
         JPanel gAerolineaMid_B = new JPanel();
         gAerolineaMid_B.setBorder(new EmptyBorder(0, 0, 20, 20));
@@ -229,10 +217,12 @@ public class GestionarAerolinea {
         gAerolinea_editB.setVerticalAlignment(SwingConstants.TOP);
         gAerolinea_editB.setFont(new Font("Tahoma", Font.PLAIN, 16));
         gAerolineaMid_B.add(gAerolinea_editB);
+        gAerolinea_editB.setIcon(new ImageIcon("resources/edit.png"));
 
         gAerolinea_deleteB = new JButton("Eliminar");
         gAerolinea_deleteB.setVerticalAlignment(SwingConstants.TOP);
         gAerolinea_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gAerolinea_deleteB.setIcon(new ImageIcon("resources/delete.png"));
         gAerolineaMid_B.add(gAerolinea_deleteB);
 
         JPanel gAerolineaBottom = new JPanel();

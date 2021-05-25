@@ -11,155 +11,156 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 public class VistaCC {
 
-    public JFrame frmAmetsTravels;
-    public JTextField ccHorarioTF;
-    public JTextField ccTotalTF;
-    public JTextField ccFechaTF;
-    public JTable table;
-    public JButton ccCorteButton;
-    public JButton ccVolverBtn;
-    /**
-     * Launch the application.
-     */
+    public JFrame cCorteFrame;
+    public JTextField cCorte_horarioTF, cCorte_totalTF, cCorte_fechaTF;
+    public JTable cCorteTable;
+    public JButton cCorte_corteB, cCorte_backB;
 
     public void runFrame(int agentID){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    VistaCC window = new VistaCC();
-                    VentaDAO dao = new VentaDAO();
-                    CorteController c = new CorteController(window, dao, agentID);
-                    window.frmAmetsTravels.setVisible(true);
-                    CorteDAO corteDAO = new CorteDAO();
-                    window.ccHorarioTF.setText(corteDAO.getHorario(agentID));
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    LocalDateTime now = LocalDateTime.now();
-                    window.ccFechaTF.setText(dtf.format(now));
-                    window.ccTotalTF.setText(String.valueOf(c.getTotal()));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                VistaCC window = new VistaCC();
+                VentaDAO dao = new VentaDAO();
+                CorteController c = new CorteController(window, dao, agentID);
+                window.cCorteFrame.setVisible(true);
+                CorteDAO corteDAO = new CorteDAO();
+                window.cCorte_horarioTF.setText(corteDAO.getHorario(agentID));
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDateTime now = LocalDateTime.now();
+                window.cCorte_fechaTF.setText(dtf.format(now));
+                window.cCorte_totalTF.setText(String.valueOf(c.getTotal()));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
 
-    /**
-     * Create the application.
-     */
     public VistaCC() {
         initialize();
     }
 
-    /**
-     * Initialize the contents of the frame.
-     */
     public void initialize() {
 
-        frmAmetsTravels = new JFrame();
-        frmAmetsTravels.setTitle("Amets Travels");
-        frmAmetsTravels.setExtendedState(Frame.MAXIMIZED_BOTH);
-        frmAmetsTravels.setBounds(100, 100, 1280, 720);
-        frmAmetsTravels.getContentPane().setLayout(new BorderLayout(0, 0));
+        cCorteFrame = new JFrame();
+        cCorteFrame.setTitle("Corte de Caja");
+        cCorteFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        cCorteFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
+        cCorteFrame.setBounds(100, 100, 1280, 720);
+        cCorteFrame.getContentPane().setLayout(new BorderLayout(0, 0));
 
-        JPanel Top = new JPanel();
-        Top.setBorder(new EmptyBorder(20, 20, 20, 20));
-        frmAmetsTravels.getContentPane().add(Top, BorderLayout.NORTH);
-        Top.setLayout(new BorderLayout(0, 0));
+        JPanel cCorteTop = new JPanel();
+        cCorteTop.setBorder(new EmptyBorder(20, 20, 20, 20));
+        cCorteFrame.getContentPane().add(cCorteTop, BorderLayout.NORTH);
+        cCorteTop.setLayout(new BorderLayout(0, 0));
 
-        JLabel ccLabel = new JLabel("Corte de caja");
-        ccLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-        ccLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        Top.add(ccLabel, BorderLayout.CENTER);
+        JLabel cCorteL = new JLabel("Corte de caja");
+        cCorteL.setFont(new Font("Tahoma", Font.BOLD, 18));
+        cCorteL.setHorizontalAlignment(SwingConstants.CENTER);
+        cCorteTop.add(cCorteL, BorderLayout.CENTER);
 
         JPanel Mid = new JPanel();
         Mid.setBorder(new EmptyBorder(20, 20, 20, 20));
-        frmAmetsTravels.getContentPane().add(Mid, BorderLayout.CENTER);
+        cCorteFrame.getContentPane().add(Mid, BorderLayout.CENTER);
         Mid.setLayout(new BorderLayout(0, 0));
 
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        Mid.add(scrollPane, BorderLayout.CENTER);
+        JScrollPane cCorteSP = new JScrollPane();
+        cCorteSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        Mid.add(cCorteSP, BorderLayout.CENTER);
 
-        table = new JTable();
-        table.setEnabled(false);
-        table.setBorder(new EmptyBorder(20, 20, 20, 20));
-        table.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        table.setModel(new DefaultTableModel(
+        cCorteTable = new JTable();
+        cCorteTable = new JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        cCorteTable.setEnabled(false);
+        cCorteTable.setBorder(new EmptyBorder(20, 20, 20, 20));
+        cCorteTable.setModel(new DefaultTableModel(
                 new Object[][] {
                 },
                 new String[] {
                         "ID Venta", "Descripcion", "Vendedor", "Forma de pago", "Importe"
                 }
         ));
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        cCorteTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+        cCorteTable.setRowHeight(50);
+        for(int i = 0; i < cCorteTable.getModel().getColumnCount(); i++){
+            cCorteTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+        }
 
-        JTableHeader tHeader = table.getTableHeader();
+        JTableHeader tHeader = cCorteTable.getTableHeader();
         tHeader.setPreferredSize(new Dimension(0, 25));
         tHeader.setBackground(Color.decode("#094293"));
         tHeader.setForeground(Color.white);
         tHeader.setFont(new Font("Tahome", Font.BOLD, 16));
-        table.setFont(new Font("Tahome", Font.PLAIN, 14));
-        scrollPane.setViewportView(table);
+        cCorteTable.setFont(new Font("Tahome", Font.PLAIN, 14));
+        cCorteSP.setViewportView(cCorteTable);
 
-        JPanel Buttom = new JPanel();
-        Buttom.setBorder(new EmptyBorder(20, 20, 20, 20));
-        frmAmetsTravels.getContentPane().add(Buttom, BorderLayout.SOUTH);
-        Buttom.setLayout(new BorderLayout(0, 0));
+        JPanel cCorteBottom = new JPanel();
+        cCorteBottom.setBorder(new EmptyBorder(20, 20, 20, 20));
+        cCorteFrame.getContentPane().add(cCorteBottom, BorderLayout.SOUTH);
+        cCorteBottom.setLayout(new BorderLayout(0, 0));
 
-        JPanel ButtomMid = new JPanel();
-        ButtomMid.setBorder(new EmptyBorder(40, 20, 20, 20));
-        Buttom.add(ButtomMid, BorderLayout.CENTER);
-        ButtomMid.setLayout(new GridLayout(0, 6, 25, 0));
+        JPanel cCorteBottom_M = new JPanel();
+        cCorteBottom_M.setBorder(new EmptyBorder(40, 20, 20, 20));
+        cCorteBottom.add(cCorteBottom_M, BorderLayout.CENTER);
+        cCorteBottom_M.setLayout(new GridLayout(0, 6, 25, 0));
 
-        JLabel ccHorarioLabel = new JLabel("Horario de corte");
-        ccHorarioLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ccHorarioLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        ButtomMid.add(ccHorarioLabel);
+        JLabel cCorte_horarioL = new JLabel("Horario de corte");
+        cCorte_horarioL.setHorizontalAlignment(SwingConstants.CENTER);
+        cCorte_horarioL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        cCorteBottom_M.add(cCorte_horarioL);
 
-        ccHorarioTF = new JTextField();
-        ccHorarioTF.setHorizontalAlignment(SwingConstants.CENTER);
-        ccHorarioTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        ccHorarioTF.setEditable(false);
-        ButtomMid.add(ccHorarioTF);
+        cCorte_horarioTF = new JTextField();
+        cCorte_horarioTF.setHorizontalAlignment(SwingConstants.CENTER);
+        cCorte_horarioTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        cCorte_horarioTF.setEditable(false);
+        cCorteBottom_M.add(cCorte_horarioTF);
 
-        JLabel ccFechaLbl = new JLabel("Fecha de corte");
-        ccFechaLbl.setHorizontalAlignment(SwingConstants.CENTER);
-        ccFechaLbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        ButtomMid.add(ccFechaLbl);
+        JLabel cCorte_fechaL = new JLabel("Fecha de corte");
+        cCorte_fechaL.setHorizontalAlignment(SwingConstants.CENTER);
+        cCorte_fechaL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        cCorteBottom_M.add(cCorte_fechaL);
 
-        ccFechaTF = new JTextField();
-        ccFechaTF.setHorizontalAlignment(SwingConstants.CENTER);
-        ccFechaTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        ccFechaTF.setEditable(false);
-        ButtomMid.add(ccFechaTF);
+        cCorte_fechaTF = new JTextField();
+        cCorte_fechaTF.setHorizontalAlignment(SwingConstants.CENTER);
+        cCorte_fechaTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        cCorte_fechaTF.setEditable(false);
+        cCorteBottom_M.add(cCorte_fechaTF);
 
-        JLabel ccTotalLabel = new JLabel("Total");
-        ccTotalLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ccTotalLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        ButtomMid.add(ccTotalLabel);
+        JLabel cCorte_totalL = new JLabel("Total");
+        cCorte_totalL.setHorizontalAlignment(SwingConstants.CENTER);
+        cCorte_totalL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        cCorteBottom_M.add(cCorte_totalL);
 
-        ccTotalTF = new JTextField();
-        ccTotalTF.setHorizontalAlignment(SwingConstants.CENTER);
-        ccTotalTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        ccTotalTF.setEditable(false);
-        ButtomMid.add(ccTotalTF);
+        cCorte_totalTF = new JTextField();
+        cCorte_totalTF.setHorizontalAlignment(SwingConstants.CENTER);
+        cCorte_totalTF.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        cCorte_totalTF.setEditable(false);
+        cCorteBottom_M.add(cCorte_totalTF);
 
-        JPanel ButtomSouth = new JPanel();
-        ButtomSouth.setBorder(new EmptyBorder(20, 20, 20, 20));
-        Buttom.add(ButtomSouth, BorderLayout.SOUTH);
-        ButtomSouth.setLayout(new GridLayout(0, 2, 600, 0));
+        JPanel cCorteBottom_B = new JPanel();
+        cCorteBottom_B.setBorder(new EmptyBorder(20, 20, 20, 20));
+        cCorteBottom.add(cCorteBottom_B, BorderLayout.SOUTH);
+        cCorteBottom_B.setLayout(new GridLayout(0, 2, 600, 0));
 
-        ccVolverBtn = new JButton("Volver");
-        ccVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        ButtomSouth.add(ccVolverBtn);
+        cCorte_backB = new JButton("Volver");
+        cCorte_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        cCorte_backB.setIcon(new ImageIcon("resources/left.png"));
+        cCorteBottom_B.add(cCorte_backB);
 
-        ccCorteButton = new JButton("Hacer corte");
-        ccCorteButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        ButtomSouth.add(ccCorteButton);
+        cCorte_corteB = new JButton("Hacer corte");
+        cCorte_corteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        cCorte_corteB.setIcon(new ImageIcon("resources/caja.png"));
+        cCorteBottom_B.add(cCorte_corteB);
     }
 
 }

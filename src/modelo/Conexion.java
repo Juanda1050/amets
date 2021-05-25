@@ -18,7 +18,6 @@ public class Conexion
         {
             Class.forName(CONTROLADOR);
             conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-            System.out.println("Conexion OK");
         }
         catch(ClassNotFoundException e)
         {
@@ -32,11 +31,5 @@ public class Conexion
         }
 
         return conexion;
-    }
-
-    public static void main(String[] args)
-    {
-        Conexion conecxion = new Conexion();
-        conecxion.conectar();
     }
 }

@@ -15,7 +15,7 @@ public class PaquetesController implements ActionListener
     Paquetes p = new Paquetes();
     GestionarPaquetes vista;
     DefaultTableModel modelo = new DefaultTableModel();
-    boolean key;
+    boolean AU;
 
     public PaquetesController(GestionarPaquetes v, PaquetesDAO dao)
     {
@@ -31,8 +31,8 @@ public class PaquetesController implements ActionListener
             vista.gPaquete_editB.addActionListener(this);
             vista.gPaquete_deleteB.addActionListener(this);
             listPack(vista.gPaqueteTable);
-            boolean[] arr = {true, false, true, true};
-            estadosBotones(arr);
+            boolean[] arr = {true, false, true, true, true};
+            areButtonsEnabled(arr);
         }
         else
         {
@@ -45,8 +45,8 @@ public class PaquetesController implements ActionListener
             vista.gPaquete_editB.addActionListener(this);
             vista.gPaquete_deleteB.addActionListener(this);
             listPack(vista.gPaqueteTable);
-            boolean[] arr = {true, false, false, false};
-            estadosBotones(arr);
+            boolean[] arr = {true, false, false, false, true};
+            areButtonsEnabled(arr);
         }
     }
 
@@ -55,25 +55,25 @@ public class PaquetesController implements ActionListener
         //Boton Nuevo
         if(e.getSource()==vista.gPaquete_addB)
         {
-            key = true;
+            AU = true;
             areTextFieldEditable(true);
-            boolean[] arr = {false, true, false, false};
-            estadosBotones(arr);
+            boolean[] arr = {false, true, false, false, false};
+            areButtonsEnabled(arr);
         }
-        //Boton savePack
+        //Boton Guardar
         if(e.getSource()==vista.gPaquete_saveB)
         {
-            boolean[] arr = {true, false, true, true};
-            estadosBotones(arr);
+            boolean[] arr = {true, false, true, true, true};
+            areButtonsEnabled(arr);
             savePack();
         }
-        //Boton editPack
+        //Boton Editar
         if(e.getSource()==vista.gPaquete_editB)
         {
-            key = false;
+            AU = false;
             editPack();
         }
-        //Boton deletePack
+        //Boton Eliminar
         if(e.getSource()==vista.gPaquete_deleteB)
         {
             deletePack();
@@ -89,8 +89,8 @@ public class PaquetesController implements ActionListener
         if(vista.gPaquete_nombreTF.getText().isEmpty() || vista.gPaquete_descripcionTF.getText().isEmpty() || vista.gPaquete_genteTF.getText().isEmpty() || vista.gPaquete_precioTF.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
-            boolean[] arr = {false, true, false, false};
-            estadosBotones(arr);
+            boolean[] arr = {false, true, false, false, false};
+            areButtonsEnabled(arr);
         }
         else
         {
@@ -100,8 +100,8 @@ public class PaquetesController implements ActionListener
             if(!i || !f)
             {
                 JOptionPane.showMessageDialog(null, "Los campos pasajeros y precio no pueden contener letras, verificalos de nuevo");
-                boolean[] arr = {false, true, false, false};
-                estadosBotones(arr);
+                boolean[] arr = {false, true, false, false, false};
+                areButtonsEnabled(arr);
             }
             else {
                 String name = vista.gPaquete_nombreTF.getText();
@@ -121,19 +121,19 @@ public class PaquetesController implements ActionListener
                 areTextFieldEditable(false);
                 cleanForm();
                 boolean[] arr = {true, false, true, true};
-                estadosBotones(arr);
+                areButtonsEnabled(arr);
             }
         }
     }
 
-
+    //Metodo actualizar
     public void updatePack()
     {
         if(vista.gPaquete_nombreTF.getText().isEmpty() || vista.gPaquete_descripcionTF.getText().isEmpty() || vista.gPaquete_genteTF.getText().isEmpty() || vista.gPaquete_precioTF.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
-            boolean[] arr = {false, true, false, false};
-            estadosBotones(arr);
+            boolean[] arr = {false, true, false, false, false};
+            areButtonsEnabled(arr);
         }
         else
         {
@@ -142,8 +142,8 @@ public class PaquetesController implements ActionListener
             if(!i || !f)
             {
                 JOptionPane.showMessageDialog(null, "Los campos pasajeros y precio no pueden contener letras, verificalos de nuevo");
-                boolean[] arr = {false, true, false, false};
-                estadosBotones(arr);
+                boolean[] arr = {false, true, false, false, false};
+                areButtonsEnabled(arr);
             }
             else
             {
@@ -171,11 +171,12 @@ public class PaquetesController implements ActionListener
         }
     }
 
+    //Metodo eliminar
     public void deletePack(){
         int fila = vista.gPaqueteTable.getSelectedRow();
         if(fila==-1)
         {
-            JOptionPane.showMessageDialog(null, "Debe selecionar un usuario");
+            JOptionPane.showMessageDialog(null, "Debe selecionar un paquete");
         }
         else
         {
@@ -184,40 +185,23 @@ public class PaquetesController implements ActionListener
             {
                 int id = Integer.parseInt((String) vista.gPaqueteTable.getValueAt(fila, 0).toString());
                 dao.eliminar(id);
-                JOptionPane.showMessageDialog(null, "Usuario eliminado");
+                JOptionPane.showMessageDialog(null, "Registro eliminado");
             }
             else
             {
-                boolean[] arr = {true, false, false, false};
-                estadosBotones(arr);
+                boolean[] arr = {true, false, false, false, true};
+                areButtonsEnabled(arr);
                 int id = Integer.parseInt((String) vista.gPaqueteTable.getValueAt(fila, 0).toString());
                 dao.eliminar(id);
-                JOptionPane.showMessageDialog(null, "Usuario eliminado");
+                JOptionPane.showMessageDialog(null, "Registro eliminado");
             }
 
-        }
-    }
-
-    public void listPack(JTable tabla)
-    {
-        modelo = (DefaultTableModel)tabla.getModel();
-        tabla.setModel(modelo);
-        int lista = dao.listar().size();
-        Object[] object = new Object[5];
-        for (int i =0; i<lista; i++)
-        {
-           object[0] = dao.listar().get(i).getID();
-           object[1] = dao.listar().get(i).getName();
-           object[2] = dao.listar().get(i).getDescription();
-           object[3] = dao.listar().get(i).getPassengers();
-            object[4] = dao.listar().get(i).getPrice();
-            modelo.addRow(object);
         }
     }
 
     public void savePack()
     {
-        if(key)
+        if(AU)
         {
             int lista = dao.listar().size();
             if (lista>0)
@@ -240,6 +224,7 @@ public class PaquetesController implements ActionListener
 
     public void editPack()
     {
+        AU = false;
         int fila = vista.gPaqueteTable.getSelectedRow();
         if(fila==-1)
         {
@@ -248,8 +233,8 @@ public class PaquetesController implements ActionListener
         else
         {
             areTextFieldEditable(true);
-            boolean[] arr = {false, true, false, false};
-            estadosBotones(arr);
+            boolean[] arr = {false, true, false, false, false};
+            areButtonsEnabled(arr);
             int id = Integer.parseInt(vista.gPaqueteTable.getValueAt(fila, 0).toString());
             String name = (String) vista.gPaqueteTable.getValueAt(fila, 1);
             String description = (String) vista.gPaqueteTable.getValueAt(fila, 2);
@@ -260,6 +245,24 @@ public class PaquetesController implements ActionListener
             vista.gPaquete_descripcionTF.setText(""+description);
             vista.gPaquete_genteTF.setText(""+passengers);
             vista.gPaquete_precioTF.setText(""+price);
+        }
+    }
+
+    //Listar la tabla paquetes en el JTable
+    public void listPack(JTable tabla)
+    {
+        modelo = (DefaultTableModel)tabla.getModel();
+        tabla.setModel(modelo);
+        int lista = dao.listar().size();
+        Object[] object = new Object[5];
+        for (int i =0; i<lista; i++)
+        {
+           object[0] = dao.listar().get(i).getID();
+           object[1] = dao.listar().get(i).getName();
+           object[2] = dao.listar().get(i).getDescription();
+           object[3] = dao.listar().get(i).getPassengers();
+            object[4] = dao.listar().get(i).getPrice();
+            modelo.addRow(object);
         }
     }
 
@@ -290,12 +293,13 @@ public class PaquetesController implements ActionListener
     }
 
     //Activar o desactivar botones
-    private void estadosBotones(boolean[] a)
+    private void areButtonsEnabled(boolean[] a)
     {
         vista.gPaquete_addB.setEnabled(a[0]);
         vista.gPaquete_saveB.setEnabled(a[1]);
         vista.gPaquete_editB.setEnabled(a[2]);
         vista.gPaquete_deleteB.setEnabled(a[3]);
+        vista.gPaquete_packB.setEnabled(a[4]);
     }
 
     //Validar si pasajeros es un numero

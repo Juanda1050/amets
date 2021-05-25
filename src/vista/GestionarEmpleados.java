@@ -45,10 +45,9 @@ public class GestionarEmpleados {
     private void initialize() {
         //Inicia el frame
         gEmpleadoFrame = new JFrame("Gestionar Empleados");
-        gEmpleadoFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
         gEmpleadoFrame.setBounds(100, 100, 1280, 720);
-        gEmpleadoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gEmpleadoFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        gEmpleadoFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
         gEmpleadoFrame.getContentPane().setLayout(new BorderLayout(0, 0));
         gEmpleadoFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
@@ -164,6 +163,13 @@ public class GestionarEmpleados {
         gEmpleado_contraTF.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if(Character.isLetter(ch) || Character.isDigit(ch) || Character.isISOControl(ch)){
+                }
+                else{
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Solo admite numeros y letras");
+                }
                 if(gEmpleado_contraTF.getText().length() >= limiteContra){
                     e.consume();
                     Toolkit.getDefaultToolkit().beep();

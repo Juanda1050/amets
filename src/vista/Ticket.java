@@ -8,99 +8,89 @@ import javax.swing.border.EmptyBorder;
 
 public class Ticket {
 
-    public JFrame frame;
-    public JPanel panel;
-    public JTextArea txtrCompraRealizada,txtrNumDeTarjeta;
-    public JTextPane txtrAsfdas;
-    public JButton btnNewButton_1, btnNewButton;
-    /**
-     * Launch the application.
-     */
+    public JFrame ticketFrame;
+    public JPanel ticketPanel;
+    public JTextArea ticket_compraTA, ticket_pagoTA;
+    public JTextPane ticket_descTP;
+    public JButton ticket_menuB, ticket_printB;
 
     public void runFrame(Ticket window, int agentID){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    TicketController tc = new TicketController(window, agentID);
-                    window.frame.setVisible(false);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                TicketController tc = new TicketController(window, agentID);
+                window.ticketFrame.setVisible(false);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
 
-    /**
-     * Create the application.
-     */
     public Ticket() {
         initialize();
     }
 
-    /**
-     * Initialize the contents of the frame.
-     */
     public void initialize() {
 
-        frame = new JFrame();
-        frame.setResizable(false);
-        frame.setBounds(100, 100, 400, 500);
+        ticketFrame = new JFrame("Ticket de Venta");
+        ticketFrame.setResizable(false);
+        ticketFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
+        ticketFrame.setBounds(100, 100, 400, 500);
 
-        JPanel bottom = new JPanel();
-        bottom.setBorder(new EmptyBorder(0, 20, 20, 20));
-        frame.getContentPane().add(bottom, BorderLayout.SOUTH);
-        bottom.setLayout(new BorderLayout(0, 0));
+        JPanel ticketBottom = new JPanel();
+        ticketBottom.setBorder(new EmptyBorder(0, 20, 20, 20));
+        ticketFrame.getContentPane().add(ticketBottom, BorderLayout.SOUTH);
+        ticketBottom.setLayout(new BorderLayout(0, 0));
 
-        panel = new JPanel();
-        frame.getContentPane().add(panel, BorderLayout.CENTER);
-        panel.setLayout(new BorderLayout(0, 0));
+        ticketPanel = new JPanel();
+        ticketFrame.getContentPane().add(ticketPanel, BorderLayout.CENTER);
+        ticketPanel.setLayout(new BorderLayout(0, 0));
 
-        JPanel top = new JPanel();
-        panel.add(top, BorderLayout.NORTH);
-        top.setLayout(new GridLayout(0, 1, 0, 0));
+        JPanel ticketTop = new JPanel();
+        ticketPanel.add(ticketTop, BorderLayout.NORTH);
+        ticketTop.setLayout(new GridLayout(0, 1, 0, 0));
 
-        JLabel lblNewLabel = new JLabel("Amets Travels");
-        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        top.add(lblNewLabel);
+        JLabel ticketL = new JLabel("Amets Travels");
+        ticketL.setHorizontalAlignment(SwingConstants.CENTER);
+        ticketL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        ticketTop.add(ticketL);
 
-        JLabel lblNewLabel_1 = new JLabel("Gracias por su compra!");
-        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 18));
-        top.add(lblNewLabel_1);
+        JLabel ticket_compraL = new JLabel("Gracias por su compra!");
+        ticket_compraL.setHorizontalAlignment(SwingConstants.CENTER);
+        ticket_compraL.setFont(new Font("Tahoma", Font.BOLD, 18));
+        ticketTop.add(ticket_compraL);
 
-        JPanel mid = new JPanel();
-        mid.setBorder(new EmptyBorder(20, 20, 20, 20));
-        panel.add(mid, BorderLayout.CENTER);
-        mid.setLayout(new GridLayout(3, 1, 0, 0));
+        JPanel ticketMid = new JPanel();
+        ticketMid.setBorder(new EmptyBorder(20, 20, 20, 20));
+        ticketPanel.add(ticketMid, BorderLayout.CENTER);
+        ticketMid.setLayout(new GridLayout(3, 1, 0, 0));
 
-        txtrCompraRealizada = new JTextArea();
-        txtrCompraRealizada.setEditable(false);
-        mid.add(txtrCompraRealizada);
+        ticket_compraTA = new JTextArea();
+        ticket_compraTA.setEditable(false);
+        ticketMid.add(ticket_compraTA);
 
-        txtrNumDeTarjeta = new JTextArea();
-        txtrNumDeTarjeta.setEditable(false);
-        mid.add(txtrNumDeTarjeta);
+        ticket_pagoTA = new JTextArea();
+        ticket_pagoTA.setEditable(false);
+        ticketMid.add(ticket_pagoTA);
 
-        txtrAsfdas = new JTextPane();
-        txtrAsfdas.setEditable(false);
-        mid.add(txtrAsfdas);
+        ticket_descTP = new JTextPane();
+        ticket_descTP.setEditable(false);
+        ticketMid.add(ticket_descTP);
 
-        JPanel bottompnt = new JPanel();
-        panel.add(bottompnt, BorderLayout.SOUTH);
+        JPanel ticketPanel_B = new JPanel();
+        ticketPanel.add(ticketPanel_B, BorderLayout.SOUTH);
 
-        JLabel lblNewLabel_2 = new JLabel("");
-        lblNewLabel_2.setIcon(new ImageIcon("resources/AMETS TRAVELS 70x70.png"));
-        lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-        bottompnt.add(lblNewLabel_2);
+        JLabel ticket_logoL = new JLabel("");
+        ticket_logoL.setIcon(new ImageIcon("resources/AMETS TRAVELS 70x70.png"));
+        ticket_logoL.setHorizontalAlignment(SwingConstants.CENTER);
+        ticketPanel_B.add(ticket_logoL);
 
-        btnNewButton_1 = new JButton("Regresar al Men\u00FA");
-        btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        bottom.add(btnNewButton_1);
+        ticket_menuB = new JButton("Regresar al Men\u00FA");
+        ticket_menuB.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        ticketBottom.add(ticket_menuB);
 
-        btnNewButton = new JButton("Imprimir Ticket");
-        btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        bottom.add(btnNewButton, BorderLayout.SOUTH);
+        ticket_printB = new JButton("Imprimir Ticket");
+        ticket_printB.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        ticketBottom.add(ticket_printB, BorderLayout.SOUTH);
     }
 
 }

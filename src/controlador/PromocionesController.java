@@ -76,7 +76,7 @@ public class PromocionesController implements ActionListener {
     public void addPromo(){
         if(vista.gPromo_nombreTF.getText().isEmpty() || vista.gPromo_paqueteCB.getSelectedIndex() == 0 || vista.gPromo_descuentoTF.getText().isEmpty() || vista.gPromo_descripcionTF.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
-            boolean[] arr = {true, false, true, true};
+            boolean[] arr = {false, true, false, false};
             areButtonEnable(arr);
         }else{
             String nombre = vista.gPromo_nombreTF.getText();
@@ -102,7 +102,7 @@ public class PromocionesController implements ActionListener {
     public void updatePromo(){
         if(vista.gPromo_nombreTF.getText().isEmpty()|| vista.gPromo_descuentoTF.getText().isEmpty() || vista.gPromo_descripcionTF.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
-            boolean[] arr = {true, false, true, true};
+            boolean[] arr = {false, true, false, false};
             areButtonEnable(arr);
         }
         else

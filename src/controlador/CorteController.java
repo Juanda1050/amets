@@ -20,16 +20,18 @@ public class CorteController implements ActionListener, WindowListener
     DefaultTableModel modelo = new DefaultTableModel();
     float total;
 
+    //Constructor del controlador
     public CorteController(VistaCC v, VentaDAO dao, int agentID){
         this.vista = v;
         this.vDao = dao;
         this.agentID = agentID;
-        listar(this.vista.table);
-        vista.ccCorteButton.addActionListener(this);
-        vista.ccVolverBtn.addActionListener(this);
-        vista.frmAmetsTravels.addWindowListener(this);
+        listar(this.vista.cCorteTable);
+        vista.cCorte_corteB.addActionListener(this);
+        vista.cCorte_backB.addActionListener(this);
+        vista.cCorteFrame.addWindowListener(this);
     }
 
+    //Listar la tabla ventas en el JTable
     public void listar(JTable destinosTable){
         modelo = (DefaultTableModel) destinosTable.getModel();
         destinosTable.setModel(modelo);
@@ -59,29 +61,30 @@ public class CorteController implements ActionListener, WindowListener
         return total;
     }
 
+    //ActionListener de cada boton de la vista
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(e.getSource() == vista.ccVolverBtn) {
+        if(e.getSource() == vista.cCorte_backB) {
             Retorno rtn = new Retorno();
-            vista.frmAmetsTravels.setVisible(rtn.runReturn(agentID));
+            vista.cCorteFrame.setVisible(rtn.runReturn(agentID));
         }
 
-        if(e.getSource() == vista.ccCorteButton){
-            /* Se realiza el corte */
+        if(e.getSource() == vista.cCorte_corteB){
+            // Se realiza el corte
             CorteDAO corteDAO = new CorteDAO();
             int turno = 0;
-            if(vista.ccHorarioTF.getText().equals("Matutino")){
+            if(vista.cCorte_horarioTF.getText().equals("Matutino")){
                 turno = 1;
-            }else if(vista.ccHorarioTF.getText().equals("Vespertino")){
+            }else if(vista.cCorte_horarioTF.getText().equals("Vespertino")){
                 turno = 2;
             }
 
-            if(corteDAO.saveCorte(lastSaleID, agentID, turno, vista.ccTotalTF.getText())){
-                DefaultTableModel model = (DefaultTableModel) vista.table.getModel();
+            if(corteDAO.saveCorte(lastSaleID, agentID, turno, vista.cCorte_totalTF.getText())){
+                DefaultTableModel model = (DefaultTableModel) vista.cCorteTable.getModel();
                 model.setRowCount(0);
                 total = 0;
-                vista.ccTotalTF.setText(String.valueOf(total));
+                vista.cCorte_totalTF.setText(String.valueOf(total));
             }else{
                 JOptionPane.showMessageDialog(null, "ERROR AL HACER EL CORTE DE CAJA","Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -96,15 +99,15 @@ public class CorteController implements ActionListener, WindowListener
     @Override
     public void windowClosing(WindowEvent e) {
 
-        if (e.getSource() == vista.frmAmetsTravels) {
-            int result = JOptionPane.showConfirmDialog(vista.frmAmetsTravels, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
+        if (e.getSource() == vista.cCorteFrame) {
+            int result = JOptionPane.showConfirmDialog(vista.cCorteFrame, "¿Desea cerrar el programa?", "Salir del programa", JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION)
             {
-                vista.frmAmetsTravels.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                vista.cCorteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
             else if (result == JOptionPane.NO_OPTION)
             {
-                vista.frmAmetsTravels.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                vista.cCorteFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             }
         }
     }

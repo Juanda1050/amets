@@ -46,7 +46,6 @@ public class GestionarPromociones{
         PromocionesDAO gpDAO = new PromocionesDAO();
         gPromoFrame = new JFrame("Gestionar Promociones");
         gPromoFrame.setBounds(100, 100, 1280, 720);
-        gPromoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gPromoFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
         gPromoFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
         gPromoFrame.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -134,12 +133,11 @@ public class GestionarPromociones{
             @Override
             public void keyTyped(KeyEvent e) {
                 char ch = e.getKeyChar();
-                if (Character.isDigit(ch) || Character.isISOControl(ch)){
-                }else{
+                if((ch<'0' || ch>'9') && (ch<',' || ch>'.') && (ch != '\b')) {
                     e.consume();
                     JOptionPane.showMessageDialog(null, "Solo admite números");
                 }
-                if(gPromo_descuentoTF.getText().length() >= limiteDescuento){
+                if (gPromo_descuentoTF.getText().length() >= limiteDescuento){
                     e.consume();
                     Toolkit.getDefaultToolkit().beep();
                 }
@@ -157,7 +155,7 @@ public class GestionarPromociones{
         gPromo_descripcionTF.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(gPromo_descuentoTF.getText().length() >= limiteDesc){
+                if(gPromo_descripcionTF.getText().length() >= limiteDesc){
                     e.consume();
                     Toolkit.getDefaultToolkit().beep();
                 }

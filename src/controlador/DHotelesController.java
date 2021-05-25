@@ -18,8 +18,8 @@ public class DHotelesController implements ActionListener {
     DefaultTableModel modelo = new DefaultTableModel();
     private boolean AU = true;
 
+    //Constructor del controlador
     public DHotelesController(DetalleHotel vista, DHotelesDAO dao){
-
         int lista = dao.listar().size();
         if (lista > 0){
             this.dao = dao;
@@ -30,7 +30,7 @@ public class DHotelesController implements ActionListener {
             this.vista.dHotel_deleteB.addActionListener(this);
             listHotel(vista.dHotelTable);
             boolean[] arr = {true, false, true, true};
-            areButtonEnable(arr);
+            areButtonsEnabled(arr);
         }else{
             this.dao = dao;
             this.vista = vista;
@@ -40,25 +40,30 @@ public class DHotelesController implements ActionListener {
             this.vista.dHotel_deleteB.addActionListener(this);
             listHotel(vista.dHotelTable);
             boolean[] arr = {true, false, false, false};
-            areButtonEnable(arr);
+            areButtonsEnabled(arr);
         }
         areTextFieldEditable(false);
     }
 
+    //ActionListener de cada boton de la vista
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Boton Nuevo
         if(e.getSource() == vista.dHotel_addB){
             AU = true;
             areTextFieldEditable(true);
             boolean[] arr = {false, true, false, false};
-            areButtonEnable(arr);
+            areButtonsEnabled(arr);
         }
+        //Boton Guardar
         if(e.getSource() == vista.dHotel_saveB){
             saveHotel();
         }
+        //Boton Editar
         if(e.getSource() == vista.dHotel_editB){
             editHotel();
         }
+        //Boton Eliminar
         if(e.getSource() == vista.dHotel_deleteB){
             deleteHotel();
             cleanHotel();
@@ -66,11 +71,12 @@ public class DHotelesController implements ActionListener {
         }
     }
 
+    //Metodo agregar
     public void addFly(){
         if(vista.dHotel_precioTF.getText().isEmpty() || vista.dHotel_hotelCB.getSelectedIndex() == 0 || vista.dHotel_habitacionCB.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
-            boolean[] arr = {true, false, true, true};
-            areButtonEnable(arr);
+            boolean[] arr = {false, true, false, false};
+            areButtonsEnabled(arr);
         }
         else{
             float price = Float.parseFloat(vista.dHotel_precioTF.getText());
@@ -87,17 +93,18 @@ public class DHotelesController implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
             boolean[] arr = {true, false, true, true};
-            areButtonEnable(arr);
+            areButtonsEnabled(arr);
         }
     }
 
+    //Metodo actualizar
     public void updateHotel(){
         String h = (String) vista.dHotel_hotelCB.getSelectedItem();
         String rn = (String) vista.dHotel_habitacionCB.getSelectedItem();
         if(vista.dHotel_precioTF.getText().isEmpty() || rn.compareTo("Seleccione una habitacion")==0 || h.compareTo("Seleccione un hotel")==0){
             JOptionPane.showMessageDialog(null, "Uno de los campos están vacios o no cumplen con los valores requeridos para continuar");
-            boolean[] arr = {true, false, true, true, true};
-            areButtonEnable(arr);
+            boolean[] arr = {false, true, false, false};
+            areButtonsEnabled(arr);
         }
         else{
             int hotel = dao.hotelID((String) vista.dHotel_hotelCB.getSelectedItem());
@@ -116,20 +123,21 @@ public class DHotelesController implements ActionListener {
         }
     }
 
+    //Metodo eliminar
     public void deleteHotel(){
         int row = vista.dHotelTable.getSelectedRow();
         if (row == 1){
             JOptionPane.showMessageDialog(null, "Seleccione un hotel");
         }else{
-            int id = dao.hotelID((String) vista.dHotelTable.getValueAt(row, 0).toString());
+            int id = dao.hotelID(vista.dHotelTable.getValueAt(row, 0).toString());
             dao.eliminar(id);
             JOptionPane.showMessageDialog(null, "Vuelo eliminado exitosamente");
         }
     }
 
+    //Metodo guardar
     private void saveHotel(){
         if (AU){
-            JOptionPane.showMessageDialog(null, "ADDING");
             addFly();
             cleanHotel();
             listHotel(vista.dHotelTable);
@@ -138,7 +146,6 @@ public class DHotelesController implements ActionListener {
 
         }else{
             updateHotel();
-            JOptionPane.showMessageDialog(null, "UPDATING");
             cleanHotel();
             listHotel(vista.dHotelTable);
             areTextFieldEditable(false);
@@ -155,7 +162,7 @@ public class DHotelesController implements ActionListener {
             areTextFieldEditable(true);
             vista.dHotel_hotelCB.setEnabled(false);
             boolean[] arr = {false, true, false, false};
-            areButtonEnable(arr);
+            areButtonsEnabled(arr);
             String Hotel = (String) vista.dHotelTable.getValueAt(row, 0);
             String Room = (String) vista.dHotelTable.getValueAt(row, 1);
             float price = Float.parseFloat(vista.dHotelTable.getValueAt(row, 2).toString());
@@ -164,6 +171,7 @@ public class DHotelesController implements ActionListener {
         }
     }
 
+    //Listar la tabla detallehotel en el JTable
     public void listHotel(JTable dhotelTable){
         modelo = (DefaultTableModel) dhotelTable.getModel();
         List<DHoteles> lista = dao.listar();
@@ -180,6 +188,7 @@ public class DHotelesController implements ActionListener {
         vista.dHotelTable.setModel(modelo);
     }
 
+    //Actualizar la Tabla cada que se hace un cambio
     private void cleanHotel(){
         for(int i = 0; i < vista.dHotelTable.getRowCount(); i++){
             modelo.removeRow(i);
@@ -187,23 +196,28 @@ public class DHotelesController implements ActionListener {
         }
     }
 
+    //Habilitar o no los componentes
     private void areTextFieldEditable(boolean flag){
         vista.dHotel_hotelCB.setEnabled(flag);
         vista.dHotel_habitacionCB.setEnabled(flag);
         vista.dHotel_precioTF.setEditable(flag);
     }
-    private void areButtonEnable(boolean[] a){
+
+    //Controla el estado de los botones
+    private void areButtonsEnabled(boolean[] a){
         vista.dHotel_addB.setEnabled(a[0]);
         vista.dHotel_saveB.setEnabled(a[1]);
         vista.dHotel_editB.setEnabled(a[2]);
         vista.dHotel_deleteB.setEnabled(a[3]);
     }
 
+    //Limpiar los componentes
     private void cleanForm(){
         vista.dHotel_habitacionCB.setSelectedIndex(0);
         vista.dHotel_precioTF.setText("");
     }
 
+    //Metodo para llenar los ComboBox con lo que esta dentro de la tabla correspondiente en la BD
     private void rellenarCB(String Hotel, String room){
         vista.dHotel_hotelCB.removeAllItems();
         vista.dHotel_hotelCB.addItem(Hotel);

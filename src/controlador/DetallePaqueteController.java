@@ -15,23 +15,26 @@ public class DetallePaqueteController implements ActionListener
     DetallePaquete vista;
     DetallePaqueteDAO dao;
     DefaultTableModel modelo = new DefaultTableModel();
-    boolean key;
+    boolean AU;
 
+    //Constructor del controlador
     public DetallePaqueteController(DetallePaquete vista, DetallePaqueteDAO dao) {
         this.vista = vista;
         this.dao = dao;
-
-        listDPaquete(vista.dPaqueteTable);
-        areComboBoxEnabled(false);
         this.vista.dPaquete_destinoCB.addActionListener(this);
         this.vista.dPaquete_addB.addActionListener(this);
         this.vista.dPaquete_saveB.addActionListener(this);
         this.vista.dPaquete_editB.addActionListener(this);
         this.vista.dPaquete_deleteB.addActionListener(this);
+        listDPaquete(vista.dPaqueteTable);
+        areComboBoxEnabled(false);
+        boolean[] arr = {true, false, true, true};
+        areButtonsEnabled(arr);
         mostrarPaquetes();
         mostrarDestinos();
     }
 
+    //Metodo para mostrar el contenido de la tabla paquetes en el CombBox
     public void mostrarPaquetes()
     {
         boolean k;
@@ -52,6 +55,8 @@ public class DetallePaqueteController implements ActionListener
             }
         }
     }
+
+    //Metodo para mostrar el contenido de la tabla destinos en el CombBox
     public void mostrarDestinos()
     {
         for (int i =0; i<dao.listarDestinos().size(); i++)
@@ -60,6 +65,7 @@ public class DetallePaqueteController implements ActionListener
         }
     }
 
+    //Metodo para mostrar el contenido de la tabla vuelos en el CombBox
     public void mostrarVuelos()
     {
         String city = (String) vista.dPaquete_destinoCB.getSelectedItem();
@@ -71,6 +77,8 @@ public class DetallePaqueteController implements ActionListener
             vista.dPaquete_vueloCB.addItem(dao.vuelosId(city).get(i));
         }
     }
+
+    //Metodo para mostrar el contenido de la tabla hotel en el CombBox
     public void mostrarHoteles()
     {
         String city = (String) vista.dPaquete_destinoCB.getSelectedItem();
@@ -82,27 +90,28 @@ public class DetallePaqueteController implements ActionListener
         }
     }
 
-
+    //ActionListener de cada boton de la vista
     public void actionPerformed(ActionEvent e)
     {
+        //Boton Nuevo
         if(e.getSource() == vista.dPaquete_addB)
         {
-            key = true;
+            AU = true;
             boolean[] arr = {false, true, false, false};
             areButtonsEnabled(arr);
             areComboBoxEnabled(true);
         }
+        //Boton Guardar
         if (e.getSource() == vista.dPaquete_saveB)
         {
-            boolean[] arr = {true, false, true, true};
-            areButtonsEnabled(arr);
             saveDPaquete();
         }
+        //Boton Editar
         if (e.getSource() == vista.dPaquete_editB)
         {
-            key = false;
             editDPaquete();
         }
+        //Boton Eliminar
         if(e.getSource() == vista.dPaquete_deleteB)
         {
             deleteDPaquete();
@@ -110,6 +119,7 @@ public class DetallePaqueteController implements ActionListener
             cleanCB();
             listDPaquete(vista.dPaqueteTable);
         }
+        //ComboBox de destinos
         if(e.getSource() == vista.dPaquete_destinoCB)
         {
             mostrarVuelos();
@@ -117,9 +127,9 @@ public class DetallePaqueteController implements ActionListener
         }
     }
 
+    //Metodo agregar
     public void addDPaquete()
     {
-
         if(vista.dPaquete_paqueteCB.getSelectedIndex() == 0 || vista.dPaquete_destinoCB.getSelectedIndex() == 0 || vista.dPaquete_vueloCB.getSelectedIndex() == 0 || vista.dPaquete_hotelCB.getSelectedIndex() == 0)
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
@@ -150,6 +160,7 @@ public class DetallePaqueteController implements ActionListener
         }
     }
 
+    //Metodo actualizar
     public void updateDPaquete()
     {
         String p = (String) vista.dPaquete_paqueteCB.getSelectedItem();
@@ -178,13 +189,10 @@ public class DetallePaqueteController implements ActionListener
             } else {
                 JOptionPane.showMessageDialog(null, "Registro fallido");
             }
-            areComboBoxEnabled(false);
-            cleanDPaquete();
-            cleanCB();
-            listDPaquete(vista.dPaqueteTable);
         }
     }
 
+    //Metodo eliminar
     public void deleteDPaquete(){
         int fila = vista.dPaqueteTable.getSelectedRow();
         if(fila==-1)
@@ -212,23 +220,16 @@ public class DetallePaqueteController implements ActionListener
                 int hotelID = dao.hotelID((String) vista.dPaqueteTable.getValueAt(fila, 2).toString());
                 int destID = dao.destinoID((String) vista.dPaqueteTable.getValueAt(fila, 3).toString());
                 dao.eliminar(packID, flightID, hotelID, destID);
-                JOptionPane.showMessageDialog(null, "Usuario eliminado");
+                JOptionPane.showMessageDialog(null, "Registro eliminado");
             }
 
         }
     }
 
-    private void areComboBoxEnabled(boolean flag)
-    {
-        vista.dPaquete_paqueteCB.setEnabled(flag);
-        vista.dPaquete_destinoCB.setEnabled(flag);
-        vista.dPaquete_vueloCB.setEnabled(flag);
-        vista.dPaquete_hotelCB.setEnabled(flag);
-    }
-
+    //Metodo guardar
     public void saveDPaquete()
     {
-        if(key)
+        if(AU)
         {
             int lista = dao.sizeDP().size();
             if (lista>0)
@@ -236,41 +237,28 @@ public class DetallePaqueteController implements ActionListener
                 addDPaquete();
                 cleanDPaquete();
                 listDPaquete(vista.dPaqueteTable);
+                areComboBoxEnabled(false);
+                cleanCB();
             }
             else
             {
                 addDPaquete();
                 listDPaquete(vista.dPaqueteTable);
+                areComboBoxEnabled(false);
+                cleanCB();
             }
         }
         else
         {
             updateDPaquete();
+            cleanDPaquete();
+            listDPaquete(vista.dPaqueteTable);
+            areComboBoxEnabled(false);
+            cleanCB();
         }
     }
 
-    public void listDPaquete(JTable tabla)
-    {
-        modelo = (DefaultTableModel)tabla.getModel();
-        tabla.setModel(modelo);
-        Object[] object = new Object[4];
-        for (int i =0; i<dao.sizeDP().size(); i++)
-        {
-            object[0] = dao.packName(dao.sizeDP().get(i).getIdpaquete());
-            object[1] = dao.sizeDP().get(i).getIdVuelo();
-            object[2] = dao.hotelName(dao.sizeDP().get(i).getIdhotel());
-            object[3] = dao.destName(dao.sizeDP().get(i).getIddestino());
-            modelo.addRow(object);
-        }
-    }
-    
-    private void cleanDPaquete(){
-        for (int i = 0; i < vista.dPaqueteTable.getRowCount(); i++){
-            modelo.removeRow(i);
-            i = i - 1;
-        }
-    }
-
+    //Metodo editar
     public void editDPaquete()
     {
         int fila = vista.dPaqueteTable.getSelectedRow();
@@ -290,6 +278,39 @@ public class DetallePaqueteController implements ActionListener
             String destNameEd = (String) vista.dPaqueteTable.getValueAt(fila, 3);
             rellenarCB(paqueteEd, flightIdEd, hotelNameEd, destNameEd);
         }
+    }
+
+    //Listar la tabla destinos en el JTable
+    public void listDPaquete(JTable tabla)
+    {
+        modelo = (DefaultTableModel)tabla.getModel();
+        tabla.setModel(modelo);
+        Object[] object = new Object[4];
+        for (int i =0; i<dao.sizeDP().size(); i++)
+        {
+            object[0] = dao.packName(dao.sizeDP().get(i).getIdpaquete());
+            object[1] = dao.sizeDP().get(i).getIdVuelo();
+            object[2] = dao.hotelName(dao.sizeDP().get(i).getIdhotel());
+            object[3] = dao.destName(dao.sizeDP().get(i).getIddestino());
+            modelo.addRow(object);
+        }
+    }
+
+    //Actualizar la Tabla cada que se hace un cambio
+    private void cleanDPaquete(){
+        for (int i = 0; i < vista.dPaqueteTable.getRowCount(); i++){
+            modelo.removeRow(i);
+            i = i - 1;
+        }
+    }
+
+    //Habilitar o no los ComboBox
+    private void areComboBoxEnabled(boolean flag)
+    {
+        vista.dPaquete_paqueteCB.setEnabled(flag);
+        vista.dPaquete_destinoCB.setEnabled(flag);
+        vista.dPaquete_vueloCB.setEnabled(flag);
+        vista.dPaquete_hotelCB.setEnabled(flag);
     }
 
     //Controla el estado de los botones
@@ -316,6 +337,7 @@ public class DetallePaqueteController implements ActionListener
         vista.dPaquete_hotelCB.addItem("Seleccione hotel");
     }
 
+    //Metodo para llenar los ComboBox con lo que esta dentro de la tabla correspondiente en la BD
     private void rellenarCB(String paqueteEd, int flightIdEd, String hotelNameEd , String destNameEd)
     {
         vista.dPaquete_paqueteCB.removeAllItems();

@@ -4,6 +4,8 @@ import controlador.DHotelesController;
 import modelo.DHotelesDAO;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -21,6 +23,7 @@ public class DetalleHotel {
     public JTable dHotelTable;
     public JComboBox dHotel_hotelCB;
     public JComboBox dHotel_habitacionCB;
+    private int limitePrecio = 10;
 
     public void runFrame() {
         EventQueue.invokeLater(() -> {
@@ -43,6 +46,7 @@ public class DetalleHotel {
         DHotelesDAO hotelDAO = new DHotelesDAO();
         dHotelFrame = new JFrame("Detalle de Hotel");
         dHotelFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        dHotelFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
         dHotelFrame.setBounds(100, 100, 1280, 720);
         dHotelFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
@@ -101,13 +105,29 @@ public class DetalleHotel {
         dHotel_precioTF.setFont(new Font("Tahoma", Font.PLAIN, 16));
         dHotelLeft.add(dHotel_precioTF);
         dHotel_precioTF.setColumns(10);
+        dHotel_precioTF.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if((ch<'0' || ch>'9') && (ch<',' || ch>'.') && (ch != '\b')) {
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Solo admite números");
+                }
+                if (dHotel_precioTF.getText().length() >= limitePrecio){
+                    e.consume();
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
 
         dHotel_addB = new JButton("Nuevo");
         dHotel_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        dHotel_addB.setIcon(new ImageIcon("resources/add.png"));
         dHotelLeft.add(dHotel_addB);
 
         dHotel_saveB = new JButton("Guardar");
         dHotel_saveB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        dHotel_saveB.setIcon(new ImageIcon("resources/save.png"));
         dHotelLeft.add(dHotel_saveB);
 
         JPanel dHotelMid = new JPanel();
@@ -133,15 +153,20 @@ public class DetalleHotel {
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         dHotelTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
         dHotelTable.setRowHeight(50);
+        for(int i = 0; i < dHotelTable.getModel().getColumnCount(); i++){
+            dHotelTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+        }
 
         //Generando estilo de JTable
         JTableHeader tHeader = dHotelTable.getTableHeader();
         tHeader.setPreferredSize(new Dimension(0, 25));
         tHeader.setBackground(Color.decode("#094293"));
         tHeader.setForeground(Color.white);
+        tHeader.setReorderingAllowed(false);
         tHeader.setFont(new Font("Tahome", Font.BOLD, 16));
         dHotelTable.setFont(new Font("Tahome", Font.PLAIN, 14));
         dHotelSP.setViewportView(dHotelTable);
+
         JPanel dHotelMid_B = new JPanel();
         dHotelMid_B.setBorder(new EmptyBorder(0, 0, 20, 20));
         dHotelMid.add(dHotelMid_B, BorderLayout.SOUTH);
@@ -149,10 +174,12 @@ public class DetalleHotel {
 
         dHotel_editB = new JButton("Editar");
         dHotel_editB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        dHotel_editB.setIcon(new ImageIcon("resources/edit.png"));
         dHotelMid_B.add(dHotel_editB);
 
         dHotel_deleteB = new JButton("Eliminar");
         dHotel_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        dHotel_deleteB.setIcon(new ImageIcon("resources/delete.png"));
         dHotelMid_B.add(dHotel_deleteB);
 
         JPanel dHotelBottom = new JPanel();
@@ -162,6 +189,7 @@ public class DetalleHotel {
 
         JButton dHotel_backB = new JButton("VOLVER");
         dHotel_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        dHotel_backB.setIcon(new ImageIcon("resources/left.png"));
         dHotelBottom.add(dHotel_backB, BorderLayout.EAST);
         dHotel_backB.addActionListener(e -> {
             GestionarHoteles ghFrame = new GestionarHoteles();

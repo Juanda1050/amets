@@ -16,17 +16,15 @@ import java.util.List;
 public class ReportesController implements ActionListener {
 
     ReportesDAO dao = new ReportesDAO();
-    GestionarReportes vista = new GestionarReportes();
+    GestionarReportes vista;
     DefaultTableModel modelo = new DefaultTableModel();
     Reportes reportes = new Reportes();
 
     public ReportesController(GestionarReportes window, ReportesDAO dao){
         this.vista = window;
         listar(vista.getgReportesTable());
-        window.getgReportes_buscarButton().addActionListener(this);
+        window.getgReportes_searchB().addActionListener(this);
     }
-
-
 
     public void listar(JTable tabla)
     {
@@ -52,7 +50,7 @@ public class ReportesController implements ActionListener {
     }
 
     private void listarPorFechas(){
-        if(vista.gReportes_inicioDate.getDateEditor().toString().isEmpty() || vista.gReportes_finalDate.getDateEditor().toString().isEmpty())
+        if(vista.gReportes_inicioDC.getDateEditor().toString().isEmpty() || vista.gReportes_finalDC.getDateEditor().toString().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Uno o mas campos estan vacios, rellenalos para continuar");
         }
@@ -62,14 +60,14 @@ public class ReportesController implements ActionListener {
             int dia2, mes2, año2;
             String fecha1, fecha2;
 
-            dia = vista.gReportes_inicioDate.getCalendar().get(Calendar.DAY_OF_MONTH);
-            mes = vista.gReportes_inicioDate.getCalendar().get(Calendar.MONTH) + 1;
-            año = vista.gReportes_inicioDate.getCalendar().get(Calendar.YEAR);
+            dia = vista.gReportes_inicioDC.getCalendar().get(Calendar.DAY_OF_MONTH);
+            mes = vista.gReportes_inicioDC.getCalendar().get(Calendar.MONTH) + 1;
+            año = vista.gReportes_inicioDC.getCalendar().get(Calendar.YEAR);
             fecha1 = dia + "-" + mes + "-" + año;
 
-            dia2 = vista.gReportes_finalDate.getCalendar().get(Calendar.DAY_OF_MONTH);
-            mes2 = vista.gReportes_finalDate.getCalendar().get(Calendar.MONTH) + 1;
-            año2 = vista.gReportes_finalDate.getCalendar().get(Calendar.YEAR);
+            dia2 = vista.gReportes_finalDC.getCalendar().get(Calendar.DAY_OF_MONTH);
+            mes2 = vista.gReportes_finalDC.getCalendar().get(Calendar.MONTH) + 1;
+            año2 = vista.gReportes_finalDC.getCalendar().get(Calendar.YEAR);
             fecha2 = dia2 + "-" + mes2 + "-" + año2;
 
             ReportesDAO obj = new ReportesDAO();
@@ -82,7 +80,7 @@ public class ReportesController implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == vista.getgReportes_buscarButton()){
+        if (e.getSource() == vista.getgReportes_searchB()){
             listarPorFechas();
         }
     }

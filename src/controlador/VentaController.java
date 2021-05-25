@@ -1,6 +1,5 @@
 package controlador;
 
-import modelo.Venta;
 import modelo.VentaDAO;
 import vista.GestionarVentas;
 

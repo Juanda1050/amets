@@ -39,6 +39,7 @@ public class DetallePaquete {
     private void initialize() {
         dPaqueteFrame = new JFrame("Detalle de Paquete");
         dPaqueteFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        dPaqueteFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
         dPaqueteFrame.setBounds(100, 100, 1280, 720);
         dPaqueteFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
@@ -111,10 +112,12 @@ public class DetallePaquete {
 
         dPaquete_addB = new JButton("Nuevo");
         dPaquete_addB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        dPaquete_addB.setIcon(new ImageIcon("resources/add.png"));
         dPaqueteLeft.add(dPaquete_addB);
 
         dPaquete_saveB = new JButton("Guardar");
         dPaquete_saveB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        dPaquete_saveB.setIcon(new ImageIcon("resources/save.png"));
         dPaqueteLeft.add(dPaquete_saveB);
 
         JPanel dPaqueteMid = new JPanel();
@@ -141,12 +144,16 @@ public class DetallePaquete {
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         dPaqueteTable.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
         dPaqueteTable.setRowHeight(50);
+        for(int i = 0; i < dPaqueteTable.getModel().getColumnCount(); i++){
+            dPaqueteTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+        }
 
         //Generando estilo de JTable
         JTableHeader tHeader = dPaqueteTable.getTableHeader();
         tHeader.setPreferredSize(new Dimension(0, 25));
         tHeader.setBackground(Color.decode("#094293"));
         tHeader.setForeground(Color.white);
+        tHeader.setReorderingAllowed(false);
         tHeader.setFont(new Font("Tahome", Font.BOLD, 16));
         dPaqueteTable.setFont(new Font("Tahome", Font.PLAIN, 14));
         dPaqueteSP.setViewportView(dPaqueteTable);
@@ -158,10 +165,12 @@ public class DetallePaquete {
 
         dPaquete_editB = new JButton("Editar");
         dPaquete_editB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        dPaquete_editB.setIcon(new ImageIcon("resources/edit.png"));
         dPaqueteMid_B.add(dPaquete_editB);
 
         dPaquete_deleteB = new JButton("Eliminar");
         dPaquete_deleteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        dPaquete_deleteB.setIcon(new ImageIcon("resources/delete.png"));
         dPaqueteMid_B.add(dPaquete_deleteB);
 
         JPanel dPaqueteBottom = new JPanel();
@@ -171,6 +180,7 @@ public class DetallePaquete {
 
         JButton dPaquete_backB = new JButton("VOLVER");
         dPaquete_backB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        dPaquete_backB.setIcon(new ImageIcon("resources/left.png"));
         dPaqueteBottom.add(dPaquete_backB, BorderLayout.EAST);
         dPaquete_backB.addActionListener(e -> {
             GestionarPaquetes gpFrame = new GestionarPaquetes();

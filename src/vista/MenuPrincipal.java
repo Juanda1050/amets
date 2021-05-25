@@ -9,19 +9,17 @@ import javax.swing.border.EmptyBorder;
 
 public class MenuPrincipal {
 
-    public JFrame mpFrame;
-    public JButton mpCajaBtn, mpSalirBtn, mpVentaBtn;
+    public JFrame mPrincipalFrame;
+    public JButton mPrincipal_corteB, mPrincipal_exitB, mPrincipal_ventaB;
 
     public void runFrame(int agentID){
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    MenuPrincipal window = new MenuPrincipal();
-                    MenuController cm = new MenuController(window, agentID);
-                    window.mpFrame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                MenuPrincipal window = new MenuPrincipal();
+                MenuController cm = new MenuController(window, agentID);
+                window.mPrincipalFrame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -32,51 +30,54 @@ public class MenuPrincipal {
 
     public void initialize() {
 
-        mpFrame = new JFrame();
-        mpFrame.setTitle("Amets Travels");
-        mpFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        mpFrame.setBounds(100, 100, 1280, 720);
-        mpFrame.getContentPane().setLayout(new BorderLayout(0, 0));
+        mPrincipalFrame = new JFrame("Menu Principal");
+        mPrincipalFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        mPrincipalFrame.setBounds(100, 100, 1280, 720);
+        mPrincipalFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
+        mPrincipalFrame.getContentPane().setLayout(new BorderLayout(0, 0));
 
-        JPanel mpTop = new JPanel();
-        mpTop.setBorder(new EmptyBorder(20, 20, 20, 20));
-        mpFrame.getContentPane().add(mpTop, BorderLayout.NORTH);
-        mpTop.setLayout(new BorderLayout(0, 0));
+        JPanel mPrincipalTop = new JPanel();
+        mPrincipalTop.setBorder(new EmptyBorder(20, 20, 20, 20));
+        mPrincipalFrame.getContentPane().add(mPrincipalTop, BorderLayout.NORTH);
+        mPrincipalTop.setLayout(new BorderLayout(0, 0));
 
-        JLabel mpLabel = new JLabel("Men\u00FA Principal");
-        mpLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        mpLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-        mpTop.add(mpLabel, BorderLayout.CENTER);
+        JLabel mPrincipalL = new JLabel("MENU PRINCIPAL");
+        mPrincipalL.setHorizontalAlignment(SwingConstants.CENTER);
+        mPrincipalL.setFont(new Font("Tahoma", Font.BOLD, 18));
+        mPrincipalTop.add(mPrincipalL, BorderLayout.CENTER);
 
-        JPanel mpMid = new JPanel();
-        mpMid.setBorder(new EmptyBorder(20, 20, 20, 20));
-        mpFrame.getContentPane().add(mpMid, BorderLayout.CENTER);
-        mpMid.setLayout(new BorderLayout(0, 0));
+        JPanel mPrincipalMid = new JPanel();
+        mPrincipalMid.setBorder(new EmptyBorder(20, 20, 20, 20));
+        mPrincipalFrame.getContentPane().add(mPrincipalMid, BorderLayout.CENTER);
+        mPrincipalMid.setLayout(new BorderLayout(0, 0));
 
-        JLabel mpLogoLbl = new JLabel("");
-        mpLogoLbl.setIcon(new ImageIcon("resources/AMETS TRAVELS 300x300.png"));
-        mpLogoLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        mpMid.add(mpLogoLbl, BorderLayout.EAST);
+        JLabel mPrincipal_logoL = new JLabel("");
+        mPrincipal_logoL.setIcon(new ImageIcon("resources/AMETS TRAVELS 300x300.png"));
+        mPrincipal_logoL.setHorizontalAlignment(SwingConstants.RIGHT);
+        mPrincipalMid.add(mPrincipal_logoL, BorderLayout.EAST);
 
-        JPanel mpMidWest = new JPanel();
-        mpMid.add(mpMidWest, BorderLayout.CENTER);
+        JPanel mPrincipalMid_L = new JPanel();
+        mPrincipalMid.add(mPrincipalMid_L, BorderLayout.CENTER);
+        mPrincipalMid_L.setLayout(new GridLayout(0, 1, 0, 0));
 
-        mpVentaBtn = new JButton("Nueva Venta");
-        mpMidWest.setLayout(new GridLayout(0, 1, 0, 0));
-        mpVentaBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        mpMidWest.add(mpVentaBtn);
+        mPrincipal_ventaB = new JButton("Nueva Venta");
+        mPrincipal_ventaB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        mPrincipal_ventaB.setIcon(new ImageIcon("resources/venta.png"));
+        mPrincipalMid_L.add(mPrincipal_ventaB);
 
-        mpCajaBtn = new JButton("Corte de Caja");
-        mpCajaBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        mpMidWest.add(mpCajaBtn);
+        mPrincipal_corteB = new JButton("Corte de Caja");
+        mPrincipal_corteB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        mPrincipal_corteB.setIcon(new ImageIcon("resources/caja.png"));
+        mPrincipalMid_L.add(mPrincipal_corteB);
 
-        JPanel mpBottom = new JPanel();
-        mpBottom.setBorder(new EmptyBorder(20, 20, 20, 20));
-        mpFrame.getContentPane().add(mpBottom, BorderLayout.SOUTH);
-        mpBottom.setLayout(new BorderLayout(0, 0));
+        JPanel mPrincipalBottom = new JPanel();
+        mPrincipalBottom.setBorder(new EmptyBorder(20, 20, 20, 20));
+        mPrincipalFrame.getContentPane().add(mPrincipalBottom, BorderLayout.SOUTH);
+        mPrincipalBottom.setLayout(new BorderLayout(0, 0));
 
-        mpSalirBtn = new JButton("Salir");
-        mpSalirBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        mpBottom.add(mpSalirBtn, BorderLayout.EAST);
+        mPrincipal_exitB = new JButton("Salir");
+        mPrincipal_exitB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        mPrincipal_exitB.setIcon(new ImageIcon("resources/salida.png"));
+        mPrincipalBottom.add(mPrincipal_exitB, BorderLayout.EAST);
     }
 }

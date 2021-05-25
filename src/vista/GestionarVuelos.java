@@ -47,8 +47,7 @@ public class GestionarVuelos {
     }
 
     private void initialize() {
-        gVuelosFrame = new JFrame();
-        gVuelosFrame.setTitle("Gestionar Vuelos");
+        gVuelosFrame = new JFrame("Gestionar Vuelos");
         gVuelosFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
         gVuelosFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("resources/amets.jpg"));
         gVuelosFrame.setBounds(100, 100, 1280, 720);
@@ -219,7 +218,6 @@ public class GestionarVuelos {
         for(int i = 0; i < gVuelosTable.getModel().getColumnCount(); i++){
             gVuelosTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
         }
-        gVuelosTable.setRowHeight(50);
 
         //Generando estilo de JTable
         JTableHeader tHeader = gVuelosTable.getTableHeader();
@@ -251,6 +249,7 @@ public class GestionarVuelos {
         gVuelos_airlineB = new JButton("Aerolinea");
         gVuelos_airlineB.setVerticalAlignment(SwingConstants.TOP);
         gVuelos_airlineB.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        gVuelos_airlineB.setIcon(new ImageIcon("resources/aerolinea.png"));
         gVuelosMid_B.add(gVuelos_airlineB);
         gVuelos_airlineB.addActionListener(e -> {
             GestionarAerolinea gaFrame = new GestionarAerolinea();
