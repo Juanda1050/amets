@@ -9,7 +9,7 @@ public class Conexion
     private static final String CONTROLADOR = "com.mysql.cj.jdbc.Driver";
     private static final String URL = "jdbc:mysql://localhost:3306/ametsTravels";
     private static final String USUARIO = "root";
-    private static final String CLAVE = "";
+    private static final String CLAVE = "Projdboss2014.";
 
     public static Connection conectar()
     {

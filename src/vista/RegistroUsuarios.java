@@ -141,7 +141,6 @@ public class RegistroUsuarios extends MenuPrincipal{
         ruVolverBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
         ruBottom.add(ruVolverBtn, BorderLayout.WEST);
         ruVolverBtn.addActionListener(e -> {
-
         });
     }
 
